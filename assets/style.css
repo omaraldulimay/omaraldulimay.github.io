@@ -185,7 +185,7 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:clamp(28px,5vw,64px);border-top:1px solid var(--inv-line)}
 .stat{padding:clamp(20px,3vw,40px) 16px clamp(20px,3vw,40px) 0;border-bottom:1px solid var(--inv-line)}
 .stat:nth-child(even){padding-left:clamp(16px,3vw,40px);border-left:1px solid var(--inv-line)}
-.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(3rem,9vw,7.5rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:lining-nums}
+.stat b{display:block;white-space:nowrap;font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,9vw,7.5rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:lining-nums}
 .stat b small{font-size:.38em;letter-spacing:0;margin-left:.15em;color:var(--inv-muted)}
 .stat span{display:block;margin-top:.7rem;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--inv-muted)}
 @media(min-width:900px){
