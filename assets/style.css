@@ -239,3 +239,7 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .pn{position:relative;border-top:0}
 .pn::before{content:"";position:absolute;top:0;left:20px;right:20px;border-top:1px solid var(--text)}
 @media(min-width:768px){.pn::before{left:48px;right:48px}}
+.frame video{display:block;width:100%;height:auto}
+.how{list-style:none;counter-reset:h;margin:clamp(20px,3vw,40px) 0 0;padding:0;border-top:1px solid var(--line)}
+.how li{counter-increment:h;display:flex;gap:1.2rem;align-items:baseline;padding:1rem 0;border-bottom:1px solid var(--line);font-size:clamp(1rem,1.6vw,1.3rem)}
+.how li::before{content:counter(h,decimal-leading-zero);font-family:var(--serif);color:var(--accent);min-width:2ch}
