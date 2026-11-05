@@ -57,12 +57,13 @@
 </section>
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">Wenn etwas schiefgeht</h2>
 <ol class="how rv"><li>Circuit Breaker: Zahlung hängt, die Bestellung wartet statt zu scheitern</li><li>Refund: Zu spät bezahlte Bestellungen werden zurückgebucht</li><li>Sweeper: Hängende Bestellungen aufräumen, Ware wieder freigeben</li></ol></section>
-<!-- GAME DAY REPORT
-     Platzhalter: Hier kommt später der Bereitschaftsbericht (Game Day) hin.
-     Noch nichts anzeigen.
-<section class="wrap sec" aria-labelledby="h-gd"><h2 id="h-gd" class="kicker">Game Day</h2>
+<section class="wrap sec" aria-labelledby="h-gd" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-gd" class="kicker">Game Day</h2>
+<p class="ph-claim rv">6 Minuten Verkaufsnacht, simuliert. Mit absichtlich kaputtem Update und Zahlungsausfall mittendrin.</p>
+<div class="stats"><div class="stat rv"><b>45<small>s</small></b><span>bis das kaputte Update automatisch zurückgerollt war</span></div><div class="stat rv"><b>6,9<small>%</small></b><span>der Checkouts waren in dieser Zeit betroffen</span></div><div class="stat rv"><b>696</b><span>Bestellungen pro Minute in der Spitze</span></div><div class="stat rv"><b>0</b><span>überverkauft</span></div></div>
+<ol class="how rv"><li>Mitternacht: Ansturm auf den Shop</li><li>Kaputtes Update wird ausgerollt</li><li>Rollback läuft automatisch</li><li>Zahlung langsam, Circuit Breaker 65 Sekunden offen</li><li>Alle wartenden Bestellungen danach bezahlt</li></ol>
+<p class="ph-claim rv">Der Checkout verfehlte sein Verfügbarkeitsziel (98,1 % statt 99,5 %). Genau dafür ist das Fehlerbudget da. Der Catalog blieb bei 100 %.</p>
+<div class="btns rv"><a class="btn" href="https://github.com/omaraldulimay/rush-hour/blob/main/docs/gameday/report.md" target="_blank" rel="noopener">Ganzer Bericht auf GitHub</a></div>
 </section>
--->
 <section class="wrap techrow rv" aria-label="Technologien"><ul class="chips"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Redis</li><li>Kubernetes</li><li>Helm</li><li>Prometheus</li><li>Grafana</li><li>GitHub Actions</li></ul></section>
 <section class="wrap sec rv" aria-label="Links" style="padding-top:clamp(28px,4vw,56px)"><div class="btns"><a class="btn primary" href="https://github.com/omaraldulimay/rush-hour" target="_blank" rel="noopener">Code auf GitHub</a></div></section>
 <nav class="wrap pn" aria-label="Weitere Projekte">
