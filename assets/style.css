@@ -244,21 +244,6 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .how li{counter-increment:h;display:flex;gap:1.2rem;align-items:baseline;padding:1rem 0;border-bottom:1px solid var(--line);font-size:clamp(1rem,1.6vw,1.3rem)}
 .how li::before{content:counter(h,decimal-leading-zero);font-family:var(--serif);color:var(--accent);min-width:2ch}
 
-/* sitting robot next to the name */
-.hero h1 .bot{display:inline-block;width:.46em;height:auto;margin-left:.06em;vertical-align:-.2em;overflow:visible}
-.bot .bot-body,.bot .bot-arm,.bot .bot-leg rect{fill:var(--card);stroke:var(--text);stroke-width:3.5}
-.bot .bot-face{fill:var(--accent)}
-.bot .bot-eyes circle{fill:var(--on-accent)}
-.bot .bot-dot,.bot .bot-tip{fill:#E0703A}
-.bot .bot-ant{stroke:var(--text);stroke-width:3.5;stroke-linecap:round}
-.bot .bot-head{transform-origin:60px 66px;transform-box:view-box;animation:bot-tilt 6s ease-in-out infinite}
-.bot .bot-eyes{transform-origin:60px 41px;transform-box:view-box;animation:bot-blink 4.2s infinite}
-.bot .bot-tip{animation:bot-glow 2.4s ease-in-out infinite}
-.bot .bot-leg{transform-box:view-box;animation:bot-swing 2.2s ease-in-out infinite}
-.bot .bot-leg.l{transform-origin:44px 106px}
-.bot .bot-leg.r{transform-origin:76px 106px;animation-delay:-1.1s}
-@keyframes bot-tilt{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}35%{transform:rotate(-9deg)}55%{transform:rotate(6deg)}70%{transform:rotate(6deg)}85%{transform:rotate(0)}}
-@keyframes bot-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-@keyframes bot-glow{0%,100%{opacity:1}50%{opacity:.35}}
-@keyframes bot-swing{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg)}}
-@media (prefers-reduced-motion:reduce){.bot *{animation:none!important}}
+/* 3D robot sitting on the hero line (assets/bot.js) */
+.bot3d{--h:clamp(104px,13vw,190px);position:absolute;right:2%;height:var(--h);width:calc(var(--h)*.7647);top:calc(var(--h)*-.7353);pointer-events:none;opacity:0;transition:opacity .15s}
+.bot3d.on{opacity:1}
