@@ -27,11 +27,11 @@ function start() {
   const key = new THREE.DirectionalLight(0xffffff, 2.6); key.position.set(3, 5, 6); scene.add(key);
   const rim = new THREE.DirectionalLight(0xdff2ff, 1.4); rim.position.set(-4, 2, -3); scene.add(rim);
 
-  const shell = new THREE.MeshPhysicalMaterial({ color: 0xa9d8f5, roughness: 0.35, clearcoat: 0.6, clearcoatRoughness: 0.25 });
-  const joint = new THREE.MeshStandardMaterial({ color: 0x6db4e3, roughness: 0.45, metalness: 0.1 });
-  const visor = new THREE.MeshPhysicalMaterial({ color: 0x12263a, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.05 });
-  const eyeMat = new THREE.MeshStandardMaterial({ color: 0xd8f3ff, emissive: 0x9fe0ff, emissiveIntensity: 1.4 });
-  const orange = new THREE.MeshStandardMaterial({ color: 0xc8ecff, emissive: 0x7fd0ff, emissiveIntensity: 0.6, roughness: 0.4 });
+  const shell = new THREE.MeshPhysicalMaterial({ color: 0x1f3c6e, roughness: 0.32, clearcoat: 0.6, clearcoatRoughness: 0.25 });
+  const joint = new THREE.MeshStandardMaterial({ color: 0xf4f6fa, roughness: 0.4, metalness: 0.05 });
+  const visor = new THREE.MeshPhysicalMaterial({ color: 0x0b1424, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.05 });
+  const eyeMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.4 });
+  const orange = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.6, roughness: 0.4 });
   const mesh = (g, m, x = 0, y = 0, z = 0) => { const o = new THREE.Mesh(g, m); o.position.set(x, y, z); return o; };
   const capsule = (r, l) => new THREE.CapsuleGeometry(r, l, 6, 16);
 
