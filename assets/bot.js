@@ -23,15 +23,15 @@ function start() {
   camera.position.set(0, 0, 10);
 
   const scene = new THREE.Scene();
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a7f72, 1.6));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x7f93a8, 1.6));
   const key = new THREE.DirectionalLight(0xffffff, 2.6); key.position.set(3, 5, 6); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xffe2c8, 1.4); rim.position.set(-4, 2, -3); scene.add(rim);
+  const rim = new THREE.DirectionalLight(0xdff2ff, 1.4); rim.position.set(-4, 2, -3); scene.add(rim);
 
-  const shell = new THREE.MeshPhysicalMaterial({ color: 0xf3efe7, roughness: 0.38, clearcoat: 0.6, clearcoatRoughness: 0.25 });
-  const joint = new THREE.MeshStandardMaterial({ color: 0x3a3632, roughness: 0.55, metalness: 0.2 });
-  const visor = new THREE.MeshPhysicalMaterial({ color: 0x1d2b25, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.05 });
-  const eyeMat = new THREE.MeshStandardMaterial({ color: 0x9df0c8, emissive: 0x6ee7b0, emissiveIntensity: 1.4 });
-  const orange = new THREE.MeshStandardMaterial({ color: 0xe0703a, emissive: 0xe0703a, emissiveIntensity: 0.6, roughness: 0.4 });
+  const shell = new THREE.MeshPhysicalMaterial({ color: 0xa9d8f5, roughness: 0.35, clearcoat: 0.6, clearcoatRoughness: 0.25 });
+  const joint = new THREE.MeshStandardMaterial({ color: 0x6db4e3, roughness: 0.45, metalness: 0.1 });
+  const visor = new THREE.MeshPhysicalMaterial({ color: 0x12263a, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.05 });
+  const eyeMat = new THREE.MeshStandardMaterial({ color: 0xd8f3ff, emissive: 0x9fe0ff, emissiveIntensity: 1.4 });
+  const orange = new THREE.MeshStandardMaterial({ color: 0xc8ecff, emissive: 0x7fd0ff, emissiveIntensity: 0.6, roughness: 0.4 });
   const mesh = (g, m, x = 0, y = 0, z = 0) => { const o = new THREE.Mesh(g, m); o.position.set(x, y, z); return o; };
   const capsule = (r, l) => new THREE.CapsuleGeometry(r, l, 6, 16);
 
@@ -80,6 +80,7 @@ function start() {
     // clientWidth ignores the line's scaleX draw animation
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
   }
+  if (getComputedStyle(canvas).position !== 'absolute') { canvas.remove(); return; }
   size(); addEventListener('resize', size);
 
   // look towards the pointer
