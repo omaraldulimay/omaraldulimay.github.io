@@ -42,7 +42,7 @@
 <div class="ph-top"><span class="num ph-n" aria-hidden="true">05</span><h1>Rush Hour</h1></div>
 <p class="ph-claim">Der Shop überlebt die Black Friday Nacht und ich kann es beweisen.</p>
 <div class="btns"><a class="btn primary" href="https://github.com/omaraldulimay/rush-hour" target="_blank" rel="noopener">Code auf GitHub</a></div>
-<figure class="ph-media rv frame"><img src="../assets/img/rh-control-room.webp" width="1440" height="1255" alt="Control Room: Bestellungen pro Minute, Fehlerrate, Zahlungsstörung und Limited Drop Bestand live"></figure>
+<figure class="ph-media rv frame"><video src="../assets/video/rush-hour-teaser.mp4" poster="../assets/img/rh-teaser-poster.jpg" width="1280" height="720" controls playsinline preload="metadata" style="display:block;width:100%;height:auto" aria-label="Teaser Video zu Rush Hour, 24 Sekunden"></video></figure>
 </header>
 <section id="glance" class="inv" aria-labelledby="h-g"><div class="wrap">
 <h2 id="h-g" class="kicker">Der Beweis</h2>
@@ -52,8 +52,9 @@
 <ol class="how rv"><li>Banken am Zahltag</li><li>Ticketverkauf beim Konzert Drop</li><li>Logistik vor Weihnachten</li></ol></section>
 <section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(40px,6vw,80px)">
 <h2 id="h-f" class="kicker">Live gemessen</h2>
-<article class="feat rv"><div><span class="feat-n num">01</span><h3>Die Verkaufsnacht</h3><p>Bestellungen, Umsatz, Limited Drop und Zahlungsdienst in einem Blick.</p></div><figure class="frame"><img src="../assets/img/rh-sale-night.webp" width="1440" height="1426" loading="lazy" alt="Grafana Dashboard der Verkaufsnacht mit Bestellungen, Umsatz, Bestand der Limited Drops und Zahlungs Circuit Breaker"></figure></article>
-<article class="feat flip rv"><div><span class="feat-n num">02</span><h3>Ziele mit Alarm</h3><p>Verfügbarkeit und Tempo gegen feste Ziele, mit Fehlerbudget.</p></div><figure class="frame"><img src="../assets/img/rh-slo.webp" width="1440" height="1870" loading="lazy" alt="Grafana SLO Dashboard mit Verfügbarkeit, Latenz und Fehlerbudget von Checkout und Catalog"></figure></article>
+<article class="feat rv"><div><span class="feat-n num">01</span><h3>Der Leitstand</h3><p>Ansturm per Klick starten, Zahlung ausfallen lassen, live zusehen.</p></div><figure class="frame"><img src="../assets/img/rh-control-room.webp" width="1440" height="1255" loading="lazy" alt="Control Room: Bestellungen pro Minute, Fehlerrate, Zahlungsstörung und Limited Drop Bestand live"></figure></article>
+<article class="feat flip rv"><div><span class="feat-n num">02</span><h3>Die Verkaufsnacht</h3><p>Bestellungen, Umsatz, Limited Drop und Zahlungsdienst in einem Blick.</p></div><figure class="frame"><img src="../assets/img/rh-sale-night.webp" width="1440" height="1426" loading="lazy" alt="Grafana Dashboard der Verkaufsnacht mit Bestellungen, Umsatz, Bestand der Limited Drops und Zahlungs Circuit Breaker"></figure></article>
+<article class="feat rv"><div><span class="feat-n num">03</span><h3>Ziele mit Alarm</h3><p>Verfügbarkeit und Tempo gegen feste Ziele, mit Fehlerbudget.</p></div><figure class="frame"><img src="../assets/img/rh-slo.webp" width="1440" height="1870" loading="lazy" alt="Grafana SLO Dashboard mit Verfügbarkeit, Latenz und Fehlerbudget von Checkout und Catalog"></figure></article>
 </section>
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">Wenn etwas schiefgeht</h2>
 <ol class="how rv"><li>Circuit Breaker: Zahlung hängt, die Bestellung wartet statt zu scheitern</li><li>Refund: Zu spät bezahlte Bestellungen werden zurückgebucht</li><li>Sweeper: Hängende Bestellungen aufräumen, Ware wieder freigeben</li></ol></section>
