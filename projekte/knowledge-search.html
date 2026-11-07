@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=7">
-<link rel="stylesheet" href="../assets/scenes.css?v=9">
+<link rel="stylesheet" href="../assets/scenes.css?v=10">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -50,10 +50,41 @@
 <section id="glance" class="inv" aria-labelledby="h-g"><div class="wrap">
 <h2 id="h-g" class="kicker">Was es bringt</h2>
 <div class="stats"><div class="stat rv"><b>100<small>%</small></b><span>richtig bei neuen Testfragen</span></div><div class="stat rv"><b>0</b><span>Rechtelecks</span></div><div class="stat rv"><b>0,17<small>$</small></b><span>pro 1.000 Fragen</span></div><div class="stat rv"><b>10.000</b><span>Dokumente getestet</span></div></div></div></section>
-<section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(64px,10vw,140px)">
-<h2 id="h-f" class="kicker">Qualität</h2>
-<article class="feat rv"><div><span class="feat-n num">01</span><h3>Gemessen, nicht geglaubt</h3><p>Jede Änderung an der Suche wird gegen Testfragen geprüft.</p></div><figure class="frame"><img src="../assets/img/ks-quality.webp" width="1440" height="2759" loading="lazy" alt="Auswertung der Antwortqualität ohne und mit Suche"></figure></article>
+<section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
+<h2 id="h-d" class="kicker">Probier es selbst</h2>
+<p class="ph-claim rv">Wähl eine Person und eine Frage. Probier auch die Fangfragen: Was nicht drinsteht oder einer anderen Abteilung gehört, bekommt keine Antwort.</p>
+<div class="lld rv" id="ksd">
+<div class="lld-bar"><div class="lld-order"><small>Wer fragt?</small></div><div class="lld-btns" id="ksd-users"></div></div>
+<p class="ks-who" id="ksd-who"></p>
+<div class="ks-qs" id="ksd-qs"></div>
+<div class="lld-grid ks-grid">
+<section class="lld-card dark" aria-label="Ablauf">
+<h3>So sucht sie</h3>
+<ol class="ks-steps" id="ksd-steps"></ol>
 </section>
+<section class="lld-card ks-out" aria-label="Antwort" aria-live="polite">
+<p class="ks-askq" id="ksd-q"></p>
+<p class="ks-ans" id="ksd-ans"></p>
+<div class="ks-cites" id="ksd-cites"></div>
+<p class="ks-meta" id="ksd-meta"></p>
+</section>
+</div>
+</div>
+<p class="demo-note">Das sind echte Antworten von Claude Haiku aus dem Projekt, einmal vorberechnet und hier abgespielt. Firma und Dokumente sind erfunden. Der echte Code mit Suche, Rechtefilter und API liegt auf GitHub.</p>
+</section>
+<section class="wrap sec" aria-labelledby="h-q" style="padding-top:clamp(64px,10vw,140px)">
+<h2 id="h-q" class="kicker">Gemessen, nicht geglaubt</h2>
+<p class="ph-claim rv">Dieselben Fragen an Claude, einmal ohne und einmal mit dieser Suche. Gezählt: richtige Fakten.</p>
+<figure class="ph-media rv scene-box" aria-hidden="true"><div class="scene sc-eval">
+<div class="ev-leg"><span><i class="o"></i>Claude ohne Dokumente</span><span><i class="w"></i>Claude mit dieser Suche</span></div>
+<div class="ev-grp"><small>Testfragen beim Bauen</small><div class="ev-bar o" style="--v:5%;--d:.3s"><b>5 %</b></div><div class="ev-bar w" style="--v:95%;--d:.6s"><b>95 %</b></div></div>
+<div class="ev-grp"><small>Neue Fragen, vorher weggelegt</small><div class="ev-bar o" style="--v:1%;--d:.9s"><b>0 %</b></div><div class="ev-bar w" style="--v:91%;--d:1.2s"><b>91 %</b></div></div>
+<div class="ev-grp"><small>Zweiter Satz neuer Fragen, ganz am Ende</small><div class="ev-bar o" style="--v:9%;--d:1.5s"><b>9 %</b></div><div class="ev-bar w" style="--v:100%;--d:1.8s"><b>100 %</b></div></div>
+<div class="rc-sum"><span class="sbadge g sa pop" style="--d:2.4s"><i></i>0 Rechtelecks</span><span class="sbadge sa pop" style="--d:2.6s">0,17 $ pro 1.000 Fragen</span><span class="sbadge sa pop" style="--d:2.8s">10.000 Dokumente getestet</span></div>
+</div></figure>
+<p class="demo-note">Kleine Stichproben, je ein echter Lauf. Eine Frage macht 5 bis 9 Prozentpunkte aus.</p>
+</section>
+
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">So funktioniert’s</h2>
 <ol class="how rv"><li>Dokumente einlesen, Beispielfragen pro Abschnitt</li><li>Suche nach Bedeutung + Stichwort, lokal nachsortiert</li><li>Rechtefilter in der Datenschicht</li><li>Claude antwortet mit Quellen (Agent nur bei zweiteiligen Fragen)</li></ol></section>
 <section class="wrap techrow rv" aria-label="Technologien"><ul class="chips"><li>Python</li><li>FastAPI</li><li>React/TypeScript</li><li>pgvector</li><li>Docker</li><li>GitHub Actions</li><li>Claude API</li></ul></section>
@@ -66,5 +97,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=4"></script>
 <script src="../assets/scenes.js?v=1"></script>
+<script src="../assets/ks-data.js?v=1"></script>
+<script src="../assets/ks-demo.js?v=2"></script>
 </body>
 </html>
