@@ -257,3 +257,8 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 /* teaser preview on project cards */
 .pj-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;pointer-events:none;background:#000}
 .pj-media.playing .pj-preview{opacity:1}
+/* live CI badge on project pages */
+.live-ci{display:inline-flex;align-items:center;gap:.55rem;margin-top:1rem;font-size:.8rem;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem}
+.live-ci:hover{color:var(--text);border-color:var(--muted)}
+.live-ci i{width:8px;height:8px;border-radius:50%;background:#3aa776;box-shadow:0 0 0 3px rgba(58,167,118,.18)}
+.live-ci i.bad{background:#d0574b;box-shadow:0 0 0 3px rgba(208,87,75,.18)}

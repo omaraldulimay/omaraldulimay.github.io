@@ -91,4 +91,21 @@
       card.addEventListener('mouseleave', function () { fig.classList.remove('playing'); v.pause(); });
     });
   }
+
+  // ---- live CI status from the GitHub API (one call, no key; hidden if it fails) ----
+  Array.prototype.forEach.call(doc.querySelectorAll('.live-ci'), function (el) {
+    var repo = el.getAttribute('data-repo');
+    fetch('https://api.github.com/repos/omaraldulimay/' + repo + '/actions/runs?branch=main&per_page=10')
+      .then(function (r) { if (!r.ok) throw r.status; return r.json(); })
+      .then(function (d) {
+        var run = (d.workflow_runs || []).filter(function (x) { return /^ci$/i.test(x.name) && x.status === 'completed'; })[0];
+        if (!run) return;
+        var ok = run.conclusion === 'success';
+        var days = Math.round((new Date(run.updated_at) - Date.now()) / 864e5);
+        var when = new Intl.RelativeTimeFormat('de', { numeric: 'auto' }).format(days, 'day');
+        el.innerHTML = '<i class="' + (ok ? 'ok' : 'bad') + '"></i>' + (ok ? 'Tests grün' : 'Tests rot') + ', zuletzt geprüft ' + when;
+        el.hidden = false;
+      })
+      .catch(function () {});
+  });
 })();
