@@ -248,3 +248,27 @@
   .rh-chartbox svg{height:160px}
   .rh-log{height:220px}
 }
+
+/* Demo zum Selbstausprobieren: Inventory Sync */
+.iv-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.iv-r{display:grid;grid-template-columns:minmax(0,1fr) 48px 48px 118px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.iv-r b{font-weight:500;display:block}
+.iv-r small{display:block;font-size:12px;color:var(--muted)}
+.iv-r .n{text-align:right;font-variant-numeric:tabular-nums;font-size:16px}
+.iv-r .n.off{color:var(--c-coral)}
+.iv-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding-top:0}
+.iv-r.hit{animation:lld-hit .9s ease-out}
+.pill{justify-self:start;font-size:12px;border-radius:999px;padding:4px 10px;white-space:nowrap}
+.pill.ok{background:rgba(95,211,160,.12);color:var(--c-green)}
+.pill.wait{background:rgba(240,191,90,.12);color:var(--c-gold)}
+.pill.retry{background:rgba(240,191,90,.18);color:var(--c-gold);animation:rh-blink .8s step-end infinite}
+.pill.failed,.pill.blocked{background:rgba(255,122,107,.15);color:var(--c-coral)}
+.iv-log{min-height:0;height:330px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
+@media(max-width:899px){
+  .iv-grid{grid-template-columns:1fr}
+  .iv-r{grid-template-columns:minmax(0,1fr) 34px 34px 96px;gap:6px;font-size:13px}
+  .iv-r small{display:none}
+  .iv-log{height:240px}
+}
+.iv-h .n{font-size:11px}
+.lld-order{flex-wrap:wrap}

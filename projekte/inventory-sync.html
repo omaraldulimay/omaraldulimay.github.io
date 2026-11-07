@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=7">
-<link rel="stylesheet" href="../assets/scenes.css?v=7">
+<link rel="stylesheet" href="../assets/scenes.css?v=9">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -44,17 +44,57 @@
 <p class="ph-claim">Hält den Shopbestand mit dem ERP synchron, auch bei Rate Limits und Ausfällen.</p>
 <div class="btns"><a class="btn primary" href="https://github.com/omaraldulimay/inventory-sync-service" target="_blank" rel="noopener">Code auf GitHub</a></div>
 <a class="live-ci" data-repo="inventory-sync-service" href="https://github.com/omaraldulimay/inventory-sync-service/actions" target="_blank" rel="noopener" hidden></a>
-<figure class="ph-media rv frame"><img src="../assets/img/inventory-dashboard.webp" width="1100" height="1014" alt="Live Dashboard des Inventory Sync Service mit Abgleichläufen und Bestandsänderungen"></figure>
+<figure class="ph-media rv scene-box" aria-hidden="true"><div class="scene sc-inv">
+<div class="iv">
+<div class="iv-box"><small>Lager (ERP)</small><div class="iv-num"><span class="roll" style="--d:1.2s">12</span><span class="roll" style="--d:1.2s">9</span></div></div>
+<div class="iv-line"><i></i></div>
+<div class="iv-box"><small>Shop</small><div class="iv-num"><span class="roll" style="--d:4.4s">12</span><span class="roll" style="--d:4.4s">9</span></div></div>
+</div>
+<div class="iv-msg">
+<span class="sbadge n sa" style="--d:1.2s">3 Paar verkauft im Laden</span>
+<span class="sbadge r sa" style="--d:3.6s"><i></i>Shop kurz offline · Änderung wartet</span>
+<span class="sbadge g sa" style="--d:4.4s"><i></i>Wieder da · beide zeigen 9</span>
+</div>
+</div></figure>
 </header>
 <section id="glance" class="inv" aria-labelledby="h-g"><div class="wrap">
 <h2 id="h-g" class="kicker">Auf einen Blick</h2>
 <div class="stats"><div class="stat rv"><b>41</b><span>Tests</span></div><div class="stat rv"><b>5</b><span>Sekunden: inkrementeller Abgleich</span></div><div class="stat rv"><b>60</b><span>Sekunden: Vollabgleich</span></div><div class="stat rv"><b>5</b><span>Versuche pro Request</span></div></div></div></section>
-<section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(64px,10vw,140px)">
-<h2 id="h-f" class="kicker">Was es kann</h2>
-<article class="feat rv"><div><span class="feat-n num">01</span><h3>Live Dashboard</h3><p>Synchron, Probleme, Läufe auf einen Blick.</p></div><figure class="frame"><img src="../assets/img/inv-kpis.webp" width="1100" height="323" loading="lazy" alt="Dashboardkacheln mit synchronen SKUs, Problemen, Läufen und Retries sowie Bestandsgesundheit"></figure></article>
-<article class="feat flip rv"><div><span class="feat-n num">02</span><h3>Ausfall sichtbar</h3><p>Fehlgeschlagene Läufe und Retries werden angezeigt.</p></div><figure class="frame"><img src="../assets/img/inv-outage.webp" width="1100" height="342" loading="lazy" alt="Dashboard im Dunkelmodus bei Shopausfall mit Fehlermeldung und 31 % Fehlern"></figure></article>
-<article class="feat rv"><div><span class="feat-n num">03</span><h3>Abweichungen</h3><p>ERP gegen Shop je SKU, dazu der Verlauf der Läufe.</p></div><figure class="frame"><img src="../assets/img/inv-charts.webp" width="1100" height="452" loading="lazy" alt="Streudiagramm ERP gegen Shop je SKU und Balkendiagramm der letzten Läufe"></figure></article>
+<section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
+<h2 id="h-d" class="kicker">Probier es selbst</h2>
+<p class="ph-claim rv">Verkauf im Laden, lass den Shop ausfallen, schick einen kaputten Export. Der Bestand bleibt richtig.</p>
+<div class="lld rv" id="ivd">
+<div class="lld-bar">
+<div class="lld-order"><small>Nächster Vollabgleich</small><b id="ivd-next">60 s</b><span>Zeitraffer, 10 ×</span></div>
+<div class="lld-btns">
+<button type="button" class="lb pay" data-act="sell">Im Laden verkaufen</button>
+<button type="button" class="lb warn" data-act="chaos" aria-pressed="false">Shop fällt aus</button>
+<button type="button" class="lb" data-act="drift">Direkt im Shop ändern</button>
+<button type="button" class="lb warn" data-act="zero">Kaputter ERP Export</button>
+<button type="button" class="lb pay" data-act="fix" hidden>Export prüfen und korrigieren</button>
+<button type="button" class="lb ghost" data-act="reset">Neu starten</button>
+</div>
+</div>
+<div class="lld-grid iv-grid">
+<section class="lld-card" aria-label="Bestand">
+<div class="iv-r iv-h"><span>Artikel</span><span class="n">ERP</span><span class="n">Shop</span><span>Status</span></div>
+<div id="ivd-rows"></div>
 </section>
+<section class="lld-card dark" aria-label="Protokoll">
+<h3>Was passiert</h3>
+<ol id="ivd-log" class="lld-log iv-log" aria-live="polite"></ol>
+</section>
+</div>
+<div class="lld-stats">
+<div><b id="ivd-c1">0</b><span>Abgleichläufe</span></div>
+<div><b id="ivd-c2">0</b><span>Bestände geschrieben</span></div>
+<div><b id="ivd-c3">0</b><span>Retries mit Backoff</span></div>
+<div><b id="ivd-c4">0</b><span>Artikel gerade abweichend</span></div>
+</div>
+</div>
+<p class="demo-note">Im Browser nachgebaut mit den Regeln aus dem echten Dienst: Abgleich alle 5 s, Vollabgleich alle 60 s, bis zu 5 Versuche mit Backoff, absolute Werte statt Differenzen, Nullbestandschutz. Der echte Code mit FastAPI und PostgreSQL liegt auf GitHub.</p>
+</section>
+
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">So funktioniert’s</h2>
 <div class="flow rv"><svg class="fh" viewBox="0 0 1000 120" role="img" aria-label="Ablauf: ERP lesen, Plan, Nullbestandschutz, Schreiben mit Retry und Backoff, Shop"><rect class="bx" x="0" y="20" width="160" height="80" rx="8"/><text class="t" x="80.0" y="56">ERP</text><text class="s" x="80.0" y="77">Quelle</text><path class="ar" d="M168 60H196"/><path class="ah" d="M204 60l-7 -4v8z"/><rect class="bx" x="210" y="20" width="160" height="80" rx="8"/><text class="t" x="290.0" y="56">Plan</text><text class="s" x="290.0" y="77">nur Abweichungen</text><path class="ar" d="M378 60H406"/><path class="ah" d="M414 60l-7 -4v8z"/><rect class="bx" x="420" y="20" width="160" height="80" rx="8"/><text class="t" x="500.0" y="56">Guard</text><text class="s" x="500.0" y="77">Null-Schutz</text><path class="ar" d="M588 60H616"/><path class="ah" d="M624 60l-7 -4v8z"/><rect class="bx" x="630" y="20" width="160" height="80" rx="8"/><text class="t" x="710.0" y="56">Schreiben</text><text class="s" x="710.0" y="77">Retry · Backoff</text><path class="ar" d="M798 60H826"/><path class="ah" d="M834 60l-7 -4v8z"/><rect class="bx hi" x="840" y="20" width="160" height="80" rx="8"/><text class="t hi-t" x="920.0" y="56">Shop</text><text class="s hi-s" x="920.0" y="77">Ziel</text></svg><svg class="fv" viewBox="0 0 300 464" aria-hidden="true"><rect class="bx" x="30" y="0" width="240" height="64" rx="8"/><text class="t" x="150" y="28">ERP</text><text class="s" x="150" y="48">Quelle</text><path class="ar" d="M150 68V90"/><path class="ah" d="M150 98l-4 -7h8z"/><rect class="bx" x="30" y="100" width="240" height="64" rx="8"/><text class="t" x="150" y="128">Plan</text><text class="s" x="150" y="148">nur Abweichungen</text><path class="ar" d="M150 168V190"/><path class="ah" d="M150 198l-4 -7h8z"/><rect class="bx" x="30" y="200" width="240" height="64" rx="8"/><text class="t" x="150" y="228">Guard</text><text class="s" x="150" y="248">Null-Schutz</text><path class="ar" d="M150 268V290"/><path class="ah" d="M150 298l-4 -7h8z"/><rect class="bx" x="30" y="300" width="240" height="64" rx="8"/><text class="t" x="150" y="328">Schreiben</text><text class="s" x="150" y="348">Retry · Backoff</text><path class="ar" d="M150 368V390"/><path class="ah" d="M150 398l-4 -7h8z"/><rect class="bx hi" x="30" y="400" width="240" height="64" rx="8"/><text class="t hi-t" x="150" y="428">Shop</text><text class="s hi-s" x="150" y="448">Ziel</text></svg></div></section>
 <section class="wrap techrow rv" aria-label="Technologien"><ul class="chips"><li>Python</li><li>FastAPI</li><li>SQLAlchemy</li><li>PostgreSQL</li><li>httpx</li><li>Docker</li><li>pytest</li></ul></section>
@@ -67,5 +107,6 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=4"></script>
 <script src="../assets/scenes.js?v=1"></script>
+<script src="../assets/inv-demo.js?v=1"></script>
 </body>
 </html>
