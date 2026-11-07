@@ -227,3 +227,24 @@
   .rc-c{font-size:12px;padding:9px 10px;min-height:40px}
   .rc-head span{font-size:10px;letter-spacing:.08em}
 }
+
+/* Demo zum Selbstausprobieren: Rush Hour */
+.rh-grid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+.rh-chartbox{display:flex;flex-direction:column;gap:10px}
+.rh-chartbox svg{width:100%;height:220px;display:block}
+.rh-legend{display:flex;gap:18px;font-size:13px}
+.lld .g{color:var(--c-green)}.lld .r{color:var(--c-coral)}.lld .y{color:var(--c-gold)}
+.rh-pods{display:flex;gap:6px;align-items:center}
+.rh-pods i{width:12px;height:12px;border-radius:3px;background:var(--c-green)}
+.rh-pods i.down{background:transparent;border:1.5px dashed var(--c-coral);animation:rh-blink .6s step-end infinite}
+@keyframes rh-blink{50%{opacity:.3}}
+.rh-sub{border-bottom:0;padding-top:0;font-size:13px}
+.rh-sub b{font-weight:400;color:var(--muted)}
+.rh-log{min-height:0;height:170px;overflow:hidden;font-variant-numeric:tabular-nums;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.rh-total{font-size:13px;color:var(--muted);margin-top:-6px}
+.rh-total span{color:var(--text);font-variant-numeric:tabular-nums}
+@media(max-width:899px){
+  .rh-grid{grid-template-columns:1fr}
+  .rh-chartbox svg{height:160px}
+  .rh-log{height:220px}
+}

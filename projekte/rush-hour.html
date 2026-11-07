@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=7">
-<link rel="stylesheet" href="../assets/scenes.css?v=5">
+<link rel="stylesheet" href="../assets/scenes.css?v=7">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -65,12 +65,46 @@
 <section class="wrap sec" aria-labelledby="h-p" style="padding-top:clamp(64px,10vw,140px)"><h2 id="h-p" class="kicker">Das Problem</h2>
 <p class="ph-claim rv">Alle kommen gleichzeitig. Dazu ein riskantes Update und ein langsamer Zahlungsdienst.</p>
 <ol class="how rv"><li>Banken am Zahltag</li><li>Ticketverkauf beim Konzert Drop</li><li>Logistik vor Weihnachten</li></ol></section>
-<section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(40px,6vw,80px)">
-<h2 id="h-f" class="kicker">Live gemessen</h2>
-<article class="feat rv"><div><span class="feat-n num">01</span><h3>Der Leitstand</h3><p>Ansturm per Klick starten, Zahlung ausfallen lassen, live zusehen.</p></div><figure class="frame"><img src="../assets/img/rh-control-room.webp" width="1440" height="1255" loading="lazy" alt="Control Room: Bestellungen pro Minute, Fehlerrate, Zahlungsstörung und Limited Drop Bestand live"></figure></article>
-<article class="feat flip rv"><div><span class="feat-n num">02</span><h3>Die Verkaufsnacht</h3><p>Bestellungen, Umsatz, Limited Drop und Zahlungsdienst in einem Blick.</p></div><figure class="frame"><img src="../assets/img/rh-sale-night.webp" width="1440" height="1426" loading="lazy" alt="Grafana Dashboard der Verkaufsnacht mit Bestellungen, Umsatz, Bestand der Limited Drops und Zahlungs Circuit Breaker"></figure></article>
-<article class="feat rv"><div><span class="feat-n num">03</span><h3>Ziele mit Alarm</h3><p>Verfügbarkeit und Tempo gegen feste Ziele, mit Fehlerbudget.</p></div><figure class="frame"><img src="../assets/img/rh-slo.webp" width="1440" height="1870" loading="lazy" alt="Grafana SLO Dashboard mit Verfügbarkeit, Latenz und Fehlerbudget von Checkout und Catalog"></figure></article>
+<section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(40px,6vw,80px)">
+<h2 id="h-d" class="kicker">Probier es selbst</h2>
+<p class="ph-claim rv">Du bist die Verkaufsnacht. Schick den Ansturm, roll ein kaputtes Update aus, lass die Zahlung hängen. Der Shop hält.</p>
+<div class="lld rv" id="rhd">
+<div class="lld-bar">
+<div class="lld-order"><small>Uhrzeit</small><b id="rhd-clock">23:58:00</b><span>Zeitraffer, 10 ×</span></div>
+<div class="lld-btns">
+<button type="button" class="lb pay" data-act="rush">Ansturm starten</button>
+<button type="button" class="lb warn" data-act="deploy">Kaputtes Update</button>
+<button type="button" class="lb warn" data-act="slow">Zahlung langsam</button>
+<button type="button" class="lb warn" data-act="pod">Pod abschießen</button>
+<button type="button" class="lb" data-act="drop">Limited Drop</button>
+<button type="button" class="lb ghost" data-act="reset">Neu starten</button>
+</div>
+</div>
+<div class="lld-grid rh-grid">
+<section class="lld-card dark rh-chartbox" aria-label="Verlauf">
+<div class="rh-legend"><span class="g">● Bestellungen pro Minute</span><span class="r">● Fehlerrate</span></div>
+<svg viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50H600M0 100H600M0 150H600" stroke="#22252E" stroke-width="1" vector-effect="non-scaling-stroke"/><path id="rhd-rate" fill="none" stroke="#5FD3A0" stroke-width="2.5" vector-effect="non-scaling-stroke"/><path id="rhd-err" fill="none" stroke="#FF7A6B" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>
 </section>
+<section class="lld-card" aria-label="Zustand">
+<div class="lld-row"><span>Version</span><b id="rhd-ver" class="g">v1.4 stabil</b></div>
+<div class="lld-row"><span>Zahlung, Circuit Breaker</span><b id="rhd-br" class="g">zu</b></div>
+<div class="lld-row"><span>Catalog Pods</span><b id="rhd-pods" class="rh-pods"></b></div>
+<div class="lld-row"><span>Sneaker Drop, Bestand</span><b id="rhd-stock">10 von 10</b></div>
+<div class="lld-row rh-sub"><span></span><b id="rhd-sold">0 Bestellungen · 0 überverkauft</b></div>
+</section>
+</div>
+<section class="lld-card dark" aria-label="Protokoll"><ol id="rhd-log" class="lld-log rh-log" aria-live="polite"></ol></section>
+<div class="lld-stats">
+<div><b id="rhd-v1">120</b><span>Bestellungen pro Minute</span></div>
+<div><b id="rhd-v2">0,1 %</b><span>Fehlerrate jetzt</span></div>
+<div><b id="rhd-v3" class="g">100,00 %</b><span>Checkout verfügbar, Ziel 99,5 %</span></div>
+<div><b id="rhd-c2">0</b><span>nach Störung bezahlt</span></div>
+</div>
+<p class="rh-total"><span id="rhd-c1">0</span> Bestellungen in dieser Nacht</p>
+</div>
+<p class="demo-note">Im Browser nachgebaut mit den Werten aus dem echten Game Day: Rollback nach 45 s, Breaker 65 s offen, Spitze 696 Bestellungen pro Minute. Der echte Code mit Kubernetes, Argo Rollouts und Grafana liegt auf GitHub.</p>
+</section>
+
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">Wenn etwas schiefgeht</h2>
 <ol class="how rv"><li>Circuit Breaker: Zahlung hängt, die Bestellung wartet statt zu scheitern</li><li>Refund: Zu spät bezahlte Bestellungen werden zurückgebucht</li><li>Sweeper: Hängende Bestellungen aufräumen, Ware wieder freigeben</li></ol></section>
 <section class="wrap sec" aria-labelledby="h-gd" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-gd" class="kicker">Game Day</h2>
@@ -91,5 +125,6 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=4"></script>
 <script src="../assets/scenes.js?v=1"></script>
+<script src="../assets/rh-demo.js?v=3"></script>
 </body>
 </html>
