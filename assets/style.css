@@ -339,3 +339,21 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
   .me-top,.me-cards{grid-template-columns:1fr}
   .me-time li{grid-template-columns:1fr;gap:2px}
 }
+
+/* ---------- großer Avatar im Hero ---------- */
+.hero h1{position:relative;z-index:1}
+.avatar{position:absolute;z-index:2;right:clamp(0px,3vw,48px);top:clamp(8px,2vw,32px);width:clamp(200px,38vw,560px);pointer-events:none;perspective:900px;
+  opacity:0;transform:translateY(calc(70px + var(--sy,0px))) scale(.92);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.avatar.in{opacity:1;transform:translateY(var(--sy,0px))}
+.av-head{position:relative;transform:translateX(var(--mx,0)) rotateX(var(--rx,0)) rotateY(var(--ry,0));transform-style:preserve-3d;
+  -webkit-mask-image:linear-gradient(#000 72%,transparent 97%);mask-image:linear-gradient(#000 72%,transparent 97%);filter:drop-shadow(0 30px 50px rgba(0,0,0,.55));animation:av-float 7s ease-in-out infinite}
+.av-head img{display:block;width:100%;height:auto}
+.av-head .fx{position:absolute;inset:0;opacity:0;transition:opacity .07s linear}
+.avatar[data-face=blink] .f-blink{opacity:1}
+@keyframes av-float{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@media(max-width:759px){.avatar{position:relative;right:auto;top:auto;width:72vw;margin:0 auto -16vw}}
+.av-bubble{position:absolute;z-index:3;right:calc(100% - 4%);top:4%;white-space:nowrap;max-width:15em;margin:0;padding:12px 16px;border-radius:18px 18px 18px 4px;background:var(--text);color:var(--bg);font:500 15px/1.35 var(--sans);opacity:0;transform:translateY(8px) scale(.9);transform-origin:bottom left;transition:opacity .3s,transform .4s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.av-bubble.on{opacity:1;transform:none}
+.avatar.nod .av-head{animation:av-nod .6s cubic-bezier(.2,.7,.2,1),av-float 7s ease-in-out infinite}
+@keyframes av-nod{30%{scale:1.04;rotate:-3deg}60%{scale:.99;rotate:2deg}}
+@media(max-width:759px){.av-bubble{right:auto;left:-12%;top:-6%;font-size:13px;white-space:normal;max-width:11em}}
