@@ -357,3 +357,18 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .avatar.nod .av-head{animation:av-nod .6s cubic-bezier(.2,.7,.2,1),av-float 7s ease-in-out infinite}
 @keyframes av-nod{30%{scale:1.04;rotate:-3deg}60%{scale:.99;rotate:2deg}}
 @media(max-width:759px){.av-bubble{right:auto;left:-12%;top:-6%;font-size:13px;white-space:normal;max-width:11em}}
+
+/* ---------- Projektnummern in glänzendem Metall mit 3D-Tiefe ---------- */
+.card-n,.ph-n{
+  font-family:var(--serif);font-weight:600;font-style:normal;letter-spacing:-.03em;
+  color:transparent;-webkit-text-stroke:0;
+  background:
+    linear-gradient(110deg,transparent 38%,rgba(255,255,255,.95) 48%,transparent 58%) 0 0/260% 100% no-repeat,
+    linear-gradient(180deg,#ffffff 0%,#d9dde2 22%,#8b929b 46%,#f4f6f8 54%,#a9b0b8 74%,#e9ecef 100%);
+  -webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(1px 1px 0 #6d737b) drop-shadow(1px 1px 0 #555b62) drop-shadow(1px 1px 0 #43484e) drop-shadow(1px 2px 0 #2f3338) drop-shadow(0 16px 22px rgba(0,0,0,.65));
+  animation:metal-sheen 6s ease-in-out infinite;
+}
+@keyframes metal-sheen{0%,55%{background-position:140% 0,0 0}100%{background-position:-60% 0,0 0}}
+.card:hover .card-n,.ph-top:hover .ph-n{animation-duration:1.6s}
+@media (prefers-reduced-motion:reduce){.card-n,.ph-n{animation:none}}
