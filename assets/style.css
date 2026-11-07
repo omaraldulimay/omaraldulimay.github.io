@@ -295,3 +295,47 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
   .card-scene{height:400px;min-height:0}
   .card-n{font-size:3.6rem}
 }
+
+/* ---------- Über mich ---------- */
+.about-me{padding-top:clamp(80px,12vw,180px)}
+.big-head h2 span{font-weight:300}
+.me-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.me-intro{display:flex;flex-direction:column;gap:20px;font-size:clamp(1rem,1.4vw,1.15rem);color:var(--muted)}
+.me-lead{font:300 clamp(2rem,4vw,3.4rem)/1.08 var(--serif);color:var(--text);letter-spacing:-.02em}
+.me-quote{margin:12px 0 0;padding:22px 0 0 26px;border-top:1px solid var(--line);position:relative;font:italic 300 clamp(1.3rem,2.2vw,1.8rem)/1.35 var(--serif);color:var(--text)}
+.me-quote::before{content:"“";position:absolute;left:-4px;top:4px;font:400 3.6rem/1 var(--serif);color:var(--c-gold)}
+.me-time{list-style:none;margin:0;padding:0;position:relative}
+.me-time::before{content:"";position:absolute;left:7px;top:10px;bottom:10px;width:1px;background:linear-gradient(var(--c-green),var(--c-gold),var(--c-coral))}
+.me-time li{position:relative;display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;padding:0 0 26px 34px}
+.me-time li::before{content:"";position:absolute;left:0;top:7px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.me-time li.now::before{background:var(--c-green);border-color:var(--c-green);box-shadow:0 0 0 6px rgba(95,211,160,.15)}
+.me-time b{font:400 1.25rem/1.4 var(--serif);color:var(--c-gold)}
+.me-time h3{font-size:1.4rem;line-height:1.2;margin-bottom:4px}
+.me-time p{font-size:.95rem;color:var(--muted)}
+.js .me-time.rv li{opacity:0;transform:translateX(-12px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.js .me-time.rv.in li{opacity:1;transform:none}
+.js .me-time.rv.in li:nth-child(2){transition-delay:.12s}
+.js .me-time.rv.in li:nth-child(3){transition-delay:.24s}
+.js .me-time.rv.in li:nth-child(4){transition-delay:.36s}
+.js .me-time.rv.in li:nth-child(5){transition-delay:.48s}
+.me-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:clamp(48px,7vw,96px)}
+.me-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column;gap:14px;color:var(--muted);font-size:.98rem}
+.me-big{font:300 clamp(1.6rem,2.4vw,2.1rem)/1.15 var(--serif);color:var(--text)}
+.me-swatch{display:flex;gap:8px;margin-top:auto}
+.me-swatch i{width:34px;height:34px;border-radius:50%}
+.me-swatch i:nth-child(1){background:var(--c-green)}
+.me-swatch i:nth-child(2){background:var(--c-gold);border-radius:999px 999px 0 0}
+.me-swatch i:nth-child(3){background:var(--c-coral);border-radius:6px}
+.me-swatch i:nth-child(4){background:var(--c-blue);border-radius:0 50% 50% 50%}
+.me-swatch i:nth-child(5){background:var(--text)}
+.me-life{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.me-life li{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line);color:var(--text);font-size:1.05rem}
+.me-life li:last-child{border-bottom:0}
+.me-life span{font-size:1.3rem;width:28px;text-align:center}
+.me-num{font:300 clamp(4rem,8vw,6.5rem)/.9 var(--serif);color:var(--text);letter-spacing:-.04em}
+.me-langs{color:var(--text);font-size:1.05rem}
+.me-tools{margin-top:clamp(56px,8vw,110px)}
+@media(max-width:899px){
+  .me-top,.me-cards{grid-template-columns:1fr}
+  .me-time li{grid-template-columns:1fr;gap:2px}
+}
