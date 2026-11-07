@@ -72,13 +72,6 @@
     rv.forEach(function (el) { io.observe(el); });
   }
 
-  // ---- pipeline demo: animated WebP unless reduced motion ----
-  var img = doc.getElementById('pipeline-media');
-  if (img) {
-    var a = img.getAttribute('data-animated');
-    if (a && !reduce.matches) img.src = a;
-  }
-
   // ---- live CI status from the GitHub API (one call, no key; hidden if it fails) ----
   Array.prototype.forEach.call(doc.querySelectorAll('.live-ci'), function (el) {
     var repo = el.getAttribute('data-repo');
