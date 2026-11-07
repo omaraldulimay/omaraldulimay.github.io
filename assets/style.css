@@ -118,6 +118,9 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
   .peeks a:hover{transform:translateY(-8px) rotate(0)}
   .peeks img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow)}
   .peeks span{display:block;margin-top:8px}
+  .peeks a{position:relative}
+  .peek-name{position:absolute;left:0;right:0;top:100%;margin-top:10px;font:italic 300 1.05rem/1.2 var(--serif);color:var(--text);text-align:center;white-space:nowrap;opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .25s;pointer-events:none}
+  .peeks a:hover .peek-name{opacity:1;transform:none}
 }
 
 /* ---------- project index (home) ---------- */
