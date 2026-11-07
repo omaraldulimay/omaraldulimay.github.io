@@ -129,7 +129,7 @@ function start() {
       if (now > nextBlink) { blinkUntil = now + 130; nextBlink = now + 2500 + Math.random() * 3000; }
       eyes.scale.y = now < blinkUntil ? 0.12 : 1;
     }
-    renderer.toneMappingExposure = dark.matches ? 1.05 : 0.95;
+    renderer.toneMappingExposure = 1.05;
     renderer.render(scene, camera);
   }
   requestAnimationFrame(frame);
