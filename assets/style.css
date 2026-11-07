@@ -372,3 +372,5 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 @keyframes metal-sheen{0%,55%{background-position:140% 0,0 0}100%{background-position:-60% 0,0 0}}
 .card:hover .card-n,.ph-top:hover .ph-n{animation-duration:1.6s}
 @media (prefers-reduced-motion:reduce){.card-n,.ph-n{animation:none}}
+.proof{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:400px){.proof b{font-size:1.65rem}.proof li+li{padding-left:10px}}

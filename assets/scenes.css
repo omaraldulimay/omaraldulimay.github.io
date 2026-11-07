@@ -398,3 +398,24 @@
 .cy-steps{padding-right:58px}
 .cy-back{top:17px}
 @media(max-width:899px){.cy-screen{height:560px}}
+/* Handy: Firmenwissensuche kompakt, Frage bricht um statt getippt zu werden */
+@media(max-width:899px){
+  .sc-know{padding:22px;gap:12px}
+  .ks-q{font-size:14px;padding:12px 16px;border-radius:18px;align-items:flex-start}
+  .ks-q svg{flex:none;margin-top:2px}
+  .ks-q span{width:auto;white-space:normal;border-right:0;opacity:0}
+  .scene.on .ks-q span{animation:sc-fade .5s .3s forwards}
+  .ks-a{padding:14px 16px;font-size:14px;border-radius:16px}
+  .ks-a b{font-size:22px;margin-bottom:4px}
+  .ks-src{gap:6px}
+  .ks-src span{font-size:12px;padding:5px 9px}
+  .ks-no{font-size:12px}
+}
+@media(max-width:899px){
+  .ct-info{min-width:0}
+  .ct-buy{font-size:12px;padding:8px 14px}
+  .ct-q,.ct-res{padding:14px}
+  .sc-pipe{padding:22px;gap:14px}
+  .pp-bars{height:130px;gap:8px}
+  .pp-flow{height:120px}
+}
