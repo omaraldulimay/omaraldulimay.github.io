@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=7">
-<link rel="stylesheet" href="../assets/scenes.css?v=3">
+<link rel="stylesheet" href="../assets/scenes.css?v=5">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -62,11 +62,63 @@
 <section class="wrap sec" aria-labelledby="h-p" style="padding-top:clamp(64px,10vw,140px)"><h2 id="h-p" class="kicker">Das Problem</h2>
 <p class="ph-claim rv">Ein Marktplatz kassiert für viele Marken. Geld darf nie doppelt, nie halb und nie verloren gebucht werden.</p>
 <ol class="how rv"><li>Kunde klickt zweimal auf Bezahlen</li><li>Server stürzt mitten in der Buchung ab</li><li>Bank und Buchhaltung zeigen andere Zahlen</li></ol></section>
-<section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(40px,6vw,80px)">
-<h2 id="h-f" class="kicker">Live zu sehen</h2>
-<article class="feat rv"><div><span class="feat-n num">01</span><h3>Der Leitstand</h3><p>Alle Konten, jede Buchung live. Die Summe aller Buchungen steht immer auf 0,00 €.</p></div><figure class="frame"><img src="../assets/img/ll-leitstand.webp?v=2" width="1360" height="1476" loading="lazy" alt="Leitstand von Ledger Lane mit Kontosalden in Euro und Dollar, Summe je Währung 0,00 und Bankabgleich"></figure></article>
-<article class="feat flip rv"><div><span class="feat-n num">02</span><h3>Der Bankabgleich</h3><p>Kontoauszug hochladen. Abweichungen stehen sofort da, ausgezahltes Geld wird automatisch abgeschlossen.</p></div><figure class="frame"><img src="../assets/img/ll-recon.webp?v=2" width="1288" height="364" loading="lazy" alt="Bankabgleich mit drei Abweichungen und 20 automatisch abgeschlossenen Auszahlungen"></figure></article>
+<section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(40px,6vw,80px)">
+<h2 id="h-d" class="kicker">Probier es selbst</h2>
+<p class="ph-claim rv">Klick ruhig zweimal. Schieß den Server ab. Der Ledger bucht trotzdem jeden Cent genau einmal.</p>
+<div class="lld rv" id="lld">
+<div class="lld-bar">
+<div class="lld-order"><small>Bestellung</small><b id="lld-ord">order-1001</b><span id="lld-amt">50,00 €</span></div>
+<div class="lld-btns">
+<button type="button" class="lb pay" data-act="pay">Bezahlen</button>
+<button type="button" class="lb" data-act="new">Neue Bestellung</button>
+<button type="button" class="lb warn" data-act="kill" aria-pressed="false">Server abschießen</button>
+<button type="button" class="lb" data-act="rush">Ansturm: 1.000 Zahlungen</button>
+<button type="button" class="lb ghost" data-act="reset">Zurücksetzen</button>
+</div>
+</div>
+<div class="lld-grid">
+<section class="lld-card" aria-label="Konten">
+<h3>Konten</h3>
+<div class="lld-row"><span>Bankkonto</span><b id="lld-bank">0,00 €</b></div>
+<div class="lld-row"><span>Marken, noch auszuzahlen</span><b id="lld-brand">0,00 €</b></div>
+<div class="lld-row"><span>Provision Plattform, 15 %</span><b id="lld-fee">0,00 €</b></div>
+<div class="lld-sum"><span>Summe aller Buchungen</span><b id="lld-sum">0,00 €</b></div>
 </section>
+<section class="lld-card dark" aria-label="Protokoll">
+<h3>Was passiert</h3>
+<ol id="lld-log" class="lld-log" aria-live="polite"></ol>
+</section>
+</div>
+<div class="lld-stats">
+<div><b id="lld-c1">0</b><span>Zahlungen gebucht</span></div>
+<div><b id="lld-c2">0</b><span>Doppelte abgefangen</span></div>
+<div><b id="lld-c3">0</b><span>Abstürze zurückgerollt</span></div>
+<div><b class="zero">0,00 €</b><span>verloren</span></div>
+</div>
+<div class="lld-crash" aria-hidden="true">kill -9</div>
+</div>
+<p class="demo-note">Im Browser nachgebaut, mit denselben Regeln wie der echte Ledger: Idempotenz-Schlüssel, Transaktion mit Rollback, Summe immer 0. Der echte Code liegt auf GitHub.</p>
+</section>
+<section class="wrap sec" aria-labelledby="h-r" style="padding-top:clamp(64px,10vw,140px)">
+<h2 id="h-r" class="kicker">Der Bankabgleich</h2>
+<p class="ph-claim rv">Kontoauszug rein, Abweichungen raus. Ausgezahltes Geld wird automatisch abgeschlossen.</p>
+<figure class="ph-media rv scene-box" aria-hidden="true"><div class="scene sc-recon">
+<div class="rc-head"><span>Kontoauszug der Bank</span><span></span><span>Ledger</span></div>
+<div class="rc-row sa" style="--d:.3s"><span class="rc-c">Zahlung order-1001<b>50,00 €</b></span><i class="ok">✓</i><span class="rc-c">order-1001<b>50,00 €</b></span></div>
+<div class="rc-row sa" style="--d:.7s"><span class="rc-c">Auszahlung Marke b1<b>−425,00 €</b></span><i class="ok">✓</i><span class="rc-c">Auszahlung b1<b>−425,00 €</b><em>abgeschlossen</em></span></div>
+<div class="rc-row bad sa" style="--d:1.1s"><span class="rc-c">Zahlung order-1043<b>89,00 €</b></span><i>≠</i><span class="rc-c">order-1043<b>98,00 €</b><em>Betrag weicht ab</em></span></div>
+<div class="rc-row sa" style="--d:1.5s"><span class="rc-c">Zahlung order-1044<b>29,90 €</b></span><i class="ok">✓</i><span class="rc-c">order-1044<b>29,90 €</b></span></div>
+<div class="rc-row bad sa" style="--d:1.9s"><span class="rc-c">Gutschrift Kunde K-88<b>120,00 €</b></span><i>?</i><span class="rc-c empty"><em>Fehlt im Ledger</em></span></div>
+<div class="rc-row bad sa" style="--d:2.3s"><span class="rc-c empty"><em>Fehlt bei der Bank</em></span><i>?</i><span class="rc-c">order-1071<b>64,00 €</b></span></div>
+<div class="rc-sum">
+<span class="sbadge g sa pop" style="--d:3s"><i></i>190 abgeglichen</span>
+<span class="sbadge r sa pop" style="--d:3.3s"><i></i>3 Abweichungen</span>
+<span class="sbadge sa pop" style="--d:3.6s">20 Auszahlungen abgeschlossen</span>
+</div>
+</div></figure>
+<p class="demo-note">Zahlen aus dem Demolauf mit dem echten Kontoauszug im Repo, die Beispielzeilen sind vereinfacht.</p>
+</section>
+
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">So bleibt jeder Cent sauber</h2>
 <ol class="how rv"><li>Doppelte Buchführung: jede Buchung ergibt in Summe genau 0</li><li>Idempotenz: gleiche Anfrage zweimal, trotzdem nur eine Buchung</li><li>Unveränderlich: Fehler werden storniert, nie gelöscht</li><li>Outbox: jede Buchung landet garantiert in Kafka</li><li>Zugriff nur mit Schlüssel: Shop bucht, Finanzen zahlt aus, Revision liest</li><li>Euro und Dollar: jede Währung geht für sich auf 0 auf</li></ol>
 <div class="btns rv"><a class="btn" href="https://github.com/omaraldulimay/ledger-lane/blob/main/docs/chaos/report.md" target="_blank" rel="noopener">Chaos Bericht auf GitHub</a></div>
@@ -82,5 +134,6 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=4"></script>
 <script src="../assets/scenes.js?v=1"></script>
+<script src="../assets/ll-demo.js?v=1"></script>
 </body>
 </html>
