@@ -78,4 +78,17 @@
     var a = img.getAttribute('data-animated');
     if (a && !reduce.matches) img.src = a;
   }
+
+  // ---- teaser preview: plays muted while the pointer is on a project card ----
+  if (window.matchMedia('(hover:hover)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    Array.prototype.forEach.call(doc.querySelectorAll('.pj-preview'), function (v) {
+      var card = v.closest('.pj'), fig = v.parentNode;
+      card.addEventListener('mouseenter', function () {
+        if (!v.src) v.src = v.getAttribute('data-src');
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+        fig.classList.add('playing');
+      });
+      card.addEventListener('mouseleave', function () { fig.classList.remove('playing'); v.pause(); });
+    });
+  }
 })();

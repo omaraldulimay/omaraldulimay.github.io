@@ -247,3 +247,13 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 /* 3D robot sitting on the hero line (assets/bot.js) */
 .bot3d{--h:clamp(104px,13vw,190px);position:absolute;right:2%;height:var(--h);width:calc(var(--h)*.7647);top:calc(var(--h)*-.7353);pointer-events:none;opacity:0;transition:opacity .15s}
 .bot3d.on{opacity:1}
+/* hero proof numbers */
+.proof{list-style:none;margin:clamp(36px,6vw,72px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.proof li{padding:clamp(14px,2.4vw,28px) 12px 0 0}
+.proof li+li{padding-left:clamp(12px,2.4vw,32px);border-left:1px solid var(--line)}
+.proof b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;white-space:nowrap}
+.proof b small{font-size:.42em;margin-left:.12em;color:var(--muted);letter-spacing:0}
+.proof span{display:block;margin-top:.6rem;font-size:clamp(.62rem,1.4vw,.74rem);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+/* teaser preview on project cards */
+.pj-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;pointer-events:none;background:#000}
+.pj-media.playing .pj-preview{opacity:1}
