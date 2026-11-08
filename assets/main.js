@@ -70,6 +70,14 @@
     mqPhone.addEventListener && mqPhone.addEventListener('change', function () { sheet(false); });
   }
 
+  // ---- Header: beim Runterscrollen weg, beim Hochscrollen wieder da ----
+  var top = doc.querySelector('.top'), lastY = window.scrollY;
+  if (top) window.addEventListener('scroll', function () {
+    var y = window.scrollY, open = (dd && dd.classList.contains('open')) || doc.body.classList.contains('lock');
+    if (!open && Math.abs(y - lastY) > 6) top.classList.toggle('hide', y > lastY && y > 120);
+    lastY = y;
+  }, { passive: true });
+
   // ---- scroll-in reveals ----
   var rv = doc.querySelectorAll('.rv');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
