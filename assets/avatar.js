@@ -55,16 +55,6 @@
     bubble.textContent = t; bubble.classList.add('on');
     clearTimeout(hideT); hideT = setTimeout(function () { bubble.classList.remove('on'); }, ms || 3200);
   }
-  // Mimik: nur Blinzeln, danach zurück zum Grundgesicht.
-  var faceT, held = null;
-  function face(f, ms) {
-    if (still) return;
-    clearTimeout(faceT); el.dataset.face = f;
-    if (ms) faceT = setTimeout(function () { el.dataset.face = held || ''; }, ms);
-  }
-  (function blink() {
-    setTimeout(function () { if (!el.dataset.face) face('blink', 140); blink(); }, 2500 + Math.random() * 3500);
-  })();
   el.style.pointerEvents = 'auto'; el.style.cursor = 'pointer';
   el.addEventListener('click', function () {
     n = (n + 1) % lines.length; say(lines[n]);
