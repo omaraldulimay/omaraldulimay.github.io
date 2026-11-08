@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=17">
+<link rel="stylesheet" href="assets/style.css?v=18">
 <link rel="stylesheet" href="assets/scenes.css?v=15">
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -52,10 +52,17 @@
 </ul>
 </section>
 <section id="projekte" class="stack wrap" aria-labelledby="h-pj">
-<div class="big-head"><h2 id="h-pj">Projekte</h2><span class="kicker">06</span></div>
+<div class="big-head"><h2 id="h-pj">Projekte</h2><span class="kicker pj-count">06</span></div>
+<div class="pj-filter" role="group" aria-label="Projekte nach Kategorie filtern">
+<button type="button" data-f="alle" aria-pressed="true">Alle <small>6</small></button>
+<button type="button" data-f="backend" aria-pressed="false">Backend <small>2</small></button>
+<button type="button" data-f="daten" aria-pressed="false">Daten &amp; KI <small>2</small></button>
+<button type="button" data-f="cloud" aria-pressed="false">Cloud &amp; Betrieb <small>1</small></button>
+<button type="button" data-f="app" aria-pressed="false">App <small>1</small></button>
+</div>
 
-<article class="card" style="--i:0"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">06</span><h3>Ledger Lane</h3><p>Jeder Cent ist erklärt, auch wenn der Server mitten in der Zahlung abstürzt.</p><ul class="chips"><li>Java 21</li><li>Spring Boot</li><li>Kafka</li><li>PostgreSQL</li></ul><a class="st-go" href="projekte/ledger-lane.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="backend" style="--i:0"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">06</span><span class="card-cat">Backend · Java</span><h3>Ledger Lane</h3><p>Jeder Cent ist erklärt, auch wenn der Server mitten in der Zahlung abstürzt.</p><ul class="chips"><li>Java 21</li><li>Spring Boot</li><li>Kafka</li><li>PostgreSQL</li></ul><a class="st-go" href="projekte/ledger-lane.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-ledger">
 <div class="lg">
 <div class="lg-row sa" style="--d:.3s"><span>Bankkonto</span><b class="p">+50,00 €</b></div>
@@ -69,8 +76,8 @@
 </div></div>
 </div></article>
 
-<article class="card" style="--i:1"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">05</span><h3>Rush Hour</h3><p>Black Friday Nacht: Fehler steigen, das System rollt sich selbst zurück.</p><ul class="chips"><li>Kubernetes</li><li>Prometheus</li><li>Grafana</li><li>FastAPI</li></ul><a class="st-go" href="projekte/rush-hour.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="cloud" style="--i:1"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">05</span><span class="card-cat">Cloud &amp; Betrieb · Kubernetes</span><h3>Rush Hour</h3><p>Black Friday Nacht: Fehler steigen, das System rollt sich selbst zurück.</p><ul class="chips"><li>Kubernetes</li><li>Prometheus</li><li>Grafana</li><li>FastAPI</li></ul><a class="st-go" href="projekte/rush-hour.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-rush">
 <div class="rh-top"><span>Bestellungen pro Sekunde</span><span>Black Friday · 23:58</span></div>
 <svg class="rh-chart" viewBox="0 0 600 300" preserveAspectRatio="none">
@@ -87,8 +94,8 @@
 </div></div>
 </div></article>
 
-<article class="card" style="--i:2"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">04</span><h3>Firmenwissensuche</h3><p>Frag in Alltagssprache. Antwort nur aus eigenen Dokumenten, immer mit Quelle.</p><ul class="chips"><li>Python</li><li>FastAPI</li><li>pgvector</li><li>Claude API</li></ul><a class="st-go" href="projekte/knowledge-search.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="daten" style="--i:2"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">04</span><span class="card-cat">Daten &amp; KI · Python</span><h3>Firmenwissensuche</h3><p>Frag in Alltagssprache. Antwort nur aus eigenen Dokumenten, immer mit Quelle.</p><ul class="chips"><li>Python</li><li>FastAPI</li><li>pgvector</li><li>Claude API</li></ul><a class="st-go" href="projekte/knowledge-search.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-know">
 <div class="ks-q"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F4A3F" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Wie viele Urlaubstage habe ich?</span></div>
 <div class="ks-a sa" style="--d:2.2s"><b>30 Arbeitstage im Jahr.</b>Teilzeit anteilig, Auszubildende 28 Tage.</div>
@@ -97,8 +104,8 @@
 </div></div>
 </div></article>
 
-<article class="card" style="--i:3"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">03</span><h3>Inventory Sync</h3><p>Lager und Shop zeigen denselben Bestand. Auch wenn einer kurz ausfällt.</p><ul class="chips"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Docker</li></ul><a class="st-go" href="projekte/inventory-sync.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="backend" style="--i:3"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">03</span><span class="card-cat">Backend · Python</span><h3>Inventory Sync</h3><p>Lager und Shop zeigen denselben Bestand. Auch wenn einer kurz ausfällt.</p><ul class="chips"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Docker</li></ul><a class="st-go" href="projekte/inventory-sync.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-inv">
 <div class="iv">
 <div class="iv-box"><small>Lager (ERP)</small><div class="iv-num"><span class="roll" style="--d:1.2s">12</span><span class="roll" style="--d:1.2s">9</span></div></div>
@@ -113,8 +120,8 @@
 </div></div>
 </div></article>
 
-<article class="card" style="--i:4"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">02</span><h3>Courtyard</h3><p>Den passenden Duft in fünf Fragen, direkt aus dem Shopify Shop.</p><ul class="chips"><li>TypeScript</li><li>React Native</li><li>Expo</li><li>Shopify</li></ul><a class="st-go" href="projekte/courtyard.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="app" style="--i:4"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">02</span><span class="card-cat">App · TypeScript</span><h3>Courtyard</h3><p>Den passenden Duft in fünf Fragen, direkt aus dem Shopify Shop.</p><ul class="chips"><li>TypeScript</li><li>React Native</li><li>Expo</li><li>Shopify</li></ul><a class="st-go" href="projekte/courtyard.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-court">
 <div class="ct-q sa" style="--d:.2s">
 <div class="ct-steps"><i style="--d:.4s"></i><i style="--d:.55s"></i><i style="--d:.7s"></i><i style="--d:.85s"></i><i style="--d:1.6s"></i></div>
@@ -136,8 +143,8 @@
 </div></div>
 </div></article>
 
-<article class="card" style="--i:5"><div class="card-in">
-<div class="card-txt"><span class="card-n" aria-hidden="true">01</span><h3>Retail Data Pipeline</h3><p>Rohdaten aus Shop, Kasse und Lager werden geprüft und zu Zahlen, denen man vertraut.</p><ul class="chips"><li>Python</li><li>DuckDB</li><li>dbt</li><li>Dagster</li></ul><a class="st-go" href="projekte/retail-data-pipeline.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
+<article class="card" data-cat="daten" style="--i:5"><div class="card-in">
+<div class="card-txt"><span class="card-n" aria-hidden="true">01</span><span class="card-cat">Daten &amp; KI · Python</span><h3>Retail Data Pipeline</h3><p>Rohdaten aus Shop, Kasse und Lager werden geprüft und zu Zahlen, denen man vertraut.</p><ul class="chips"><li>Python</li><li>DuckDB</li><li>dbt</li><li>Dagster</li></ul><a class="st-go" href="projekte/retail-data-pipeline.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
 <div class="card-scene" aria-hidden="true"><div class="scene sc-pipe">
 <div class="pp-src"><span>Shop</span><span>Kasse</span><span>Lager</span></div>
 <div class="pp-flow"><i style="--d:0s;top:10px"></i><i style="--d:.45s;top:70px"></i><i style="--d:.9s;top:130px"></i><i style="--d:.25s;top:40px"></i><i style="--d:.7s;top:110px"></i></div>
@@ -205,7 +212,7 @@
 <div class="wrap shape-row" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="assets/main.js?v=5"></script>
-<script src="assets/scenes.js?v=1"></script>
+<script src="assets/scenes.js?v=2"></script>
 <script src="assets/avatar.js?v=7"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module" src="assets/bot.js?v=4"></script>

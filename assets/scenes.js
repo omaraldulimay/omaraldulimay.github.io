@@ -19,7 +19,21 @@
   }
 
   // Kartenstapel: wird eine Karte überdeckt, tritt sie leicht nach hinten.
-  var cards = [].slice.call(doc.querySelectorAll('.stack .card'));
+  var all = [].slice.call(doc.querySelectorAll('.stack .card')), cards = all.slice();
+
+  // Filter nach Kategorie: ausgeblendete Karten raus, der Stapel schließt sich ohne Lücke.
+  var bar = doc.querySelector('.pj-filter');
+  if (bar) bar.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-f]'); if (!b) return;
+    var f = b.dataset.f;
+    [].forEach.call(bar.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    cards = all.filter(function (c) { var on = f === 'alle' || c.dataset.cat === f; c.hidden = !on; return on; });
+    cards.forEach(function (c, i) { c.style.setProperty('--i', i); });
+    var cnt = doc.querySelector('.pj-count'); if (cnt) cnt.textContent = String(cards.length).padStart(2, '0');
+    var top = doc.getElementById('projekte').getBoundingClientRect().top + scrollY - 70;
+    if (scrollY > top) scrollTo({ top: top, behavior: 'smooth' });
+    if (typeof update === 'function') update();
+  });
   if (!cards.length || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var mq = matchMedia('(min-width:900px)'), ticking = false;
   function update() {

@@ -374,3 +374,14 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 @media (prefers-reduced-motion:reduce){.card-n,.ph-n{animation:none}}
 .proof{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:400px){.proof b{font-size:1.65rem}.proof li+li{padding-left:10px}}
+
+/* ---------- Kategorien ---------- */
+.pj-filter{display:flex;flex-wrap:wrap;gap:8px;margin:-36px 0 clamp(28px,4vw,48px)}
+.pj-filter button{min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font:500 14px var(--sans);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.pj-filter button:hover{color:var(--text);border-color:var(--muted)}
+.pj-filter button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.pj-filter small{font-size:12px;opacity:.6;margin-left:4px}
+.card[hidden]{display:none}
+.card-cat{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);margin-top:-6px}
+.ph-cat{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);margin-bottom:14px}
+@media(max-width:899px){.pj-filter{margin-top:-16px}}
