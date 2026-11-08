@@ -1,5 +1,7 @@
 // Großer Avatar im Hero: folgt der Maus, schaut sich ohne Maus selbst um, redet per Sprechblase.
 (function () {
+  var EN = document.documentElement.lang === 'en';
+  function T(de, en) { return EN ? en : de; }
   var el = document.querySelector('.avatar');
   if (!el) return;
   var img = el.querySelector('img');   // Grundgesicht, die Mimik liegt als .fx darüber
@@ -47,8 +49,8 @@
 
   // Sprechblase und Klick: kleine Reaktionen, damit der Kopf lebendig wirkt.
   var bubble = el.querySelector('.av-bubble'), lines = [
-    'Hi, ich bin Omar 👋', 'Scroll runter, alles hier kannst du ausprobieren.', 'Klick ruhig doppelt auf Bezahlen. Passiert nix.',
-    'Lieblingsprojekt? Ledger Lane.', 'Kaffee an der Alster? Schreib mir.'
+    T('Hi, ich bin Omar 👋', "Hi, I'm Omar 👋"), T('Scroll runter, alles hier kannst du ausprobieren.', 'Scroll down, you can try everything here.'), T('Klick ruhig doppelt auf Bezahlen. Passiert nix.', 'Go ahead, double click Pay. Nothing happens.'),
+    T('Lieblingsprojekt? Ledger Lane.', 'Favourite project? Ledger Lane.'), T('Kaffee an der Alster? Schreib mir.', 'Coffee by the Alster? Write me.')
   ], n = 0, hideT;
   function say(t, ms) {
     if (!bubble) return;
@@ -61,6 +63,6 @@
     el.classList.remove('nod'); void el.offsetWidth; el.classList.add('nod');
   });
   [].forEach.call(document.querySelectorAll('.btn-k, .icons a'), function (a) {
-    a.addEventListener('mouseenter', function () { say('Ja, schreib mir! 🙂', 2000); });
+    a.addEventListener('mouseenter', function () { say(T('Ja, schreib mir! 🙂', 'Yes, write me! 🙂'), 2000); });
   });
 })();

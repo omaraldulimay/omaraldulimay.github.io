@@ -412,3 +412,9 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .hero h1{z-index:3}
 .hair{z-index:3}
 @media(max-width:759px){.avatar{width:58vw;margin:0 auto -6vw}}
+
+/* ---------- Sprachumschalter DE · EN ---------- */
+.lang{font:500 .82rem/1 var(--sans);color:var(--muted);text-decoration:none;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:.6rem .85rem;transition:border-color .2s,color .2s}
+.lang:hover{border-color:var(--muted);color:var(--text)}
+.lang [aria-current]{color:var(--text)}
+@media(max-width:759px){.js .lang{margin-top:18px;align-self:flex-start;font-size:1rem;padding:.8rem 1.1rem}}

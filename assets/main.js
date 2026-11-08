@@ -1,5 +1,5 @@
 (function () {
-  var doc = document;
+  var doc = document, EN = doc.documentElement.lang === 'en';
 
   // ---- Projekte dropdown (desktop) and menu sheet (phones) ----
   var dd = doc.querySelector('.dd');
@@ -100,8 +100,8 @@
         if (!run) return;
         var ok = run.conclusion === 'success';
         var days = Math.round((new Date(run.updated_at) - Date.now()) / 864e5);
-        var when = new Intl.RelativeTimeFormat('de', { numeric: 'auto' }).format(days, 'day');
-        el.innerHTML = '<i class="' + (ok ? 'ok' : 'bad') + '"></i>' + (ok ? 'Tests grün' : 'Tests rot') + ', zuletzt geprüft ' + when;
+        var when = new Intl.RelativeTimeFormat(EN ? 'en' : 'de', { numeric: 'auto' }).format(days, 'day');
+        el.innerHTML = '<i class="' + (ok ? 'ok' : 'bad') + '"></i>' + (ok ? (EN ? 'Tests passing' : 'Tests grün') : (EN ? 'Tests failing' : 'Tests rot')) + (EN ? ', last checked ' : ', zuletzt geprüft ') + when;
         el.hidden = false;
       })
       .catch(function () {});

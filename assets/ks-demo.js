@@ -1,21 +1,25 @@
 // Firmenwissensuche: echte, vorberechnete Antworten abspielen, mit Rechtefilter je Person.
 (function () {
+  var EN = document.documentElement.lang === 'en', LOC = EN ? 'en-GB' : 'de-DE';
+  function T(de, en) { return EN ? en : de; }
+  var DEPT = { Personal: 'HR', Vertrieb: 'Sales', Logistik: 'Logistics', IT: 'IT' };
+  function dept(u) { return u.dept.map(function (d) { return EN ? (DEPT[d] || d) : d; }).join(', '); }
   var root = document.getElementById('ksd');
   if (!root || !window.KS_DATA) return;
   var $ = function (id) { return document.getElementById(id); };
   var data = window.KS_DATA, user = data[0], gen = 0;
-  var TAG = { not_found: 'Fangfrage: steht nirgends', permission: 'Fangfrage: fremde Abteilung', multi: 'zweiteilig' };
+  var TAG = { not_found: T('Fangfrage: steht nirgends', 'Trick question: not in any document'), permission: T('Fangfrage: fremde Abteilung', 'Trick question: other department'), multi: T('zweiteilig', 'two part') };
 
   function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function renderUsers() {
     $('ksd-users').innerHTML = data.map(function (u, i) {
       return '<button type="button" class="lb' + (u === user ? ' pay' : '') + '" data-u="' + i + '" aria-pressed="' + (u === user) + '">' +
-        esc(u.name.split(' ')[0]) + ' <small>' + esc(u.dept.join(', ')) + '</small></button>';
+        esc(u.name.split(' ')[0]) + ' <small>' + esc(dept(u)) + '</small></button>';
     }).join('');
     $('ksd-qs').innerHTML = user.qs.map(function (q, i) {
       return '<button type="button" class="ks-chip" data-q="' + i + '">' + esc(q.q) + (TAG[q.k] ? '<em>' + TAG[q.k] + '</em>' : '') + '</button>';
     }).join('');
-    $('ksd-who').textContent = user.name + ' darf lesen: Allgemein, ' + user.dept.join(', ');
+    $('ksd-who').textContent = user.name + T(' darf lesen: Allgemein, ', ' may read: General, ') + dept(user);
   }
   function ask(q) {
     var g = ++gen, steps = $('ksd-steps'), ans = $('ksd-ans');
@@ -23,10 +27,10 @@
     $('ksd-q').textContent = q.q;
     ans.innerHTML = ''; $('ksd-cites').innerHTML = ''; $('ksd-meta').textContent = '';
     var list = [
-      ['Suche nach Bedeutung und Stichwort', q.n],
-      ['Lokal nachsortiert', 'beste Abschnitte zuerst'],
-      ['Rechtefilter in der Datenbank', 'nur Allgemein, ' + user.dept.join(', ')],
-      q.f ? [q.r === 'agentic' ? 'Claude als Agent, Frage braucht mehrere Schritte' : 'Claude antwortet mit Quellen', ''] : ['Nichts Passendes, das diese Person lesen darf', 'feste Antwort statt einer erfundenen']
+      [T('Suche nach Bedeutung und Stichwort', 'Search by meaning and keyword'), EN ? q.n.replace('Treffer', 'hits').replace('Zeilen', 'rows') : q.n],
+      [T('Lokal nachsortiert', 'Reranked locally'), T('beste Abschnitte zuerst', 'best passages first')],
+      [T('Rechtefilter in der Datenbank', 'Permission filter in the database'), T('nur Allgemein, ', 'only General, ') + dept(user)],
+      q.f ? [q.r === 'agentic' ? T('Claude als Agent, Frage braucht mehrere Schritte', 'Claude as an agent, the question needs several steps') : T('Claude antwortet mit Quellen', 'Claude answers with sources'), ''] : [T('Nichts Passendes, das diese Person lesen darf', 'Nothing relevant this person may read'), T('feste Antwort statt einer erfundenen', 'fixed answer instead of a made up one')]
     ];
     steps.innerHTML = list.map(function (s) { return '<li><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('');
     var lis = steps.children, i = 0;
@@ -47,8 +51,8 @@
       $('ksd-cites').innerHTML = q.c.map(function (c, i) {
         return '<span><sup>' + (i + 1) + '</sup>' + esc(c[0]) + ' · ' + esc(c[1]) + '</span>';
       }).join('');
-      var cent = (q.usd * 100).toLocaleString('de-DE', { maximumFractionDigits: 3 });
-      $('ksd-meta').textContent = (q.ms / 1000).toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' s · ' + cent + ' Cent';
+      var cent = (q.usd * 100).toLocaleString(LOC, { maximumFractionDigits: 3 });
+      $('ksd-meta').textContent = (q.ms / 1000).toLocaleString(LOC, { maximumFractionDigits: 1 }) + ' s · ' + cent + T(' Cent', ' cents');
     })();
   }
   root.addEventListener('click', function (e) {

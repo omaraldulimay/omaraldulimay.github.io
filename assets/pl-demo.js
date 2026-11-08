@@ -1,14 +1,16 @@
 // Retail Data Pipeline: den Lauf um 06:00 abspielen, mit den echten Zahlen aus dem Warehouse.
 (function () {
+  var EN = document.documentElement.lang === 'en', LOC = EN ? 'en-GB' : 'de-DE';
+  function T(de, en) { return EN ? en : de; }
   var root = document.getElementById('pld');
   if (!root) return;
   var $ = function (id) { return document.getElementById(id); };
-  var SOURCES = [['Shop API', 'Bestellungen', 25995], ['Lager API', 'Bestandsmeldungen', 12775], ['Logistik CSV', 'Versandereignisse', 53193]];
-  var RULES = [['Doppelte Zeile', 'Logistik', 379], ['Menge kleiner oder gleich 0', 'Shop', 64], ['Unbekannte Bestellung', 'Logistik', 60],
-               ['Unbekannter Artikel', 'Shop', 43], ['Negativer Preis', 'Shop', 28], ['Negativer Bestand', 'Lager', 4]];
+  var SOURCES = [['Shop API', T('Bestellungen', 'orders'), 25995], [T('Lager API', 'Warehouse API'), T('Bestandsmeldungen', 'stock snapshots'), 12775], [T('Logistik CSV', 'Logistics CSV'), T('Versandereignisse', 'shipping events'), 53193]];
+  var RULES = [[T('Doppelte Zeile', 'Duplicate row'), T('Logistik', 'Logistics'), 379], [T('Menge kleiner oder gleich 0', 'Quantity 0 or less'), 'Shop', 64], [T('Unbekannte Bestellung', 'Unknown order'), T('Logistik', 'Logistics'), 60],
+               [T('Unbekannter Artikel', 'Unknown product'), 'Shop', 43], [T('Negativer Preis', 'Negative price'), 'Shop', 28], [T('Negativer Bestand', 'Negative stock'), T('Lager', 'Warehouse'), 4]];
   var MODELS = ['stg_orders', 'stg_order_lines', 'fct_orders', 'agg_daily_sales', 'rec_reorder', 'alert_sales_anomalies'];
   var gen = 0, flaky = false;
-  var fmt = function (n) { return Math.round(n).toLocaleString('de-DE'); };
+  var fmt = function (n) { return Math.round(n).toLocaleString(LOC); };
 
   function wait(ms, g) { return new Promise(function (r) { setTimeout(function () { if (g === gen) r(); }, ms); }); }
   function count(el, to, ms, g) {
@@ -50,8 +52,8 @@
     await Promise.all(SOURCES.map(function (s, i) { return count($('pld-s' + i), s[2], 1600 + i * 300, g); }));
     if (g !== gen) return;
     $('pld-retry').textContent = flaky
-      ? 'API wackelte: 20 % der Anfragen scheiterten und wurden mit Backoff wiederholt. Trotzdem alles angekommen.'
-      : 'Alles inkrementell geladen, sicher wiederholbar.';
+      ? T('API wackelte: 20 % der Anfragen scheiterten und wurden mit Backoff wiederholt. Trotzdem alles angekommen.', 'API was shaky: 20 % of requests failed and were retried with backoff. Everything still arrived.')
+      : T('Alles inkrementell geladen, sicher wiederholbar.', 'Everything loaded incrementally, safe to repeat.');
     stage(0, 'done'); stage(1, 'run');
     await wait(300, g);
     for (var i = 0; i < RULES.length; i++) {
@@ -69,7 +71,7 @@
     $('pld-out').classList.add('show');
     stage(3, 'done');
     root.querySelector('[data-act=run]').disabled = false;
-    root.querySelector('[data-act=run]').textContent = 'Nochmal laufen lassen';
+    root.querySelector('[data-act=run]').textContent = T('Nochmal laufen lassen', 'Run it again');
   }
   root.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-act]');
@@ -78,7 +80,7 @@
     if (b.dataset.act === 'flaky') {
       flaky = !flaky;
       b.setAttribute('aria-pressed', flaky ? 'true' : 'false');
-      b.textContent = flaky ? 'API wackelt: 20 % Fehler ✕' : 'API wackeln lassen';
+      b.textContent = flaky ? T('API wackelt: 20 % Fehler ✕', 'API shaky: 20 % errors ✕') : T('API wackeln lassen', 'Make the API shaky');
     }
   });
   reset();
