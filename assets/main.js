@@ -11,7 +11,17 @@
   var mqPhone = window.matchMedia('(max-width:759px)');
   var pinned = false, timer = null;
 
-  function items() { return Array.prototype.slice.call(menu.querySelectorAll('a')); }
+  function items() { return Array.prototype.slice.call(menu.querySelectorAll('.dd-pane.on a')); }
+  // Zweistufig: Kategorie wählen (Maus oder Tastatur), rechts erscheinen ihre Projekte.
+  function pick(c) {
+    Array.prototype.forEach.call(menu.querySelectorAll('.dd-cat'), function (b) { var on = b.dataset.c === c; b.classList.toggle('on', on); b.setAttribute('aria-expanded', on ? 'true' : 'false'); });
+    Array.prototype.forEach.call(menu.querySelectorAll('.dd-pane'), function (p) { p.classList.toggle('on', p.dataset.c === c); });
+  }
+  if (menu) Array.prototype.forEach.call(menu.querySelectorAll('.dd-cat'), function (b) {
+    b.addEventListener('mouseenter', function () { pick(b.dataset.c); });
+    b.addEventListener('focus', function () { pick(b.dataset.c); });
+    b.addEventListener('click', function () { pick(b.dataset.c); var a = menu.querySelector('.dd-pane.on a'); if (a) a.focus(); });
+  });
   function setOpen(o) {
     dd.classList.toggle('open', o);
     btn.setAttribute('aria-expanded', o ? 'true' : 'false');

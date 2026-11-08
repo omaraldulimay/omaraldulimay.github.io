@@ -385,7 +385,26 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .card-cat{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);margin-top:-6px}
 .ph-cat{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);margin-bottom:14px}
 @media(max-width:899px){.pj-filter{margin-top:-16px}}
-.dd-group{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);padding:12px 10px 4px}
-.dd-group:first-child{padding-top:6px}
-.dd-menu{max-height:calc(100vh - 90px);overflow:auto}
-@media(max-width:759px){.js .dd-group{padding:18px 0 2px}.js .dd-menu{max-height:none;overflow:visible}}
+
+/* ---------- Header als schwebende Pille, Projektmenü zweistufig ---------- */
+@media(min-width:760px){
+  .top{top:14px;width:min(calc(100% - 40px),960px);margin:14px auto 0;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg2) 78%,transparent);box-shadow:0 18px 40px -24px rgba(0,0,0,.9)}
+  .top-in{height:58px;padding-left:26px;padding-right:8px}
+  .top .btn-k{padding:.75rem 1.25rem}
+  .dd-menu{width:620px;right:-140px;top:calc(100% + 18px);padding:10px;grid-template-columns:200px 1fr;gap:8px;border-radius:20px}
+  .dd.open .dd-menu{display:grid}
+  .dd-cats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line);padding-right:8px}
+  .dd-cat{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;padding:12px 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:500 .95rem var(--sans);cursor:pointer;transition:background .15s,color .15s}
+  .dd-cat small{font-size:.75rem;opacity:.6}
+  .dd-cat:hover,.dd-cat.on{background:var(--bg2);color:var(--text)}
+  .dd-cat.on::after{content:"›";color:var(--c-gold);margin-left:auto;padding-left:6px}
+  .dd-cat.on small{display:none}
+  .dd-pane{list-style:none;margin:0;padding:0;display:none}
+  .dd-pane.on{display:block;animation:ddin .18s ease-out}
+  .dd-pane::before{content:attr(data-label);display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);padding:10px 10px 6px}
+}
+@media(max-width:759px){
+  .js .dd-cats{display:none}
+  .js .dd-pane{list-style:none;margin:0;padding:0}
+  .js .dd-pane::before{content:attr(data-label);display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--c-gold);padding:18px 0 2px}
+}
