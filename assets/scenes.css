@@ -40,7 +40,7 @@
 .sc-rush{background:#0F1626;color:#E6ECF5;padding:44px 48px;display:flex;flex-direction:column;gap:18px}
 .rh-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;opacity:.75}
 .rh-chart{flex:1;width:100%;min-height:0}
-.rh-chart path{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke}
+.rh-chart path{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
 .scene.on .rh-chart .traffic{animation:sc-draw 2.2s .3s ease-out forwards}
 .scene.on .rh-chart .err{animation:sc-draw 1.6s 1.4s ease-out forwards}
 .rh-chart .grid{stroke:#1F2A40;stroke-width:1;stroke-dasharray:none;stroke-dashoffset:0}
