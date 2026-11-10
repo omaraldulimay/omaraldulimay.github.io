@@ -421,3 +421,5 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 .lang .flag[aria-current]{opacity:1}
 .lang:hover .flag:not([aria-current]){opacity:1;transform:scale(1.08)}
 @media(max-width:759px){.js .lang{margin-top:18px;align-self:flex-start;padding:.75rem 1rem}.js .lang .flag svg{height:18px}}
+.card-txt h3.h3-long{font-size:clamp(1.9rem,3.3vw,3rem);overflow-wrap:normal;hyphens:none}
+.card-txt:has(.h3-long){padding-right:clamp(0px,1.5vw,20px)}
