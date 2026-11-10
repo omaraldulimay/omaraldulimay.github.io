@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css?v=25">
-<link rel="stylesheet" href="assets/scenes.css?v=19">
+<link rel="stylesheet" href="assets/scenes.css?v=20">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -66,19 +66,7 @@
 
 <article class="card" data-cat="backend" style="--i:0"><div class="card-in">
 <div class="card-txt"><span class="card-n" aria-hidden="true">07</span><span class="card-cat">Architektur · Java</span><h3>Harbor Desk</h3><p>Viele Firmen, eine Plattform. Keine sieht die Daten der anderen.</p><ul class="chips"><li>Java 21</li><li>Spring Boot</li><li>PostgreSQL RLS</li><li>Terraform</li></ul><a class="st-go" href="projekte/harbor-desk.html">Projekt ansehen <span aria-hidden="true">→</span></a></div>
-<div class="card-scene" aria-hidden="true"><div class="scene sc-harbor">
-<div class="hd-co"><span class="hd-chip sa me" style="--c:#7AA2FF;--d:0.2s"><i></i>Norddock Freight</span><span class="hd-chip sa" style="--c:#5FD3A0;--d:0.35s"><i></i>Kestrel Mutual</span><span class="hd-chip sa" style="--c:#FF9E7A;--d:0.5s"><i></i>Bramble Goods</span></div>
-<div class="hd-db"><small>Gemeinsame Datenbank</small>
-<div class="hd-r sa" style="--c:#7AA2FF;--d:0.60s"><b>NF-1041</b><span>Container 4471 hängt im Zoll</span></div>
-<div class="hd-r sa o hit" style="--c:#5FD3A0;--d:0.85s"><b>KM-2207</b><span>Schadenmeldung Wasserschaden</span></div>
-<div class="hd-r sa o" style="--c:#FF9E7A;--d:1.10s"><b>BG-3310</b><span>Retoure ohne Etikett</span></div>
-<div class="hd-r sa" style="--c:#7AA2FF;--d:1.35s"><b>NF-1042</b><span>Lieferfenster verschieben</span></div>
-<div class="hd-r sa o" style="--c:#5FD3A0;--d:1.60s"><b>KM-2208</b><span>Police: Adresse ändern</span></div>
-<div class="hd-r sa o" style="--c:#FF9E7A;--d:1.85s"><b>BG-3311</b><span>Gutscheincode funktioniert nicht</span></div>
-</div>
-<div class="hd-foot"><span class="sbadge r sa" style="--d:4s"><i></i>Zugriff auf fremdes Ticket: 404 nicht gefunden</span><span class="sbadge g sa pop" style="--d:5s"><i></i>0 Lecks</span></div>
-<span class="tag">10.000 Zugriffe auf fremde Daten · 0 Lecks</span>
-</div></div>
+<div class="card-scene" aria-hidden="true"><div class="hq hq-card hq-auto" data-labels="Anmeldung|Token prüfen|Datenbank filtert|Angriff abgewehrt" role="img" aria-label="Weg einer Anfrage: Anmeldung, Token prüfen, Datenbank filtert, Angriff abgewehrt"><div class="hq-in"><div class="hq-main"><div class="hq-top"><div class="hq-node hq-user"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/></svg><b>Norddock</b></div><div class="hq-lane"><div class="hq-token"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3"/></svg>Token</span><em>Firma: Norddock</em></div></div><div class="hq-node hq-srv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><b>Server</b><span class="hq-pk ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14M6 13l6 6 6-6"/></svg>Anfrage</span><span class="hq-pk bad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>KM-2207</span></div><div class="hq-stat"><span class="hq-chk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Signatur</span><span class="hq-shield"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Firma = Norddock</span></div></div><div class="hq-bar"><span>Filter: Norddock</span></div><div class="hq-db"><small><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Gemeinsame Datenbank</small><div class="hq-r" style="--c:#7AA2FF"><b>NF-1041</b><span>Container 4471 hängt im Zoll</span></div><div class="hq-r o hit" style="--c:#5FD3A0"><b>KM-2207</b><span>Schadenmeldung Wasserschaden</span></div><div class="hq-r o" style="--c:#FF9E7A"><b>BG-3310</b><span>Retoure ohne Etikett</span></div><div class="hq-r" style="--c:#7AA2FF"><b>NF-1042</b><span>Lieferfenster verschieben</span></div><div class="hq-r o" style="--c:#5FD3A0"><b>KM-2208</b><span>Police: Adresse ändern</span></div><div class="hq-r o" style="--c:#FF9E7A"><b>BG-3311</b><span>Gutscheincode funktioniert nicht</span></div></div></div><div class="hq-end"><span class="sbadge hq-b404"><i></i>404 nicht gefunden</span><span class="sbadge hq-b0"><i></i>0 Lecks</span></div><div class="hq-cap" aria-hidden="true"><span class="hq-dots"><i></i><i></i><i></i><i></i></span><b>Angriff abgewehrt</b></div></div></div></div>
 </div></article>
 
 <article class="card" data-cat="backend" style="--i:1"><div class="card-in">
