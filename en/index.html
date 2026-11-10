@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=25">
-<link rel="stylesheet" href="../assets/scenes.css?v=20">
+<link rel="stylesheet" href="../assets/scenes.css?v=21">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -71,35 +71,12 @@
 
 <article class="card" data-cat="backend" style="--i:1"><div class="card-in">
 <div class="card-txt"><span class="card-n" aria-hidden="true">06</span><span class="card-cat">Backend · Java</span><h3>Ledger Lane</h3><p>Every cent is accounted for, even if the server crashes mid payment.</p><ul class="chips"><li>Java 21</li><li>Spring Boot</li><li>Kafka</li><li>PostgreSQL</li></ul><a class="st-go" href="projekte/ledger-lane.html">View project <span aria-hidden="true">→</span></a></div>
-<div class="card-scene" aria-hidden="true"><div class="scene sc-ledger">
-<div class="lg">
-<div class="lg-row sa" style="--d:.3s"><span>Bank account</span><b class="p">+€50.00</b></div>
-<div class="lg-row sa" style="--d:.7s"><span>Brand receives</span><b class="m">−€42.50</b></div>
-<div class="lg-row sa" style="--d:1.1s"><span>Platform fee</span><b class="m">−€7.50</b></div>
-<div class="lg-sum sa pop" style="--d:1.6s"><span>Sum of all entries</span><b>€0.00</b></div>
-<div class="sbadge sa" style="--d:3.4s"><i></i>Restart after kill -9: entry there exactly once</div>
-</div>
-<div class="lg-kill">kill -9</div>
-<span class="tag">100,000 payments · 0 cent difference</span>
-</div></div>
+<div class="card-scene" aria-hidden="true"><div class="fx ll fx-card fx-auto" data-labels="Customer pays|Accept payment|Split the money|Balance checked" role="img" aria-label="How a payment flows: customer pays, accept payment, split the money, balance checked"><div class="fx-in"><div class="ll-top"><div class="fx-node ll-cu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/></svg><b>Customer</b></div><div class="ll-lane"><div class="ll-coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5a3.5 3.5 0 1 0 0 5M8.5 11h5M8.5 13h5"/></svg>€50.00</div></div><div class="fx-node ll-sv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><b>Server</b></div><div class="ll-stat"><span class="ll-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Accepted</span><span class="ll-key"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3"/></svg>Unique key</span></div></div><div class="ll-rows"><div class="ll-r p"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"/></svg><span>Bank account</span><b>+€50.00</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l2-5h12l2 5M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></svg><span>Brand receives</span><b>−€42.50</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/></svg><span>Platform fee</span><b>−€7.50</b></div><div class="ll-sum"><span>Sum of all entries</span><b style='--pre:"€";--end:".00"'></b></div></div><div class="fx-end"><span class="sbadge ll-b"><i></i>Every cent accounted for</span></div><div class="fx-cap" aria-hidden="true"><span class="fx-dots"><i></i><i></i><i></i><i></i></span><b>Balance checked</b></div></div></div></div>
 </div></article>
 
 <article class="card" data-cat="cloud" style="--i:2"><div class="card-in">
 <div class="card-txt"><span class="card-n" aria-hidden="true">05</span><span class="card-cat">Cloud &amp; Ops · Kubernetes</span><h3>Rush Hour</h3><p>Black Friday night: errors climb, the system rolls itself back.</p><ul class="chips"><li>Kubernetes</li><li>Prometheus</li><li>Grafana</li><li>FastAPI</li></ul><a class="st-go" href="projekte/rush-hour.html">View project <span aria-hidden="true">→</span></a></div>
-<div class="card-scene" aria-hidden="true"><div class="scene sc-rush">
-<div class="rh-top"><span>Orders per second</span><span>Black Friday · 23:58</span></div>
-<svg class="rh-chart" viewBox="0 0 600 300" preserveAspectRatio="none">
-<path class="grid" d="M0 75H600M0 150H600M0 225H600"/>
-<path class="traffic" pathLength="1" stroke="#5FD3A0" d="M0 260 C80 255 120 240 170 200 S260 90 320 70 S420 60 470 66 S560 70 600 64"/>
-<path class="err" pathLength="1" stroke="#FF7A6B" d="M220 285 C260 284 290 280 330 200 S380 110 400 120 C415 130 425 270 450 282 S560 286 600 286"/>
-<line class="rh-roll" x1="410" y1="20" x2="410" y2="295"/>
-</svg>
-<div class="rh-stats">
-<span class="sbadge r sa" style="--d:2.2s"><i></i>Error rate rising</span>
-<span class="sbadge sa" style="--d:2.7s">Rollback after 45 s</span>
-<span class="sbadge g sa" style="--d:3.2s"><i></i>0 items oversold</span>
-</div>
-</div></div>
+<div class="card-scene" aria-hidden="true"><div class="fx rh fx-card fx-auto" data-labels="Quiet evening|The rush|Scaling out|All stable" role="img" aria-label="How the shop handles the rush: quiet evening, the rush, scaling out, all stable"><div class="fx-in"><div class="rh-hd"><span>Orders per second</span><span class="rh-clk"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><span class="fx-sw"><i>23:50</i><i>23:58</i><i>00:01</i><i>00:05</i></span></span></div><svg class="rh-chart" viewBox="0 0 600 190" aria-hidden="true" style="stroke-width:1"><path class="grid" d="M0 47H600M0 95H600M0 142H600"/><path class="c" pathLength="1" d="M0 168 C70 166 120 164 170 160 C220 156 230 40 290 30 C340 24 380 40 430 32 S540 28 600 30"/></svg><div class="rh-k"><b><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M18.4 5.6l-4.2 4.2M9.8 14.2l-4.2 4.2"/></svg>Kubernetes</b><span class="fx-sw rh-n"><i>2 pods</i><i>2 pods</i><i>2 to 6 pods</i><i>6 pods</i></span></div><div class="rh-pods"><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div><div class="rh-pod"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><span class="rh-lv"><i></i></span></div></div><div class="fx-end"><span class="rh-rt">Response time <span class="fx-sw"><i style="--c:#5FD3A0">80 ms</i><i style="--c:#FF7A6B">1.9 s</i><i style="--c:#F0BF5A">420 ms</i><i style="--c:#5FD3A0">90 ms</i></span></span><span class="sbadge rh-b0"><i></i>0 items oversold</span></div><div class="fx-cap" aria-hidden="true"><span class="fx-dots"><i></i><i></i><i></i><i></i></span><b>All stable</b></div></div></div></div>
 </div></article>
 
 <article class="card" data-cat="daten" style="--i:3"><div class="card-in">
@@ -220,7 +197,7 @@
 <div class="wrap shape-row" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=20"></script>
-<script src="../assets/scenes.js?v=20"></script>
+<script src="../assets/scenes.js?v=21"></script>
 <script src="../assets/avatar.js?v=20"></script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module" src="../assets/bot.js?v=4"></script>

@@ -23,7 +23,7 @@
   if (!calm && 'IntersectionObserver' in window) {
     // Projektseite: Kapitel wechselt mit dem Scrollen, auch rückwärts.
     [].forEach.call(doc.querySelectorAll('.hq-flow'), function (fl) {
-      var sc = fl.querySelector('.hq'), steps = fl.querySelectorAll('.hq-step');
+      var sc = fl.querySelector('.hq,.fx'), steps = fl.querySelectorAll('.hq-step');
       function set(n) {
         sc.setAttribute('data-step', n);
         [].forEach.call(steps, function (s) { s.classList.toggle('on', s.getAttribute('data-s') === String(n)); });
@@ -35,13 +35,13 @@
       [].forEach.call(steps, function (s) { so.observe(s); });
     });
     // Startseite: Kapitel laufen von selbst, solange die Karte im Bild ist.
-    [].forEach.call(doc.querySelectorAll('.hq-auto'), function (sc) {
-      var names = sc.getAttribute('data-labels').split('|'), dots = sc.querySelectorAll('.hq-dots i'), cap = sc.querySelector('.hq-cap b'), n = 0, t = 0;
+    [].forEach.call(doc.querySelectorAll('.hq-auto,.fx-auto'), function (sc) {
+      var names = sc.getAttribute('data-labels').split('|'), dots = sc.querySelectorAll('.hq-dots i,.fx-dots i'), cap = sc.querySelector('.hq-cap b,.fx-cap b'), n = 0, t = 0;
       function show(i) {
         sc.setAttribute('data-step', i); cap.textContent = names[i - 1];
         [].forEach.call(dots, function (d, k) { d.classList.toggle('on', k === i - 1); });
       }
-      function tick() { n = n % 4 + 1; show(n); t = setTimeout(tick, n === 4 ? 4200 : 2500); }
+      function tick() { n = n % names.length + 1; show(n); t = setTimeout(tick, n === names.length ? 4200 : 2500); }
       show(1);
       new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { if (!t) { n = 0; tick(); } }
