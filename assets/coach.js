@@ -30,9 +30,9 @@
       { sel: '.cy-opts.notes button', hit: '[data-n]', t: ['2. Lieblingsnote wählen', '2. Pick a note'] },
       { sel: '[data-go]', t: ['3. Ergebnis zeigen', '3. Show result'] }],
     ksd: [
-      { sel: '#ksd-users button:not([aria-pressed=true])', hit: '[data-u]', t: ['1. Person wählen', '1. Pick a person'] },
-      { sel: '.ks-chip:not(.on)', hit: '[data-q]', t: ['2. Frage anklicken', '2. Click a question'] },
-      { sel: '.ks-chip:has(em):not(.on)', hit: '[data-q]', t: ['3. Frage mit Etikett', '3. Try a labelled one'] }],
+      { sel: '.ks-chip:not(.on):not(:has(em))', hit: '[data-q]', t: ['1. Weitere Frage anklicken', '1. Click another question'] },
+      { sel: '.ks-chip:has(em):not(.on)', hit: '[data-q]', t: ['2. Schwierige Frage testen', '2. Try a tricky one'] },
+      { sel: '#ksd-users button:not([aria-pressed=true])', hit: '[data-u]', t: ['3. Andere Person wählen', '3. Pick another person'] }],
     pld: [
       { sel: '[data-act=flaky]', t: ['1. Verbindung stören', '1. Disturb connection'] },
       { sel: '[data-act=run]', t: ['2. Nochmal starten', '2. Run again'] }]
