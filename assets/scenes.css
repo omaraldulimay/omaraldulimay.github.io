@@ -701,7 +701,7 @@
 .ll[data-step="2"] .ll-b,.ll[data-step="3"] .ll-b{opacity:0}
 .ll[data-step="3"] .ll-r{animation:fx-in .6s backwards}
 .ll[data-step="3"] .ll-r:nth-child(1){animation-delay:.2s}.ll[data-step="3"] .ll-r:nth-child(2){animation-delay:.8s}.ll[data-step="3"] .ll-r:nth-child(3){animation-delay:1.4s}
-.ll[data-step="4"] .ll-sum b{animation:ll-count 1.4s .3s var(--ease) backwards}
+.ll[data-step="4"] .ll-sum b{animation:fx-pop .6s .3s backwards}
 .ll[data-step="4"] .ll-b{animation:fx-pop .5s 1.8s backwards}
 @keyframes ll-count{from{--n:50}to{--n:0}}
 
