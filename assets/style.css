@@ -165,7 +165,7 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 
 /* ---------- project pages ---------- */
 .ph{padding-top:clamp(24px,4vw,56px)}
-.back{display:inline-flex;gap:.5rem;align-items:center;font-size:.85rem;color:var(--muted);text-decoration:none;margin-bottom:clamp(28px,5vw,64px)}
+.back{display:flex;width:fit-content;gap:.5rem;align-items:center;font-size:.85rem;color:var(--muted);text-decoration:none;margin-bottom:clamp(20px,3.4vw,36px)}
 .back:hover{color:var(--text)}
 .ph-top{display:flex;align-items:flex-end;gap:clamp(16px,3vw,40px);flex-wrap:wrap}
 .ph-n{font-size:clamp(4rem,12vw,10rem);line-height:.8;color:transparent;-webkit-text-stroke:1px var(--muted)}

@@ -20,6 +20,57 @@
 
   // Weg einer Anfrage: ohne JS oder bei reduzierter Bewegung bleibt der Endzustand stehen.
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Label Lab Hero: Vorher/Nachher Regler. Fährt einmal langsam von Vorher zu Nachher, danach gehört er dem Besucher.
+  [].forEach.call(doc.querySelectorAll('.ba'), function (ba) {
+    var h = ba.querySelector('.ba-h'), card = ba.querySelector('.ba-card'), pb = ba.querySelector('.ba-pb').textContent,
+      pa = ba.querySelector('.ba-pa').textContent, p = 50, raf = 0, drag = false;
+    function set(v) {
+      p = Math.max(0, Math.min(100, v));
+      ba.style.setProperty('--p', p.toFixed(2));
+      ba.setAttribute('data-side', p >= 50 ? 'before' : 'after');
+      h.setAttribute('aria-valuenow', Math.round(p));
+      h.setAttribute('aria-valuetext', pb + ' ' + Math.round(p) + ' %, ' + pa + ' ' + Math.round(100 - p) + ' %');
+    }
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+    function at(e) { var r = card.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); }
+    ba.addEventListener('pointerdown', function (e) {
+      if (e.button) return;
+      stop(); drag = true; try { ba.setPointerCapture(e.pointerId); } catch (x) {}
+      at(e); h.focus({ preventScroll: true });
+    });
+    ba.addEventListener('pointermove', function (e) { if (drag) at(e); });
+    ['pointerup', 'pointercancel'].forEach(function (n) { ba.addEventListener(n, function () { drag = false; }); });
+    h.addEventListener('keydown', function (e) {
+      var k = e.key, step = e.shiftKey ? 20 : 5;
+      if (k === 'ArrowLeft' || k === 'ArrowDown') set(p - step);
+      else if (k === 'ArrowRight' || k === 'ArrowUp') set(p + step);
+      else if (k === 'PageDown') set(p - 20);
+      else if (k === 'PageUp') set(p + 20);
+      else if (k === 'Home') set(0);
+      else if (k === 'End') set(100);
+      else return;
+      stop(); e.preventDefault();
+    });
+    set(50);
+    if (calm || !('IntersectionObserver' in window)) return;
+    set(94);
+    var from = 94, to = 8, ms = 6500;
+    new IntersectionObserver(function (es, o) {
+      if (!es[0].isIntersecting) return;
+      o.disconnect();
+      setTimeout(function () {
+        if (drag || p !== from) return;  // schon angefasst
+        var t0 = 0;
+        (function step(t) {
+          if (!t0) t0 = t;
+          var k = Math.min(1, (t - t0) / ms), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          set(from + (to - from) * e);
+          raf = k < 1 ? requestAnimationFrame(step) : 0;
+        })(performance.now());
+      }, 900);
+    }, { threshold: 0.4 }).observe(ba);
+  });
+
   if (!calm && 'IntersectionObserver' in window) {
     // Projektseite: Kapitel wechselt mit dem Scrollen, auch rückwärts.
     [].forEach.call(doc.querySelectorAll('.hq-flow'), function (fl) {
