@@ -303,10 +303,10 @@ function openDetail(r, keepScroll = false, flash = false) {
   }
   if (d.description.length) body.append(el("p", {class: "text"}, ...diffNodes(d.description, " ")));
 
-  body.append(el("h3", {text: t("llmRun")}), table([
+  if (!EMBED) body.append(el("h3", {text: t("llmRun")}), table([
     [t("model"), `${r.llm.model} (${r.llm.mode})`], [t("runtime"), r.llm.seconds + " s"],
     [t("tokens"), `${fmt(r.llm.tokens_in)} / ${fmt(r.llm.tokens_out)}`],
-    ...(EMBED ? [] : [[t("apiCost"), r.llm.mode === "claude" ? `${fmt((r.llm.cost_usd || 0) * 100, 3)} ${t("centsShort")}` : "0 €"]]), [t("cache"), r.llm.cached ? t("yes") : t("no")]]));
+    [t("apiCost"), r.llm.mode === "claude" ? `${fmt((r.llm.cost_usd || 0) * 100, 3)} ${t("centsShort")}` : "0 €"], [t("cache"), r.llm.cached ? t("yes") : t("no")]]));
   const n = r.product.nutriments || {};
   body.append(el("h3", {text: t("nutrients")}), table(Object.entries(NUTRIENTS).map(
     ([k, l]) => [t(l), n[k] === undefined ? t("missing") : String(n[k])])));

@@ -25,7 +25,7 @@
     var g = ++gen, steps = $('ksd-steps'), ans = $('ksd-ans');
     root.querySelectorAll('.ks-chip').forEach(function (c) { c.classList.toggle('on', c.textContent.indexOf(q.q) === 0); });
     $('ksd-q').textContent = q.q;
-    ans.innerHTML = ''; $('ksd-cites').innerHTML = ''; $('ksd-meta').textContent = '';
+    ans.innerHTML = ''; $('ksd-cites').innerHTML = '';
     var list = [
       [T('Suche nach Bedeutung und Stichwort', 'Search by meaning and keyword'), EN ? q.n.replace('Treffer', 'hits').replace('Zeilen', 'rows') : q.n],
       [T('Lokal nachsortiert', 'Reranked locally'), T('beste Abschnitte zuerst', 'best passages first')],
@@ -51,8 +51,6 @@
       $('ksd-cites').innerHTML = q.c.map(function (c, i) {
         return '<span><sup>' + (i + 1) + '</sup>' + esc(c[0]) + ' · ' + esc(c[1]) + '</span>';
       }).join('');
-      var cent = (q.usd * 100).toLocaleString(LOC, { maximumFractionDigits: 3 });
-      $('ksd-meta').textContent = (q.ms / 1000).toLocaleString(LOC, { maximumFractionDigits: 1 }) + ' s · ' + cent + T(' Cent', ' cents');
     })();
   }
   root.addEventListener('click', function (e) {

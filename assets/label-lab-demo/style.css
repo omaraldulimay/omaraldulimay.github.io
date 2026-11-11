@@ -96,3 +96,4 @@ body.embed .stat{padding:8px 10px}
 body.embed .stat .l{font-size:11px}
 body.embed .count,body.embed #count{margin:8px 0 0}
 }
+body.embed .row{grid-template-columns:14px 1fr}body.embed .row .mini,body.embed .row .time{display:none}

@@ -77,21 +77,22 @@
   });
 
 
-  // Kapitel-Szene (data-scene="rail"): normale Sektion ohne Scroll-Steuerung. Die Kapitel wechseln alle 5 s von selbst,
-  // solange sie im Bild ist. Klick und Pfeile springen direkt, Hover pausiert. Nach Kapitel 4 bleibt sie stehen.
+  // Kapitel-Szene (data-scene="rail"): normale Sektion ohne Scroll-Steuerung. Kapitel wechseln alle 3,5 s von selbst (das letzte bleibt 10 s),
+  // danach beginnt sie von vorn. Klick und Pfeile springen direkt, nach 10 s ohne Eingriff läuft es ab dem aktuellen Kapitel weiter.
+  // Verlässt die Szene das Bild, wird sie auf Kapitel 1 zurückgesetzt.
   [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
     var fx = rl.querySelector('.fx,.hq'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(rl.querySelectorAll('.lab-p')),
-      cap = rl.querySelector('.rl-cap'), n = items.length, cur = -1, MS = 5000, el = 0, last = 0, raf = 0, seen = false, hover = false, hold = 0, over = false;
+      cap = rl.querySelector('.rl-cap'), n = items.length, cur = -1, MS = 3500, END = 10000, IDLE = 10000, el = 0, last = 0, raf = 0, seen = false, hold = 0;
     var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div');
     rl.classList.add('live');
     items.forEach(function (it) { var p = doc.createElement('i'); p.className = 'rl-p'; p.setAttribute('aria-hidden', 'true'); p.appendChild(doc.createElement('i')); it.querySelector('.rl-b').appendChild(p); });
     bar.className = 'rl-bar';
-    bar.innerHTML = '<button type="button" class="rl-ar" data-d="-1" aria-label="' + (de ? 'Zurück' : 'Previous') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="rl-ct" aria-live="polite"></span><button type="button" class="rl-ar" data-d="1" aria-label="' + (de ? 'Weiter' : 'Next') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="rl-re" hidden>' + (de ? 'Nochmal ansehen' : 'Watch again') + '</button>';
+    bar.innerHTML = '<button type="button" class="rl-ar" data-d="-1" aria-label="' + (de ? 'Zurück' : 'Previous') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="rl-ct" aria-live="off"></span><button type="button" class="rl-ar" data-d="1" aria-label="' + (de ? 'Weiter' : 'Next') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
     rl.querySelector('.rl-pin').appendChild(bar);
-    var ct = bar.querySelector('.rl-ct'), prev = bar.querySelector('[data-d="-1"]'), next = bar.querySelector('[data-d="1"]'), re = bar.querySelector('.rl-re');
+    var ct = bar.querySelector('.rl-ct'), prev = bar.querySelector('[data-d="-1"]'), next = bar.querySelector('[data-d="1"]');
     function fill(f) { var p = items[cur].querySelector('.rl-p i'); if (p) p.style.transform = 'scaleX(' + f + ')'; }
     function show(k) {
-      cur = k; el = 0; over = false; re.hidden = true;
+      cur = k; el = 0;
       fx.setAttribute('data-step', k + 1);
       panels.forEach(function (p, i) { p.classList.toggle('past', i < k); });
       items.forEach(function (it, i) {
@@ -99,31 +100,37 @@
         it.querySelector('.rl-p i').style.transform = 'scaleX(0)';
         var b = it.querySelector('.rl-b'); if (i === k) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       });
-      ct.textContent = (k + 1) + ' / ' + n; prev.disabled = k === 0; next.disabled = k === n - 1;
+      ct.textContent = (k + 1) + ' / ' + n;
       cap.textContent = items[k].querySelector('.rl-h').textContent;
       var sm = doc.createElement('small'); sm.textContent = items[k].querySelector('.rl-d p').textContent; cap.appendChild(sm);
     }
-    function go(i) { show(Math.max(0, Math.min(n - 1, i))); }
-    function manual(i) { go(i); hold = performance.now() + 8000; }  // nach einem Klick kurz in Ruhe lassen
+    function go(i) { show((i + n) % n); }
+    function manual(i) { go(i); hold = performance.now() + IDLE; }
     function tick(t) {
       raf = 0;
       var dt = Math.min(100, t - last); last = t;
-      if (!calm && seen && !hover && !over && t > hold) {
-        el += dt; fill(Math.min(1, el / MS));
-        if (el >= MS) { if (cur < n - 1) go(cur + 1); else { over = true; re.hidden = false; } }
+      if (seen && t > hold) {
+        el += dt; var dur = cur === n - 1 ? END : MS; fill(Math.min(1, el / dur));
+        if (el >= dur) go(cur + 1);
       }
-      if (!calm && seen) raf = requestAnimationFrame(tick);
+      if (seen) raf = requestAnimationFrame(tick);
     }
-    function wake() { if (!calm && !raf && seen) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+    function wake() { if (!raf && seen) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+    function vis(v) {
+      if (v === seen) return;
+      seen = v;
+      if (v) { hold = 0; show(0); wake(); } else { show(0); }
+    }
     prev.addEventListener('click', function () { manual(cur - 1); });
     next.addEventListener('click', function () { manual(cur + 1); });
-    re.addEventListener('click', function () { go(0); hold = 0; });
     items.forEach(function (it, i) { it.querySelector('.rl-b').addEventListener('click', function () { manual(i); }); });
-    rl.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
-    rl.addEventListener('pointerleave', function () { hover = false; });
     show(0);
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; if (seen) wake(); }, { threshold: 0.45 }).observe(rl);
-    else seen = true;
+    if (calm) return;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) {
+      var e = es[es.length - 1];
+      vis(e.isIntersecting && (e.intersectionRatio >= 0.35 || e.intersectionRect.height >= innerHeight * 0.45));
+    }, { threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75, 1] }).observe(rl);
+    else vis(true);
   });
 
   if (!calm && 'IntersectionObserver' in window) {
