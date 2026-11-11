@@ -7,7 +7,7 @@
   var root = document.getElementById('ksd');
   if (!root || !window.KS_DATA) return;
   var $ = function (id) { return document.getElementById(id); };
-  var data = window.KS_DATA, user = data[0], gen = 0;
+  var data = window.KS_DATA, user = data[2], gen = 0, START = 1; // Start: Katja (Vertrieb) mit firmeninterner Vertragsstrafe-Frage
   var TAG = { not_found: T('Steht in keinem Dokument', 'Not in any document'), permission: T('Andere Abteilung, kein Zugriff', 'Other department, no access'), multi: T('Zwei Fragen in einer', 'Two questions in one') };
   function say(kind, text) {
     var r = $('ksd-res'), t = $('ksd-res-t');
@@ -66,18 +66,18 @@
   }
   root.addEventListener('click', function (e) {
     var u = e.target.closest('[data-u]'), q = e.target.closest('[data-q]');
-    if (u) { user = data[+u.dataset.u]; renderUsers(); ask(user.qs[0]); }
+    if (u) { user = data[+u.dataset.u]; renderUsers(); ask(user.qs[user === data[2] ? START : 0]); }
     else if (q) ask(user.qs[+q.dataset.q]);
   });
-  function start() { gen++; user = data[0]; renderUsers(); ask(user.qs[0]); }
+  function start() { gen++; user = data[2]; renderUsers(); ask(user.qs[START]); }
   root.addEventListener('demo:reset', start);
   renderUsers();
   say('', T('Wähle eine Person und klicke eine Frage an.', 'Pick a person and click a question.'));
   // Erste Frage starten, sobald die Demo ins Bild kommt.
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
-      if (es[0].isIntersecting) { ask(user.qs[0]); io.disconnect(); }
+      if (es[0].isIntersecting) { ask(user.qs[START]); io.disconnect(); }
     }, { threshold: 0.3 });
     io.observe(root);
-  } else ask(user.qs[0]);
+  } else ask(user.qs[START]);
 })();

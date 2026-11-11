@@ -140,8 +140,9 @@
       s.amt = AMOUNTS[s.n % AMOUNTS.length];
       s.busy = false;
       var nb = s.booked - b0, nd = s.dup - d0, diff = eur(s.bank + s.brand + s.fee);
-      say('ok', T(total.toLocaleString(LOC) + ' Klicks, davon ' + nd.toLocaleString(LOC) + ' doppelt. ' + nb.toLocaleString(LOC) + ' Zahlungen gebucht, keine doppelt, ' + diff + ' Differenz.',
-                  total.toLocaleString(LOC) + ' clicks, ' + nd.toLocaleString(LOC) + ' of them doubles. ' + nb.toLocaleString(LOC) + ' payments booked, none twice, ' + diff + ' difference.'));
+      var sum = s.booked.toLocaleString(LOC), more = s.booked !== nb;
+      say('ok', T('Dieser Ansturm: ' + total.toLocaleString(LOC) + ' Klicks, ' + nd.toLocaleString(LOC) + ' doppelt, ' + nb.toLocaleString(LOC) + ' gebucht. ' + (more ? 'Insgesamt ' + sum + ' gebucht, ' : '') + diff + ' Differenz.',
+                  'This rush: ' + total.toLocaleString(LOC) + ' clicks, ' + nd.toLocaleString(LOC) + ' doubles, ' + nb.toLocaleString(LOC) + ' booked. ' + (more ? sum + ' booked in total, ' : '') + diff + ' difference.'));
       notes([['info', T(total.toLocaleString(LOC) + ' Klicks insgesamt', total.toLocaleString(LOC) + ' clicks in total')], ['warn', T(nd + ' Doppelklicks abgefangen', nd + ' double clicks caught')], ['ok', T(nb + ' Zahlungen genau einmal gebucht', nb + ' payments booked exactly once')]]);
       flash(['lld-bank', 'lld-brand', 'lld-fee']);
       render();

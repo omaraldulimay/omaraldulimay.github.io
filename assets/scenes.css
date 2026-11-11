@@ -52,9 +52,10 @@
 
 /* Firmenwissensuche */
 .sc-know{background:#2F4A3F;color:#F7F4EF;padding:56px;display:flex;flex-direction:column;justify-content:center;gap:22px}
-.ks-q{background:#F7F4EF;color:#2B2724;border-radius:999px;padding:18px 24px;font-size:19px;display:flex;gap:12px;align-items:center}
-.ks-q span{display:inline-block;overflow:hidden;white-space:nowrap;width:0;border-right:2px solid #2F4A3F}
-.scene.on .ks-q span{animation:ks-type 1.6s steps(30) .3s forwards,ks-blink .8s step-end 6}
+.ks-q{background:#F7F4EF;color:#2B2724;border-radius:28px;padding:18px 26px;font-size:19px;line-height:1.4;display:flex;gap:12px;align-items:flex-start}
+.ks-q svg{flex:none;margin-top:3px}
+.ks-q span{display:inline-block;opacity:0}
+.scene.on .ks-q span{animation:sc-fade .5s .3s forwards}
 @keyframes ks-type{to{width:30ch}}
 @keyframes ks-blink{50%{border-color:transparent}}
 .ks-a{background:#24392F;border:1px solid #4A6A5C;border-radius:20px;padding:22px 24px;font-size:18px;line-height:1.5;max-width:30em}

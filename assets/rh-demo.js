@@ -22,11 +22,30 @@
     render();
   }
   // Ein großer Ergebnissatz pro Aktion.
+  var shownAt = 0, queue = [], qTimer = 0, HOLD = 3500;
   function say(kind, text) {
+    clearTimeout(qTimer); queue = [];
+    show(kind, text);
+  }
+  function show(kind, text) {
     var r = $('rhd-res'), x = $('rhd-res-t');
     r.className = 'lld-res' + (kind ? ' k-' + kind : '');
     x.textContent = text;
     x.style.animation = 'none'; void x.offsetWidth; x.style.animation = '';
+    shownAt = Date.now();
+  }
+  // Automatische Folgesätze warten, bis der aktuelle Satz mindestens 3,5 s zu lesen war.
+  function sayAuto(kind, text) {
+    queue.push([kind, text]);
+    if (!qTimer) flush();
+  }
+  function flush() {
+    qTimer = 0;
+    if (!queue.length) return;
+    var wait = shownAt + HOLD - Date.now();
+    if (wait > 0) { qTimer = setTimeout(flush, wait); return; }
+    var n = queue.shift(); show(n[0], n[1]);
+    if (queue.length) qTimer = setTimeout(flush, HOLD);
   }
   function clock() {
     var sec = (23 * 3600 + 58 * 60 + s.t) % 86400;
@@ -44,20 +63,20 @@
       err += Math.min(7, age * 0.25);   // nur der Canary-Anteil bekommt v1.5
       if (age === ROLLBACK_AFTER) {
         s.deploy = null; s.version = 'v1.4';
-        say('ok', T('Update zurückgenommen. Die Fehler sinken wieder.', 'Update taken back. Errors are falling again.'));
+        sayAuto('ok', T('Update zurückgenommen. Die Fehler sinken wieder.', 'Update taken back. Errors are falling again.'));
       }
     }
     if (s.breaker === 'offen') {
       s.waiting += Math.round(s.rate / 60);
       if (s.t >= s.openUntil) {
         s.breaker = 'zu'; s.paidLate += s.waiting;
-        say('ok', T('Zahlung wieder schnell. ', 'Payments fast again. ') + s.waiting.toLocaleString(LOC) + T(' wartende Bestellungen wurden bezahlt.', ' waiting orders were paid.'));
+        sayAuto('ok', T('Zahlung wieder schnell. ', 'Payments fast again. ') + s.waiting.toLocaleString(LOC) + T(' wartende Bestellungen wurden bezahlt.', ' waiting orders were paid.'));
         s.waiting = 0;
       }
     }
     if (s.podBack && s.t >= s.podBack) {
       s.pods = s.pods.map(function () { return 1; }); s.podBack = 0;
-      say('ok', T('Ersatzserver gestartet. Wieder 6 von 6 Servern bereit.', 'Replacement server started. 6 of 6 servers ready again.'));
+      sayAuto('ok', T('Ersatzserver gestartet. Wieder 6 von 6 Servern bereit.', 'Replacement server started. 6 of 6 servers ready again.'));
     }
     s.err = err;
     var perSec = s.rate / 60;
@@ -120,7 +139,7 @@
         render();
         if (done < buyers) return setTimeout(step, 40);
         s.busy = false;
-        say('ok', T('Ausverkauft. ' + s.sold + ' Paar verkauft, ' + s.rejected + ' Käufer gehen leer aus. Nichts doppelt verkauft.', 'Sold out. ' + s.sold + ' pairs sold, ' + s.rejected + ' buyers miss out. Nothing sold twice.'));
+        sayAuto('ok', T('Ausverkauft. ' + s.sold + ' Paar verkauft, ' + s.rejected + ' Käufer gehen leer aus. Nichts doppelt verkauft.', 'Sold out. ' + s.sold + ' pairs sold, ' + s.rejected + ' buyers miss out. Nothing sold twice.'));
         render();
       })();
     }
