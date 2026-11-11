@@ -1,3 +1,5 @@
+// Einbettung im Portfolio (?embed=1): keine Kostenangaben anzeigen
+const EMBED = new URLSearchParams(location.search).get("embed") === "1";
 const I18N = {
   de: {
     eyebrow: "Produktdaten Check", search: "Produkt oder Marke suchen", searchlabel: "Suche", source: "Quelle",
@@ -145,15 +147,17 @@ function renderStats() {
   const c = {red: 0, yellow: 0, green: 0};
   rows.forEach((r) => { c[eff(r).status] += 1; });
   const paid = meta.mode === "claude", cents = fmt((meta.api_cost_usd || 0) * 100, 2);
-  $("claim").replaceChildren(t("checked", fmt(meta.products)).replace(/, $/, " "), ...(paid
-    ? [el("b", {text: t("paid", cents)})]
-    : [el("b", {text: t("cost")}), t("localMin", fmt(meta.llm_minutes))]));
+  $("claim").replaceChildren(...(EMBED
+    ? [t("checked", fmt(meta.products)).replace(/, $/, ".")]
+    : [t("checked", fmt(meta.products)).replace(/, $/, " "), ...(paid
+      ? [el("b", {text: t("paid", cents)})]
+      : [el("b", {text: t("cost")}), t("localMin", fmt(meta.llm_minutes))])]));
   const off = state.source === "off";
   $("offNote").hidden = !off;
   const items = [
     [fmt(rows.length), t("statProducts")],
     ...(off ? [[fmt(c.green), t("statComplete")], [fmt(c.yellow + c.red), t("statGap")]]
-      : [[fmt(c.red), t("statRed")], [fmt(c.yellow), t("statYellow")], [fmt(c.green), t("statGreen")]]), [paid ? cents : "0 €", paid ? t("centsLabel") : t("statCost")],
+      : [[fmt(c.red), t("statRed")], [fmt(c.yellow), t("statYellow")], [fmt(c.green), t("statGreen")]]), ...(EMBED ? [] : [[paid ? cents : "0 €", paid ? t("centsLabel") : t("statCost")]]),
     [fmt(meta.llm_minutes) + " Min.", t(paid ? "statRuntimeApi" : "statRuntime", meta.model)],
     [fmt(meta.tokens_in + meta.tokens_out), t("statTokens")],
   ];
@@ -269,7 +273,7 @@ function openDetail(r, keepScroll = false, flash = false) {
   body.append(el("h3", {text: t("llmRun")}), table([
     [t("model"), `${r.llm.model} (${r.llm.mode})`], [t("runtime"), r.llm.seconds + " s"],
     [t("tokens"), `${fmt(r.llm.tokens_in)} / ${fmt(r.llm.tokens_out)}`],
-    [t("apiCost"), r.llm.mode === "claude" ? `${fmt((r.llm.cost_usd || 0) * 100, 3)} ${t("centsShort")}` : "0 €"], [t("cache"), r.llm.cached ? t("yes") : t("no")]]));
+    ...(EMBED ? [] : [[t("apiCost"), r.llm.mode === "claude" ? `${fmt((r.llm.cost_usd || 0) * 100, 3)} ${t("centsShort")}` : "0 €"]]), [t("cache"), r.llm.cached ? t("yes") : t("no")]]));
   const n = r.product.nutriments || {};
   body.append(el("h3", {text: t("nutrients")}), table(Object.entries(NUTRIENTS).map(
     ([k, l]) => [t(l), n[k] === undefined ? t("missing") : String(n[k])])));

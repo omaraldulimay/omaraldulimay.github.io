@@ -22,7 +22,7 @@
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Label Lab Hero: Vorher/Nachher Regler. Fährt einmal langsam von Vorher zu Nachher, danach gehört er dem Besucher.
   [].forEach.call(doc.querySelectorAll('.ba'), function (ba) {
-    var h = ba.querySelector('.ba-h'), card = ba.querySelector('.ba-card'), pb = ba.querySelector('.ba-pb').textContent,
+    var h = ba.querySelector('.ba-h'), card = ba.querySelector('.ba-can'), pb = ba.querySelector('.ba-pb').textContent,
       pa = ba.querySelector('.ba-pa').textContent, p = 50, raf = 0, drag = false;
     function set(v) {
       p = Math.max(0, Math.min(100, v));
@@ -35,6 +35,7 @@
     function at(e) { var r = card.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); }
     ba.addEventListener('pointerdown', function (e) {
       if (e.button) return;
+      if (e.pointerType === 'mouse') e.preventDefault();
       stop(); drag = true; try { ba.setPointerCapture(e.pointerId); } catch (x) {}
       at(e); h.focus({ preventScroll: true });
     });
