@@ -22,7 +22,7 @@
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Label Lab Hero: Vorher/Nachher Regler. Fährt einmal langsam von Vorher zu Nachher, danach gehört er dem Besucher.
   [].forEach.call(doc.querySelectorAll('.ba'), function (ba) {
-    var h = ba.querySelector('.ba-h'), card = ba.querySelector('.ba-can'), pb = ba.querySelector('.ba-pb').textContent,
+    var h = ba.querySelector('.ba-h'), card = ba.querySelector('.ba-desc'), pb = ba.querySelector('.ba-pb').textContent,
       pa = ba.querySelector('.ba-pa').textContent, p = 50, raf = 0, drag = false;
     function set(v) {
       p = Math.max(0, Math.min(100, v));
@@ -72,9 +72,66 @@
     }, { threshold: 0.4 }).observe(ba);
   });
 
+
+  // Kapitel-Szene mit Fortschrittsleiste (data-scene="rail"): Bild bleibt stehen, Leiste füllt sich mit dem Scrollen, Kapitel blenden weich über.
+  if (!calm) [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
+    var pin = rl.querySelector('.rl-pin'), run = rl.querySelector('.rl-run'), nav = rl.querySelector('.rl-nav'), line = rl.querySelector('.rl-line'),
+      fill = rl.querySelector('.rl-fill'), cap = rl.querySelector('.rl-cap'), fx = rl.querySelector('.fx'),
+      items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(fx.querySelectorAll('.lab-p')), n = items.length, cur = -1, raf = 0,
+      mq = matchMedia('(max-width:899px)');
+    rl.style.setProperty('--n', n); rl.classList.add('live');
+    function dot(i) { return items[i].querySelector('.rl-n'); }
+    function pos(i, horiz) {  // Mitte des Punktes, gemessen ab dem Anfang der Leiste
+      var d = dot(i).getBoundingClientRect(), r = nav.getBoundingClientRect();
+      return horiz ? d.left + d.width / 2 - r.left : d.top + d.height / 2 - r.top;
+    }
+    function show(k) {
+      if (k === cur) return; cur = k;
+      fx.setAttribute('data-step', k + 1);
+      panels.forEach(function (p, i) { p.classList.toggle('past', i < k); });
+      items.forEach(function (it, i) {
+        it.classList.toggle('on', i === k); it.classList.toggle('done', i <= k);
+        var b = it.querySelector('.rl-b'); if (i === k) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      });
+      var h = items[k].querySelector('.rl-h').textContent, t = items[k].querySelector('.rl-d p').textContent;
+      cap.textContent = h; var sm = doc.createElement('small'); sm.textContent = t; cap.appendChild(sm);
+    }
+    function range() { return Math.max(1, rl.offsetHeight - pin.offsetHeight); }
+    function top() { return parseFloat(getComputedStyle(pin).top) || 0; }
+    function update() {
+      raf = 0;
+      var p = Math.min(1, Math.max(0, (top() - rl.getBoundingClientRect().top) / range())), k = Math.min(n - 1, Math.floor(p * n)), f = p * n - k;
+      if (p >= 1) { k = n - 1; f = 1; }
+      show(k);
+      var horiz = mq.matches, a = pos(k, horiz), b = k < n - 1 ? pos(k + 1, horiz) : (horiz ? pos(k, true) : nav.offsetHeight - (parseFloat(getComputedStyle(nav).paddingBottom) || 0)),
+        s = pos(0, horiz), len = a + (b - a) * f - s;
+      if (horiz) {
+        line.style.left = s + 'px'; line.style.right = (nav.offsetWidth - pos(n - 1, true)) + 'px';
+        line.style.top = ''; line.style.height = ''; fill.style.height = '';
+        fill.style.width = Math.max(0, len) + 'px';
+      } else {
+        line.style.left = ''; line.style.right = ''; fill.style.width = '';
+        line.style.top = s + 'px'; line.style.height = Math.max(0, nav.offsetHeight - s) + 'px';
+        fill.style.height = Math.max(0, len) + 'px';
+      }
+    }
+    function req() { if (!raf) raf = requestAnimationFrame(update); }
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req);
+    // Während Kapitel auf- und zuklappen, wandern die Punkte: Leiste mitführen.
+    nav.addEventListener('transitionrun', req); nav.addEventListener('transitionend', req);
+    items.forEach(function (it, i) {
+      it.querySelector('.rl-b').addEventListener('click', function () {
+        var y = scrollY + rl.getBoundingClientRect().top - top() + (i + 0.5) / n * range();
+        scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+    update();
+  });
+
   if (!calm && 'IntersectionObserver' in window) {
     // Projektseite: Kapitel wechselt mit dem Scrollen, auch rückwärts.
-    [].forEach.call(doc.querySelectorAll('.hq-flow'), function (fl) {
+    [].forEach.call(doc.querySelectorAll('.hq-flow:not([data-scene="rail"])'), function (fl) {
       var sc = fl.querySelector('.hq,.fx'), steps = fl.querySelectorAll('.hq-step');
       function set(n) {
         sc.setAttribute('data-step', n);
