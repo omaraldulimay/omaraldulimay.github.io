@@ -94,6 +94,7 @@
         var b = it.querySelector('.rl-b'); if (i === k) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       });
       var h = items[k].querySelector('.rl-h').textContent, t = items[k].querySelector('.rl-d p').textContent;
+      ct.textContent = (k + 1) + ' / ' + n; prev.disabled = k === 0; next.disabled = k === n - 1;
       cap.textContent = h; var sm = doc.createElement('small'); sm.textContent = t; cap.appendChild(sm);
     }
     function range() { return Math.max(1, rl.offsetHeight - pin.offsetHeight); }
@@ -115,6 +116,20 @@
         fill.style.height = Math.max(0, len) + 'px';
       }
     }
+    var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div'), touched = false;
+    bar.className = 'rl-bar';
+    bar.innerHTML = '<button type="button" class="rl-ar" data-d="-1" aria-label="' + (de ? 'Zurück' : 'Previous') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="rl-ct" aria-live="polite"></span><button type="button" class="rl-ar" data-d="1" aria-label="' + (de ? 'Weiter' : 'Next') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><span class="rl-hint">' + (de ? 'Scrollen oder Kapitel anklicken' : 'Scroll or pick a chapter') + '</span>';
+    pin.appendChild(bar);
+    var ct = bar.querySelector('.rl-ct'), hint = bar.querySelector('.rl-hint'), prev = bar.querySelector('[data-d="-1"]'), next = bar.querySelector('[data-d="1"]');
+    function go(i) {
+      i = Math.max(0, Math.min(n - 1, i));
+      scrollTo({ top: scrollY + rl.getBoundingClientRect().top - top() + (i + 0.5) / n * range(), behavior: 'smooth' });
+    }
+    function done() { if (!touched) { touched = true; hint.classList.add('off'); } }
+    prev.addEventListener('click', function () { done(); go(cur - 1); });
+    next.addEventListener('click', function () { done(); go(cur + 1); });
+    addEventListener('wheel', function () { if (rl.getBoundingClientRect().top < innerHeight * 0.5 && rl.getBoundingClientRect().bottom > 0) done(); }, { passive: true });
+    addEventListener('touchmove', function () { if (rl.getBoundingClientRect().top < innerHeight * 0.5 && rl.getBoundingClientRect().bottom > 0) done(); }, { passive: true });
     function req() { if (!raf) raf = requestAnimationFrame(update); }
     addEventListener('scroll', req, { passive: true });
     addEventListener('resize', req);
@@ -122,8 +137,7 @@
     nav.addEventListener('transitionrun', req); nav.addEventListener('transitionend', req);
     items.forEach(function (it, i) {
       it.querySelector('.rl-b').addEventListener('click', function () {
-        var y = scrollY + rl.getBoundingClientRect().top - top() + (i + 0.5) / n * range();
-        scrollTo({ top: y, behavior: 'smooth' });
+        done(); go(i);
       });
     });
     update();

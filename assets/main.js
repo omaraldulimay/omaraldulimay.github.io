@@ -107,3 +107,25 @@
       .catch(function () {});
   });
 })();
+
+// Hero Thumbnails als Slider: wischen, Pfeile, Rand Fade.
+(function () {
+  var pk = document.querySelector('.peeks'); if (!pk) return;
+  var EN = document.documentElement.lang === 'en', w = document.createElement('div');
+  w.className = 'peeks-w'; pk.parentNode.insertBefore(w, pk); w.appendChild(pk);
+  function mk(d) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'peeks-ar ' + (d < 0 ? 'l' : 'r');
+    b.setAttribute('aria-label', d < 0 ? (EN ? 'Previous projects' : 'Vorherige Projekte') : (EN ? 'More projects' : 'Weitere Projekte'));
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + (d < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
+    b.addEventListener('click', function () { pk.scrollBy({ left: d * (pk.clientWidth * 0.8), behavior: 'smooth' }); });
+    w.appendChild(b); return b;
+  }
+  var l = mk(-1), r = mk(1);
+  function upd() {
+    var m = pk.scrollWidth - pk.clientWidth, x = pk.scrollLeft;
+    w.classList.toggle('can-l', x > 2); w.classList.toggle('can-r', x < m - 2);
+    l.tabIndex = x > 2 ? 0 : -1; r.tabIndex = x < m - 2 ? 0 : -1;
+  }
+  pk.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+  addEventListener('load', upd);
+})();
