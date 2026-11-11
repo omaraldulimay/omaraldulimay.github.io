@@ -28,11 +28,15 @@
       p = Math.max(0, Math.min(100, v));
       ba.style.setProperty('--p', p.toFixed(2));
       ba.setAttribute('data-side', p >= 50 ? 'before' : 'after');
+      if (p < 1.5 || p > 98.5) ba.setAttribute('data-edge', ''); else ba.removeAttribute('data-edge');
       h.setAttribute('aria-valuenow', Math.round(p));
       h.setAttribute('aria-valuetext', pb + ' ' + Math.round(p) + ' %, ' + pa + ' ' + Math.round(100 - p) + ' %');
     }
     function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
-    function at(e) { var r = card.getBoundingClientRect(); set((e.clientX - r.left) / r.width * 100); }
+    function at(e) {  // Regler läuft nur zwischen den Innenrändern, so sitzt die Linie bei 0 und 100 % außerhalb des Textes
+      var r = card.getBoundingClientRect(), pad = parseFloat(getComputedStyle(ba).fontSize) * 0.55;
+      set((e.clientX - r.left - pad) / Math.max(1, r.width - 2 * pad) * 100);
+    }
     ba.addEventListener('pointerdown', function (e) {
       if (e.button) return;
       if (e.pointerType === 'mouse') e.preventDefault();
@@ -54,8 +58,8 @@
     });
     set(50);
     if (calm || !('IntersectionObserver' in window)) return;
-    set(94);
-    var from = 94, to = 8, ms = 6500;
+    set(100);
+    var from = 100, to = 0, ms = 7000;
     new IntersectionObserver(function (es, o) {
       if (!es[0].isIntersecting) return;
       o.disconnect();
@@ -73,74 +77,53 @@
   });
 
 
-  // Kapitel-Szene mit Fortschrittsleiste (data-scene="rail"): Bild bleibt stehen, Leiste füllt sich mit dem Scrollen, Kapitel blenden weich über.
-  if (!calm) [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
-    var pin = rl.querySelector('.rl-pin'), run = rl.querySelector('.rl-run'), nav = rl.querySelector('.rl-nav'), line = rl.querySelector('.rl-line'),
-      fill = rl.querySelector('.rl-fill'), cap = rl.querySelector('.rl-cap'), fx = rl.querySelector('.fx'),
-      items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(fx.querySelectorAll('.lab-p')), n = items.length, cur = -1, raf = 0,
-      mq = matchMedia('(max-width:899px)');
-    rl.style.setProperty('--n', n); rl.classList.add('live');
-    function dot(i) { return items[i].querySelector('.rl-n'); }
-    function pos(i, horiz) {  // Mitte des Punktes, gemessen ab dem Anfang der Leiste
-      var d = dot(i).getBoundingClientRect(), r = nav.getBoundingClientRect();
-      return horiz ? d.left + d.width / 2 - r.left : d.top + d.height / 2 - r.top;
-    }
+  // Kapitel-Szene (data-scene="rail"): normale Sektion ohne Scroll-Steuerung. Die Kapitel wechseln alle 5 s von selbst,
+  // solange sie im Bild ist. Klick und Pfeile springen direkt, Hover pausiert. Nach Kapitel 4 bleibt sie stehen.
+  [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
+    var fx = rl.querySelector('.fx'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(fx.querySelectorAll('.lab-p')),
+      cap = rl.querySelector('.rl-cap'), n = items.length, cur = -1, MS = 5000, el = 0, last = 0, raf = 0, seen = false, hover = false, hold = 0, over = false;
+    var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div');
+    rl.classList.add('live');
+    items.forEach(function (it) { var p = doc.createElement('i'); p.className = 'rl-p'; p.setAttribute('aria-hidden', 'true'); p.appendChild(doc.createElement('i')); it.querySelector('.rl-b').appendChild(p); });
+    bar.className = 'rl-bar';
+    bar.innerHTML = '<button type="button" class="rl-ar" data-d="-1" aria-label="' + (de ? 'Zurück' : 'Previous') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="rl-ct" aria-live="polite"></span><button type="button" class="rl-ar" data-d="1" aria-label="' + (de ? 'Weiter' : 'Next') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><button type="button" class="rl-re" hidden>' + (de ? 'Nochmal ansehen' : 'Watch again') + '</button>';
+    rl.querySelector('.rl-pin').appendChild(bar);
+    var ct = bar.querySelector('.rl-ct'), prev = bar.querySelector('[data-d="-1"]'), next = bar.querySelector('[data-d="1"]'), re = bar.querySelector('.rl-re');
+    function fill(f) { var p = items[cur].querySelector('.rl-p i'); if (p) p.style.transform = 'scaleX(' + f + ')'; }
     function show(k) {
-      if (k === cur) return; cur = k;
+      cur = k; el = 0; over = false; re.hidden = true;
       fx.setAttribute('data-step', k + 1);
       panels.forEach(function (p, i) { p.classList.toggle('past', i < k); });
       items.forEach(function (it, i) {
         it.classList.toggle('on', i === k); it.classList.toggle('done', i <= k);
+        it.querySelector('.rl-p i').style.transform = 'scaleX(0)';
         var b = it.querySelector('.rl-b'); if (i === k) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
       });
-      var h = items[k].querySelector('.rl-h').textContent, t = items[k].querySelector('.rl-d p').textContent;
       ct.textContent = (k + 1) + ' / ' + n; prev.disabled = k === 0; next.disabled = k === n - 1;
-      cap.textContent = h; var sm = doc.createElement('small'); sm.textContent = t; cap.appendChild(sm);
+      cap.textContent = items[k].querySelector('.rl-h').textContent;
+      var sm = doc.createElement('small'); sm.textContent = items[k].querySelector('.rl-d p').textContent; cap.appendChild(sm);
     }
-    function range() { return Math.max(1, rl.offsetHeight - pin.offsetHeight); }
-    function top() { return parseFloat(getComputedStyle(pin).top) || 0; }
-    function update() {
+    function go(i) { show(Math.max(0, Math.min(n - 1, i))); }
+    function manual(i) { go(i); hold = performance.now() + 8000; }  // nach einem Klick kurz in Ruhe lassen
+    function tick(t) {
       raf = 0;
-      var p = Math.min(1, Math.max(0, (top() - rl.getBoundingClientRect().top) / range())), k = Math.min(n - 1, Math.floor(p * n)), f = p * n - k;
-      if (p >= 1) { k = n - 1; f = 1; }
-      show(k);
-      var horiz = mq.matches, a = pos(k, horiz), b = k < n - 1 ? pos(k + 1, horiz) : (horiz ? pos(k, true) : nav.offsetHeight - (parseFloat(getComputedStyle(nav).paddingBottom) || 0)),
-        s = pos(0, horiz), len = a + (b - a) * f - s;
-      if (horiz) {
-        line.style.left = s + 'px'; line.style.right = (nav.offsetWidth - pos(n - 1, true)) + 'px';
-        line.style.top = ''; line.style.height = ''; fill.style.height = '';
-        fill.style.width = Math.max(0, len) + 'px';
-      } else {
-        line.style.left = ''; line.style.right = ''; fill.style.width = '';
-        line.style.top = s + 'px'; line.style.height = Math.max(0, nav.offsetHeight - s) + 'px';
-        fill.style.height = Math.max(0, len) + 'px';
+      var dt = Math.min(100, t - last); last = t;
+      if (!calm && seen && !hover && !over && t > hold) {
+        el += dt; fill(Math.min(1, el / MS));
+        if (el >= MS) { if (cur < n - 1) go(cur + 1); else { over = true; re.hidden = false; } }
       }
+      if (!calm && seen) raf = requestAnimationFrame(tick);
     }
-    var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div'), touched = false;
-    bar.className = 'rl-bar';
-    bar.innerHTML = '<button type="button" class="rl-ar" data-d="-1" aria-label="' + (de ? 'Zurück' : 'Previous') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><span class="rl-ct" aria-live="polite"></span><button type="button" class="rl-ar" data-d="1" aria-label="' + (de ? 'Weiter' : 'Next') + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><span class="rl-hint">' + (de ? 'Scrollen oder Kapitel anklicken' : 'Scroll or pick a chapter') + '</span>';
-    pin.appendChild(bar);
-    var ct = bar.querySelector('.rl-ct'), hint = bar.querySelector('.rl-hint'), prev = bar.querySelector('[data-d="-1"]'), next = bar.querySelector('[data-d="1"]');
-    function go(i) {
-      i = Math.max(0, Math.min(n - 1, i));
-      scrollTo({ top: scrollY + rl.getBoundingClientRect().top - top() + (i + 0.5) / n * range(), behavior: 'smooth' });
-    }
-    function done() { if (!touched) { touched = true; hint.classList.add('off'); } }
-    prev.addEventListener('click', function () { done(); go(cur - 1); });
-    next.addEventListener('click', function () { done(); go(cur + 1); });
-    addEventListener('wheel', function () { if (rl.getBoundingClientRect().top < innerHeight * 0.5 && rl.getBoundingClientRect().bottom > 0) done(); }, { passive: true });
-    addEventListener('touchmove', function () { if (rl.getBoundingClientRect().top < innerHeight * 0.5 && rl.getBoundingClientRect().bottom > 0) done(); }, { passive: true });
-    function req() { if (!raf) raf = requestAnimationFrame(update); }
-    addEventListener('scroll', req, { passive: true });
-    addEventListener('resize', req);
-    // Während Kapitel auf- und zuklappen, wandern die Punkte: Leiste mitführen.
-    nav.addEventListener('transitionrun', req); nav.addEventListener('transitionend', req);
-    items.forEach(function (it, i) {
-      it.querySelector('.rl-b').addEventListener('click', function () {
-        done(); go(i);
-      });
-    });
-    update();
+    function wake() { if (!calm && !raf && seen) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+    prev.addEventListener('click', function () { manual(cur - 1); });
+    next.addEventListener('click', function () { manual(cur + 1); });
+    re.addEventListener('click', function () { go(0); hold = 0; });
+    items.forEach(function (it, i) { it.querySelector('.rl-b').addEventListener('click', function () { manual(i); }); });
+    rl.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    rl.addEventListener('pointerleave', function () { hover = false; });
+    show(0);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; if (seen) wake(); }, { threshold: 0.45 }).observe(rl);
+    else seen = true;
   });
 
   if (!calm && 'IntersectionObserver' in window) {
@@ -207,3 +190,13 @@
   addEventListener('resize', onScroll);
   update();
 })();
+
+// Demo Anleitung: der Startpunkt der Demo pulsiert, bis der Besucher in die Demo klickt.
+addEventListener('load', function () {
+  [].forEach.call(document.querySelectorAll('.demo-how[data-start]'), function (h) {
+    var root = document.querySelector(h.getAttribute('data-root')), t = root && root.querySelector(h.getAttribute('data-start'));
+    if (!t) return;
+    t.classList.add('demo-start');
+    root.addEventListener('click', function () { t.classList.remove('demo-start'); }, { once: true });
+  });
+});

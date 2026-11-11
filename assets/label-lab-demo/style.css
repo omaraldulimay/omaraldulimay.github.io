@@ -68,3 +68,31 @@ ins{color:var(--gold);text-decoration:none;background:rgba(240,191,90,.1);border
 .note{border:1px solid var(--gold);border-left-width:4px;border-radius:8px;background:var(--panel);padding:12px 16px;margin:16px 0 0;font-weight:500}
 .note[hidden]{display:none}
 .more{list-style:none;text-align:center;padding:16px 0}
+
+/* Geführter Start in der Einbettung */
+.again{display:block;margin:-12px 0 12px;background:none;border:0;padding:0;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
+.again:hover{color:var(--gold)}
+.row.guide{background:rgba(240,191,90,.07);box-shadow:inset 3px 0 0 var(--gold);animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{background:rgba(240,191,90,.05)}50%{background:rgba(240,191,90,.17)}}
+.badge{display:inline-block;margin-top:4px;background:var(--gold);color:#1a1405;border-radius:999px;padding:2px 10px;font:600 12px Inter}
+.hint{display:inline-block;background:var(--gold);color:#1a1405;border-radius:999px;padding:3px 12px;font:600 12px Inter;margin:10px 10px 0 0}
+.hint3{display:block;width:fit-content;background:rgba(111,191,139,.15);color:var(--green);border:1px solid var(--green);font-size:13px;margin:4px 0 8px}
+.apply.guide{animation:ring 1.6s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(240,191,90,.6)}100%{box-shadow:0 0 0 12px rgba(240,191,90,0)}}
+@media(prefers-reduced-motion:reduce){.row.guide,.apply.guide{animation:none}}
+body.embed header{padding:18px 16px 0}
+body.embed .eyebrow,body.embed h1{display:none}
+body.embed .claim{font-size:18px;margin:0 0 4px;padding-right:96px}
+body.embed .again{margin:0 0 6px}
+body.embed .stats{grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 14px}
+body.embed .stat{padding:10px 12px}
+body.embed .stat .n{font-size:26px}
+body.embed .stat .l{font-size:12px;line-height:1.35}
+@media(max-width:560px){
+body.embed #checkFilter,body.embed #search{display:none}
+body.embed .controls{gap:8px}
+body.embed .chip{padding:4px 11px;font-size:13px}
+body.embed .stat{padding:8px 10px}
+body.embed .stat .l{font-size:11px}
+body.embed .count,body.embed #count{margin:8px 0 0}
+}

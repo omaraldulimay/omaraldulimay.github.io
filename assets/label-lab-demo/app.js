@@ -12,7 +12,7 @@ const I18N = {
     red: "Rot", yellow: "Gelb", green: "Grün", all: "Alle", allChecks: "Alle Prüfungen",
     checked: (n) => `${n} Produkte geprüft, `, cost: "0 € API Kosten", localMin: (n) => `, ${n} Minuten lokal.`,
     centsShort: "US Cent", paid: (c) => `für ${c} US Cent.`, centsLabel: "US Cent API Kosten", statRuntimeApi: (m) => `Laufzeit, Modell ${m}`,
-    statProducts: "Produkte in dieser Quelle", statRed: "rot", statYellow: "gelb", statGreen: "grün",
+    statProducts: "Produkte in dieser Quelle", statRed: "rot: verbotene Aussage oder fehlende Pflichtangabe", statYellow: "gelb: Hinweis, bitte prüfen", statGreen: "grün: nichts zu beanstanden",
     statCost: "API Kosten", statRuntime: (m) => `Laufzeit lokal, Modell ${m}`, statTokens: "Token gesamt",
     count: (a, b) => `${a} von ${b} Produkten`, noResults: "results.json nicht gefunden. Zuerst make check-all ausführen.",
     artNo: "Art. Nr.", ean: "EAN", noFindings: "Keine Funde.", rule: "Rechtsgrundlage", suggestion: "Korrekturvorschlag",
@@ -27,6 +27,8 @@ const I18N = {
     gap: "Datenlücke", complete: "Vollständig", statGap: "Datenlücke", statComplete: "vollständig",
     offNote: "Geprüft werden die Einträge in der offenen Datenbank Open Food Facts, nicht die Produkte oder Verpackungen der Hersteller.",
     more: (n) => `Mehr laden (${n} weitere)`, country: "Land", allCountries: "Alle Länder",
+    guideBadge: "1. Hier klicken", guideApply: "2. Korrektur übernehmen", guideDone: "3. Ampel springt auf Grün. Jetzt frei erkunden.",
+    guideAgain: "Anleitung nochmal zeigen", guideIntro: "Rot = verbotene Aussage oder fehlende Pflichtangabe.",
     locale: "de-DE",
   },
   en: {
@@ -40,7 +42,7 @@ const I18N = {
     red: "Red", yellow: "Yellow", green: "Green", all: "All", allChecks: "All checks",
     checked: (n) => `${n} products checked, `, cost: "€0 API cost", localMin: (n) => `, ${n} minutes local.`,
     centsShort: "US cents", paid: (c) => `for ${c} US cents.`, centsLabel: "US cents API cost", statRuntimeApi: (m) => `runtime, model ${m}`,
-    statProducts: "products in this source", statRed: "red", statYellow: "yellow", statGreen: "green",
+    statProducts: "products in this source", statRed: "red: forbidden claim or missing mandatory information", statYellow: "yellow: note, please check", statGreen: "green: nothing to flag",
     statCost: "API cost", statRuntime: (m) => `local runtime, model ${m}`, statTokens: "tokens in total",
     count: (a, b) => `${a} of ${b} products`, noResults: "results.json not found. Run make check-all first.",
     artNo: "Item no.", ean: "EAN", noFindings: "No findings.", rule: "Legal basis", suggestion: "Suggested fix",
@@ -55,6 +57,8 @@ const I18N = {
     gap: "Data gap", complete: "Complete", statGap: "data gap", statComplete: "complete",
     offNote: "What is checked are the entries in the open database Open Food Facts, not the manufacturers' products or packaging.",
     more: (n) => `Load more (${n} more)`, country: "Country", allCountries: "All countries",
+    guideBadge: "1. Click here", guideApply: "2. Apply the fix", guideDone: "3. The light turns green. Now explore freely.",
+    guideAgain: "Show the guide again", guideIntro: "Red = forbidden claim or missing mandatory information.",
     locale: "en-GB",
   },
 };
@@ -65,6 +69,22 @@ const NUTRIENTS = {"energy-kcal_100g": "n_energy", fat_100g: "n_fat", "saturated
 const FIELDS = {name: "fieldName", generic_name: "fieldGeneric", labels: "fieldLabels", description: "fieldDescription"};
 const PAGE = 50;  // Zeilen pro Seite, der Rest kommt mit "Mehr laden"
 const state = {source: "brand", status: "all", country: "all", shown: PAGE, check: "all", q: "", data: null, lang: "de", applied: {}, open: null};
+
+// Geführter Start in der Einbettung: ein rotes Produkt mit einem Fund, drei kurze Schritte
+const GUIDE = "RF-1082";
+if (EMBED) document.body.classList.add("embed");
+const guide = {step: EMBED ? 1 : 0, timer: 0};
+function guideReset() {
+  guide.step = 1; clearTimeout(guide.timer);
+  delete state.applied[GUIDE]; state.source = "brand"; state.status = "red"; state.check = "all"; state.q = ""; state.shown = PAGE;
+  $("search").value = ""; $("detail").hidden = true;
+  renderStats(); sourceChips(); filterChips(); render();
+  scrollTo({top: 0});
+}
+function guideEnd() {
+  guide.step = 0; clearTimeout(guide.timer);
+  if (state.data) { render(); if (state.open && !$("detail").hidden) openDetail(state.open, true); }
+}
 
 function store(key, value) {  // localStorage kann fehlen oder werfen (privates Fenster), dann einfach ohne
   try {
@@ -109,6 +129,7 @@ function renderStatic() {
   document.querySelectorAll("[data-i18n-html]").forEach((n) => { n.innerHTML = t(n.dataset.i18nHtml); });
   document.querySelectorAll("[data-i18n-ph]").forEach((n) => { n.placeholder = t(n.dataset.i18nPh); });
   document.querySelectorAll("[data-i18n-aria]").forEach((n) => { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
+  const ag = $("again"); if (ag) ag.textContent = t("guideAgain");
   $("lang").replaceChildren(...["de", "en"].map((l) => el("button", {"aria-pressed": String(state.lang === l),
     text: l.toUpperCase(), onclick: () => setLang(l)})));
 }
@@ -161,27 +182,31 @@ function renderStats() {
     [fmt(meta.llm_minutes) + " Min.", t(paid ? "statRuntimeApi" : "statRuntime", meta.model)],
     [fmt(meta.tokens_in + meta.tokens_out), t("statTokens")],
   ];
-  $("stats").replaceChildren(...items.map(([n, l]) =>
+  $("stats").replaceChildren(...(EMBED ? items.slice(1, -2) : items).map(([n, l]) =>
     el("div", {class: "stat"}, el("div", {class: "n", text: n}), el("div", {class: "l", text: l}))));
 }
 
 function visible() {
   const q = state.q.trim().toLowerCase();
-  return sourceRows().filter((r) => {
+  const rows = sourceRows().filter((r) => {
     const e = eff(r);
     return (state.status === "all" || e.status === state.status) &&
       (state.country === "all" || r.country === state.country) &&
       (state.check === "all" || e.checks[state.check] !== "green") &&
       (!q || (r.name + " " + r.brand).toLowerCase().includes(q));
   });
+  if (guide.step) rows.sort((a, b) => (b.code === GUIDE) - (a.code === GUIDE));  // Startpunkt der Anleitung steht oben
+  return rows;
 }
 
 function row(r) {
   const e = eff(r);
-  return el("li", {class: "row", tabindex: "0", role: "button", onclick: () => openDetail(r),
+  const mark = guide.step === 1 && r.code === GUIDE;
+  return el("li", {class: "row" + (mark ? " guide" : ""), tabindex: "0", role: "button", onclick: () => openDetail(r),
     onkeydown: (ev) => { if (ev.key === "Enter") openDetail(r); }},
     dot(e.status),
-    el("div", {}, el("div", {class: "name", text: r.name}), el("div", {class: "brand", text: r.brand || t("noBrand")})),
+    el("div", {}, el("div", {class: "name", text: r.name}), el("div", {class: "brand", text: r.brand || t("noBrand")}),
+      ...(mark ? [el("span", {class: "badge", text: t("guideBadge")})] : [])),
     el("div", {class: "mini"}, ...CHECKS.map((k) => dot(e.checks[k]))),
     el("div", {class: "time", text: r.llm.cached ? t("cacheShort") : r.llm.seconds + " s"}));
 }
@@ -208,8 +233,12 @@ function renderAll() {
 }
 
 function applyFix(r, idx) {
+  if (guide.step === 2 && r.code === GUIDE) {
+    guide.step = 3; clearTimeout(guide.timer); guide.timer = setTimeout(guideEnd, 9000);
+  }
   state.applied[r.code] = [...appliedOf(r), idx];
   saveApplied(); renderStats(); render(); openDetail(r, true, true);
+  if (guide.step === 3) $("detail").scrollTop = 0;  // die Ampel mit Hinweis 3 muss im Bild sein
 }
 function resetFix(r) {
   delete state.applied[r.code];
@@ -229,6 +258,7 @@ function diffNodes(segs, sep) {
 
 function openDetail(r, keepScroll = false, flash = false) {
   state.open = r;
+  if (guide.step === 1 && r.code === GUIDE) { guide.step = 2; render(); }
   const body = $("detailBody"), e = eff(r), applied = appliedOf(r);
   const scroll = $("detail").scrollTop;
   body.replaceChildren(el("h2", {text: r.name}),
@@ -236,6 +266,7 @@ function openDetail(r, keepScroll = false, flash = false) {
   const light = el("div", {class: "light " + e.status + (flash ? " flash" : "")}, dot(e.status, r.source), el("b", {text: lab(e.status, r.source)}));
   if (e.status !== r.status) light.append(el("span", {class: "was", text: t("was", lab(r.status, r.source))}));
   body.append(light);
+  if (guide.step === 3 && r.code === GUIDE) body.append(el("p", {class: "hint hint3", text: t("guideDone")}));
   if (applied.length) body.append(el("p", {class: "muted"}, `${t("resetHint")} `,
     el("button", {class: "reset", text: t("reset"), onclick: () => resetFix(r)})));
 
@@ -252,7 +283,9 @@ function openDetail(r, keepScroll = false, flash = false) {
         box.append(el("div", {class: "fix"}, el("span", {text: t("suggestion")}), el("div", {text: pick(f, "suggestion")})));
         if (done) box.append(el("div", {class: "tag", text: t("applied")}));
         else if (Fix.canApply(f, r.product, r.name)) {
-          box.append(el("button", {class: "apply", text: t("apply"), onclick: () => applyFix(r, i)}));
+          const mark = guide.step === 2 && r.code === GUIDE;
+          if (mark) box.append(el("span", {class: "hint", text: t("guideApply")}));
+          box.append(el("button", {class: "apply" + (mark ? " guide" : ""), text: t("apply"), onclick: () => applyFix(r, i)}));
         }
       }
       body.append(box);
@@ -284,8 +317,13 @@ function openDetail(r, keepScroll = false, flash = false) {
 }
 const table = (rows) => el("table", {}, ...rows.map(([a, b]) => el("tr", {}, el("td", {text: a}), el("td", {text: b}))));
 
-$("close").onclick = () => { $("detail").hidden = true; };
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("detail").hidden = true; });
+function closeDetail() {
+  $("detail").hidden = true;
+  if (guide.step === 2) { guide.step = 1; render(); }  // nicht übernommen: Startpunkt wieder zeigen
+  else if (guide.step === 3) guideEnd();
+}
+$("close").onclick = closeDetail;
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeDetail(); });
 let searchTimer;  // kurz warten, damit nicht jede Taste die ganze Liste neu filtert
 $("search").oninput = (e) => {
   clearTimeout(searchTimer);
@@ -298,6 +336,11 @@ const urlLang = new URLSearchParams(location.search).get("lang");  // Einbettung
 if (urlLang === "de" || urlLang === "en") state.lang = urlLang;
 document.documentElement.lang = state.lang;
 renderStatic();
+if (EMBED) {
+  state.status = "red";
+  const again = el("button", {class: "again", id: "again", onclick: guideReset, text: t("guideAgain")});
+  $("claim").after(again);
+}
 
 // results.json ist kompakt (siehe compact() in pipeline.py): Standardwerte und Rechtsgrundlagen wieder einsetzen
 function expand(data) {
@@ -324,5 +367,6 @@ fetch("public/results.json").then((r) => r.json()).then((data) => {
     const saved = JSON.parse(store("labellab.applied") || "null");
     state.applied = saved && saved.gen === data.meta.generated ? saved.map : {};
   } catch (e) { state.applied = {}; }
+  if (EMBED) delete state.applied[GUIDE];  // die Anleitung beginnt immer mit rotem Produkt
   renderAll();
 }).catch(() => { $("count").textContent = t("noResults"); });
