@@ -895,7 +895,8 @@
 .rl-h{font:400 clamp(1.25rem,1.9vw,1.6rem)/1.2 var(--serif);color:var(--fg,#F2EDE4)}
 .rl-d p{margin:.35rem 0 0;color:var(--muted);max-width:22em;font-size:1.02rem}
 .rl-cap,.rl-bar,.rl-p{display:none}
-.rl .fx-in{font-size:clamp(11px,3.9cqw,20px);justify-content:center}
+.rl .lab .fx-in{font-size:clamp(11px,3.9cqw,20px)}
+.rl .fx-in,.rl .hq-in{justify-content:center}
 .rl .lab-stage{height:18.5em}
 .rl.live .rl-bar{grid-column:1/-1;display:flex;align-items:center;gap:.9rem;padding-top:.9rem;border-top:1px solid var(--line,#3A3631)}
 .rl-ct{font:400 1.05rem/1 var(--serif);color:var(--fg,#F2EDE4);min-width:3.2rem;font-variant-numeric:tabular-nums}
@@ -939,14 +940,14 @@
   .rl.live .rl-cap small{display:block;margin-top:.25rem;font:400 .92rem/1.4 var(--sans);color:var(--muted)}
 }
 
-/* So funktioniert die Demo: kurze Anleitung über jeder Demo */
-.demo-how{margin:clamp(14px,2vw,24px) 0 clamp(16px,2.4vw,28px);padding:clamp(16px,2.4vw,26px) clamp(18px,2.8vw,32px);border:1px solid var(--line,#3A3631);border-left:3px solid var(--c-gold,#F0BF5A);border-radius:14px;background:rgba(240,191,90,.04);max-width:60rem}
-.demo-how h3{margin:0 0 .7rem;font:400 1.15rem/1.2 var(--serif);color:var(--c-gold,#F0BF5A)}
-.demo-how ol{list-style:none;counter-reset:dh;margin:0;padding:0;display:grid;gap:.55rem}
-.demo-how li{counter-increment:dh;position:relative;padding-left:2.1rem;font-size:1rem;line-height:1.5}
-.demo-how li::before{content:counter(dh);position:absolute;left:0;top:.1rem;width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;font:600 .8rem/1 var(--sans);color:#1E1D1B;background:var(--c-gold,#F0BF5A)}
-.demo-how .dh-see{margin:.85rem 0 0;color:var(--muted);font-size:.95rem}
-.demo-how .dh-see b{color:var(--fg,#F2EDE4);font-weight:500}
-.demo-start{position:relative;animation:dh-ring 1.8s ease-out infinite}
-@keyframes dh-ring{0%{box-shadow:0 0 0 0 rgba(240,191,90,.65)}100%{box-shadow:0 0 0 14px rgba(240,191,90,0)}}
-@media(prefers-reduced-motion:reduce){.demo-start{animation:none;box-shadow:0 0 0 3px rgba(240,191,90,.5)}}
+/* Demo Hinweise (Coach Marks, assets/coach.js): pulsierender goldener Ring plus kleines Badge am nächsten Element */
+.demo-sub{margin:.4rem 0 1rem;color:var(--muted);font-size:1rem}
+.cm-layer{position:absolute;inset:0;pointer-events:none;z-index:30}
+.cm-badge{position:absolute;left:0;top:0;padding:.36rem .8rem;border-radius:999px;background:var(--c-gold,#F0BF5A);color:#1E1D1B;font:600 .84rem/1.2 var(--sans);white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.4);opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .25s ease,transform .25s ease,visibility .25s}
+.cm-badge.on{opacity:1;visibility:visible;transform:none}
+.cm-target{animation:cm-ring 1.8s ease-out infinite}
+@keyframes cm-ring{0%{box-shadow:0 0 0 0 rgba(240,191,90,.7)}100%{box-shadow:0 0 0 14px rgba(240,191,90,0)}}
+.cm-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cm-again{all:unset;box-sizing:border-box;display:block;margin:10px 0 0 auto;cursor:pointer;font-size:.88rem;color:var(--c-gold,#F0BF5A);text-decoration:underline;text-underline-offset:3px}
+.cm-again:focus-visible{outline:2px solid var(--c-gold,#F0BF5A);outline-offset:3px;border-radius:4px}
+@media(prefers-reduced-motion:reduce){.cm-target{animation:none;box-shadow:0 0 0 3px rgba(240,191,90,.6)}.cm-badge{transition:none;transform:none}}

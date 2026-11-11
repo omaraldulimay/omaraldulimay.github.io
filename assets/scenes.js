@@ -80,7 +80,7 @@
   // Kapitel-Szene (data-scene="rail"): normale Sektion ohne Scroll-Steuerung. Die Kapitel wechseln alle 5 s von selbst,
   // solange sie im Bild ist. Klick und Pfeile springen direkt, Hover pausiert. Nach Kapitel 4 bleibt sie stehen.
   [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
-    var fx = rl.querySelector('.fx'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(fx.querySelectorAll('.lab-p')),
+    var fx = rl.querySelector('.fx,.hq'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(rl.querySelectorAll('.lab-p')),
       cap = rl.querySelector('.rl-cap'), n = items.length, cur = -1, MS = 5000, el = 0, last = 0, raf = 0, seen = false, hover = false, hold = 0, over = false;
     var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div');
     rl.classList.add('live');
@@ -190,13 +190,3 @@
   addEventListener('resize', onScroll);
   update();
 })();
-
-// Demo Anleitung: der Startpunkt der Demo pulsiert, bis der Besucher in die Demo klickt.
-addEventListener('load', function () {
-  [].forEach.call(document.querySelectorAll('.demo-how[data-start]'), function (h) {
-    var root = document.querySelector(h.getAttribute('data-root')), t = root && root.querySelector(h.getAttribute('data-start'));
-    if (!t) return;
-    t.classList.add('demo-start');
-    root.addEventListener('click', function () { t.classList.remove('demo-start'); }, { once: true });
-  });
-});
