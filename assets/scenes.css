@@ -740,3 +740,66 @@
 }
 @media(prefers-reduced-motion:reduce){.fx *{transition:none!important;animation:none!important}}
 .card-scene .fx{position:absolute;inset:0}
+
+/* Label Lab: Katalog prüfen in 4 Kapiteln (.lab nutzt die .fx Grundlagen). Ohne data-step gilt der Endzustand (Kapitel 4). */
+.lab{background:#1E1D1B;color:#F2EDE4;--y:#F0BF5A;box-shadow:inset 0 0 0 1px rgba(240,191,90,.22)}
+.lab-stage{position:relative;height:17.5em}
+.lab-p{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;gap:.8em}
+.lab:not([data-step]) .lab-p4,.lab[data-step="1"] .lab-p1,.lab[data-step="2"] .lab-p2,.lab[data-step="3"] .lab-p3,.lab[data-step="4"] .lab-p4{display:flex}
+.lab-p>*{animation:fx-in .55s var(--ease) backwards}
+.lab-p>*:nth-child(2){animation-delay:.25s}.lab-p>*:nth-child(3){animation-delay:.5s}.lab-p>*:nth-child(4){animation-delay:.75s}
+.lab-src{display:grid;grid-template-columns:1fr 1fr;gap:.7em}
+.lab-chip{display:flex;flex-direction:column;gap:.2em;padding:.8em 1em;border-radius:1em;border:1px solid #3A3631;background:#171615;font-size:.9em;color:#9A9288}
+.lab-chip b{font:400 2.4em/1 var(--serif);color:#F2EDE4}
+.lab-chip:first-child{border-color:rgba(240,191,90,.5)}.lab-chip:first-child b{color:var(--y)}
+.lab-chip:last-child{border-color:rgba(122,162,255,.5)}
+.lab-flow{height:2.6em;display:flex;align-items:center;justify-content:center;gap:.5em;color:#6A6358}
+.lab-flow i{width:.55em;height:.55em;border-radius:50%;background:#6A6358}
+.lab-flow i:nth-child(odd){background:var(--y)}
+.lab-big{display:flex;align-items:baseline;gap:.5em;justify-content:center}
+.lab-big b{font:300 4.6em/1 var(--serif);color:var(--y);letter-spacing:-.03em}
+.lab-big span{font-size:1.1em;color:#9A9288}
+.lab-rule{display:grid;grid-template-columns:1.9em minmax(0,1fr);column-gap:.7em;align-items:center;padding:.7em .9em;border-radius:.9em;background:#171615;border:1px solid #3A3631}
+.lab-rule svg{grid-row:span 2;color:var(--g)}
+.lab-rule b{font-weight:500;font-size:1.05em}
+.lab-rule em{font-style:normal;font-size:.85em;color:#9A9288}
+.lab-s{display:flex;align-items:center;justify-content:space-between;gap:.8em;padding:.65em .9em;border-radius:.9em;background:#171615;border:1px solid #3A3631;font-size:.95em}
+.lab-s span{min-width:0}
+.lab-s em{font-style:normal;flex:none;font-size:.8em;font-weight:600;padding:.25em .7em;border-radius:999px;background:rgba(95,211,160,.14);color:var(--g);white-space:nowrap}
+.lab-s.ok{opacity:.55}
+.lab-s.hit{border-color:var(--y);box-shadow:0 0 1.2em rgba(240,191,90,.3)}
+.lab-s.hit em{background:var(--y);color:#1E1D1B}
+.lab-n{display:flex;gap:1.4em;font-size:.95em;color:#9A9288;flex-wrap:wrap}
+.lab-n b{font:400 1.7em/1 var(--serif);color:#F2EDE4;margin-right:.3em}
+.lab-n b.g{color:var(--g)}.lab-n b.y{color:var(--y)}
+.lab-lights{display:grid;grid-template-columns:repeat(3,1fr);gap:.7em}
+.lab-light{display:flex;flex-direction:column;gap:.3em;padding:.8em .9em;border-radius:1em;background:#171615;border:1px solid var(--c);color:var(--c);font-size:.9em}
+.lab-light b{font:400 3.2em/1 var(--serif);letter-spacing:-.02em}
+.lab-light span{color:#9A9288}
+.lab-light.g{--c:#5FD3A0}.lab-light.y{--c:#F0BF5A}.lab-light.r{--c:#FF7A6B}
+.lab-light i{width:.7em;height:.7em;border-radius:50%;background:var(--c);display:inline-block;margin-right:.4em}
+.lab-badges{display:flex;flex-wrap:wrap;gap:.6em}
+.lab-badges .sbadge{font-size:.9em;padding:.55em .9em;gap:.55em;background:rgba(240,191,90,.16);color:var(--y)}
+.lab-badges .sbadge.k{background:rgba(255,255,255,.07);color:#F2EDE4}
+.lab .fx-cap{color:var(--y)}
+.lab .fx-dots i{background:#4A453E}
+.lab .fx-dots i.on,.lab:not([data-step]) .fx-dots i:last-child{background:var(--y)}
+@media(max-width:720px){.lab-stage{height:16em}.lab-big b{font-size:3.8em}}
+.labd{width:100%;height:min(80vh,820px);border:1px solid #2A2622;border-radius:20px;background:#0E0D0C;display:block}
+@media(max-width:720px){.labd{height:78vh}}
+/* Label Lab Hero: Etikett mit durchgestrichenem Werbesatz und zulässiger Korrektur */
+.sc-lb{background:#1E1D1B;color:#F2EDE4;display:flex;align-items:center;justify-content:center;padding:clamp(22px,3.4vw,44px);box-shadow:inset 0 0 0 1px rgba(240,191,90,.22)}
+.lbh-card{width:100%;max-width:640px;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(8px,1.2vw,14px)}
+.lbh-head{width:100%;display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid #3A3631;margin-bottom:6px}
+.lbh-head b{font:600 clamp(18px,2.4vw,28px) var(--serif);letter-spacing:.14em}
+.lbh-head span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9A9288}
+.lbh-bad,.lbh-good{margin:0;font:400 clamp(20px,3vw,34px)/1.25 var(--serif)}
+.lbh-bad{color:#9A9288;text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:transparent}
+.scene.on .lbh-bad{animation:sc-up .6s var(--ease) forwards .3s,lbh-strike .5s 1.2s forwards}
+@keyframes lbh-strike{to{text-decoration-color:#FF7A6B}}
+.lbh-good{color:#F0BF5A;margin-top:10px}
+.sc-lb .sbadge.r{background:rgba(255,122,107,.16);color:#FF7A6B}
+.sc-lb .sbadge.y{background:rgba(240,191,90,.16);color:#F0BF5A}
+.card-scene:has(.lab),.scene-box:has(.sc-lb){min-height:0}
+.lab.fx-card .lab-stage{height:22em}
+@media(max-width:899px){.lab.fx-card .lab-stage{height:17.5em}}

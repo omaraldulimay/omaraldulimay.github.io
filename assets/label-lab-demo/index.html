@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Label Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="placeholder" class="banner" data-i18n="placeholder" hidden></div>
+<header class="wrap">
+  <div id="lang" class="lang" role="group" aria-label="Sprache / Language"></div>
+  <p class="eyebrow" data-i18n="eyebrow"></p>
+  <h1>Label Lab</h1>
+  <p id="claim" class="claim"></p>
+</header>
+<main class="wrap">
+  <p id="offNote" class="note" hidden></p>
+  <section id="stats" class="stats"></section>
+  <section class="controls">
+    <div id="sourceFilter" class="chips" role="group" data-i18n-aria="source"></div>
+    <div id="statusFilter" class="chips" role="group" data-i18n-aria="light"></div>
+    <div id="checkFilter" class="chips" role="group" data-i18n-aria="checktype"></div>
+    <input id="search" type="search" data-i18n-ph="search" data-i18n-aria="searchlabel">
+  </section>
+  <p id="count" class="muted"></p>
+  <ul id="list" class="list"></ul>
+</main>
+<aside id="detail" class="detail" hidden>
+  <button id="close" class="close" data-i18n="close"></button>
+  <div id="detailBody"></div>
+</aside>
+<footer class="wrap foot">
+  <p data-i18n-html="foot1"></p>
+  <p data-i18n="foot2"></p>
+</footer>
+<script src="fix.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
