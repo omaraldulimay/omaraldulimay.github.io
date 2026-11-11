@@ -32,7 +32,7 @@
       b.setAttribute('aria-selected', k === cur ? 'true' : 'false');
       b.tabIndex = k === cur ? 0 : -1;
     });
-    $('hdd-meta').innerHTML = T('Angemeldet als <b>' + c.name + '</b> · ' + c.plan, 'Signed in as <b>' + c.name + '</b> · ' + c.plan);
+    $('hdd-meta').innerHTML = T('Angemeldet als <b>' + c.name + '</b>. Das sind die Tickets dieser Firma.', 'Signed in as <b>' + c.name + '</b>. These are this company\'s tickets.');
     $('hdd-list').innerHTML = c.tickets.map(function (t) {
       return '<li><b>' + t[0] + '</b><span>' + t[1] + '</span><em>' + t[2] + '</em></li>';
     }).join('');
@@ -44,21 +44,23 @@
     o.classList.remove('shake'); void o.offsetWidth;
     return o;
   }
+  var HINT = [T('Wähle eine Firma und versuche dann, fremde Tickets zu sehen.', 'Pick a company, then try to see foreign tickets.'), ''];
   function foreign() {
     var others = KEYS.filter(function (k) { return k !== cur; });
     var o = CO[others[pick % others.length]], t = o.tickets[(pick >> 1) % o.tickets.length];
     pick++; tries++;
-    out('<code>GET /api/tickets/' + t[0] + '</code> ' + T('als ', 'as ') + CO[cur].name +
-      '<span class="no">' + T('404 · nicht gefunden. Postgres liefert fremde Zeilen gar nicht erst aus.', '404 · not found. Postgres never returns foreign rows in the first place.') + '</span>').classList.add('shake');
+    out('<small>' + T('Versuch: Ticket ' + t[0] + ' von ' + o.name + ' öffnen', 'Attempt: open ticket ' + t[0] + ' of ' + o.name) + '</small>' +
+      '<b class="no">' + T('Nicht gefunden. Fremde Tickets bleiben unsichtbar.', 'Not found. Foreign tickets stay invisible.') + '</b>').classList.add('shake');
     $('hdd-n').textContent = tries;
   }
   function nofilter() {
-    out('<code>select * from tickets</code> ' + T('(ohne WHERE)', '(no WHERE)') +
-      '<span class="ok">' + T(CO[cur].tickets.length + ' Zeilen, alle von ' + CO[cur].name + '. In der Tabelle liegen ' + TOTAL + '.', CO[cur].tickets.length + ' rows, all from ' + CO[cur].name + '. The table holds ' + TOTAL + '.') + '</span>');
+    out('<small>' + T('Versuch: alle Tickets der Datenbank abfragen, ohne Filter', 'Attempt: ask for all tickets in the database, no filter') + '</small>' +
+      '<b class="ok">' + T('Nur die ' + CO[cur].tickets.length + ' Tickets von ' + CO[cur].name + ' kommen zurück. ' + (TOTAL - CO[cur].tickets.length) + ' fremde bleiben unsichtbar.', 'Only the ' + CO[cur].tickets.length + ' tickets of ' + CO[cur].name + ' come back. ' + (TOTAL - CO[cur].tickets.length) + ' foreign ones stay invisible.') + '</b>');
   }
+  function reset() { cur = 'nd'; tries = 0; pick = 0; render(); out('<b>' + HINT[0] + '</b>'); }
   root.addEventListener('click', function (e) {
     var t = e.target.closest('[data-co]');
-    if (t) { cur = t.dataset.co; render(); out(T('Wähle ein Ticket oder probiere einen Zugriff auf fremde Daten.', 'Pick a ticket or try to reach foreign data.')); return; }
+    if (t) { cur = t.dataset.co; render(); out('<b>' + T('Jetzt als ' + CO[cur].name + '. Versuche, fremde Tickets zu sehen.', 'Now as ' + CO[cur].name + '. Try to see foreign tickets.') + '</b>'); return; }
     var b = e.target.closest('[data-act]');
     if (!b) return;
     if (b.dataset.act === 'foreign') foreign(); else nofilter();
@@ -69,6 +71,6 @@
     var i = KEYS.indexOf(t.dataset.co) + (e.key === 'ArrowRight' ? 1 : 2);
     cur = KEYS[i % 3]; render(); root.querySelector('[data-co=' + cur + ']').focus();
   });
-  render();
-  out(T('Wähle ein Ticket oder probiere einen Zugriff auf fremde Daten.', 'Pick a ticket or try to reach foreign data.'));
+  root.addEventListener('demo:reset', reset);
+  reset();
 })();

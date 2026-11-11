@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=36">
-<link rel="stylesheet" href="../../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -60,34 +60,35 @@
 <div class="stats"><div class="stat rv"><b>06:00</b><span>Fresh numbers every morning</span></div><div class="stat rv"><b>3 → 1</b><span>Three systems, one dashboard</span></div><div class="stat rv"><b>578</b><span>errors caught before the report</span></div><div class="stat rv"><b>13<small>of 46</small></b><span>Real alerts, holidays filtered</span></div></div></div></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-d" class="kicker">Try it yourself</h2>
-<p class="ph-claim rv">The 06:00 run: a year of data from three systems in, errors out, finished dashboard. Feel free to make the API flaky.</p>
+<p class="ph-claim rv">The 06:00 run: a year of data from three systems in, errors out, finished dashboard. Feel free to disturb the connection.</p>
 <p class="demo-sub rv">Try it: follow the golden hints.</p>
 <div class="lld rv" id="pld">
 <div class="lld-bar">
 <div class="lld-order"><small>Time</small><b id="pld-clock">05:59</b><span>Nordhafen Living, one year of data</span></div>
 <div class="lld-btns">
-<button type="button" class="lb pay" data-act="run">Start run</button>
-<button type="button" class="lb warn" data-act="flaky" aria-pressed="false">Make API flaky</button>
+<button type="button" class="lb pay" data-act="run">Start the daily run</button>
+<button type="button" class="lb warn" data-act="flaky" aria-pressed="false">Disturb connection</button>
 </div>
 </div>
+<div class="lld-res" id="pld-res" aria-live="polite"><b id="pld-res-t"></b></div>
 <ol class="pl-stages">
-<li class="pl-stage"><span>1</span>Load</li>
-<li class="pl-stage"><span>2</span>Check</li>
-<li class="pl-stage"><span>3</span>dbt models</li>
-<li class="pl-stage"><span>4</span>Dashboard</li>
+<li class="pl-stage"><span>1</span>Fetch data</li>
+<li class="pl-stage"><span>2</span>Set errors aside</li>
+<li class="pl-stage"><span>3</span>Calculate</li>
+<li class="pl-stage"><span>4</span>Overview</li>
 </ol>
 <div class="pl-grid">
-<section class="lld-card" aria-label="Sources"><h3>Sources</h3><div id="pld-src"></div></section>
-<section class="lld-card dark" aria-label="Quarantine"><h3>Quarantine <b class="pl-qt" id="pld-qt">0</b></h3><div id="pld-q"></div><p class="pl-hint">Broken rows are not deleted but filed with a reason for review.</p></section>
-<section class="lld-card" aria-label="Models"><h3>dbt</h3><ul class="pl-models" id="pld-m"></ul></section>
+<section class="lld-card" aria-label="Sources"><h3>Where the data comes from</h3><div id="pld-src"></div></section>
+<section class="lld-card dark" aria-label="Set aside"><h3>Set aside <b class="pl-qt" id="pld-qt">0</b></h3><div id="pld-q"></div><p class="pl-hint">Faulty rows are not deleted but kept with a reason for review.</p></section>
+<section class="lld-card" aria-label="Calculated"><h3>Calculated tables</h3><ul class="pl-models" id="pld-m"></ul></section>
 </div>
 <div class="pl-out" id="pld-out" aria-live="polite">
 <article><small>Important this week</small><b>Reorder 15 items</b><p>White waffle towel 277 units · Lighthouse table lamp 287 units · Sage linen cushion cover 295 units</p></article>
-<article><small>Revenue</small><b>13 real outliers</b><p>46 unusual days, 33 of them explained: Black Friday, holiday season, sale.</p></article>
-<article class="warn"><small>Data gap</small><b>Shipping file missing</b><p>versand_2026-08-14.csv never arrived. Dagster reports it instead of silently calculating wrong.</p></article>
+<article><small>Revenue</small><b>13 days without explanation</b><p>46 unusual days, 33 of them explained: Black Friday, holiday season, sale.</p></article>
+<article class="warn"><small>Data gap</small><b>Shipping file missing</b><p>versand_2026-08-14.csv never arrived. The system reports it instead of silently calculating wrong.</p></article>
 </div>
 </div>
-<p class="demo-note">All numbers come from the real warehouse after a run over a year of test data. The retailer is made up, the errors are built in on purpose, and the tests check that quarantine finds exactly these errors.</p>
+<p class="demo-note">All numbers come from the real warehouse after a run over a year of test data. The retailer is made up, the errors are built in on purpose, and the tests check that exactly these errors are set aside.</p>
 </section>
 
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">How it works</h2>
@@ -102,7 +103,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../../assets/main.js?v=20"></script>
 <script src="../../assets/scenes.js?v=42"></script>
-<script src="../../assets/pl-demo.js?v=20"></script>
-<script src="../../assets/coach.js?v=2" defer></script>
+<script src="../../assets/pl-demo.js?v=21"></script>
+<script src="../../assets/coach.js?v=3" defer></script>
 </body>
 </html>

@@ -139,8 +139,10 @@
       if (done < total) return requestAnimationFrame(step);
       s.amt = AMOUNTS[s.n % AMOUNTS.length];
       s.busy = false;
-      say('ok', T('Alles stimmt. ' + (s.booked - b0) + ' gebucht, nichts doppelt.', 'All correct. ' + (s.booked - b0) + ' booked, none twice.'));
-      notes([['ok', T((s.booked - b0) + ' Zahlungen gebucht', (s.booked - b0) + ' payments booked')], ['warn', T((s.dup - d0) + ' Doppelklicks abgefangen', (s.dup - d0) + ' double clicks caught')], ['ok', T('Differenz weiter 0,00 €', 'Difference still €0.00')]]);
+      var nb = s.booked - b0, nd = s.dup - d0, diff = eur(s.bank + s.brand + s.fee);
+      say('ok', T(total.toLocaleString(LOC) + ' Klicks, davon ' + nd.toLocaleString(LOC) + ' doppelt. ' + nb.toLocaleString(LOC) + ' Zahlungen gebucht, keine doppelt, ' + diff + ' Differenz.',
+                  total.toLocaleString(LOC) + ' clicks, ' + nd.toLocaleString(LOC) + ' of them doubles. ' + nb.toLocaleString(LOC) + ' payments booked, none twice, ' + diff + ' difference.'));
+      notes([['info', T(total.toLocaleString(LOC) + ' Klicks insgesamt', total.toLocaleString(LOC) + ' clicks in total')], ['warn', T(nd + ' Doppelklicks abgefangen', nd + ' double clicks caught')], ['ok', T(nb + ' Zahlungen genau einmal gebucht', nb + ' payments booked exactly once')]]);
       flash(['lld-bank', 'lld-brand', 'lld-fee']);
       render();
     })();

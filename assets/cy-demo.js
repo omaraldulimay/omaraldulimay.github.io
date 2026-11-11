@@ -45,7 +45,7 @@
     return { title: p[0], format: p[1], price: p[2], tags: p[3], families: ORDER.filter(function (f) { return fam.indexOf(f) >= 0; }) };
   });
 
-  var a, step;
+  var a, step, tm = 0;
   function selected() { return Q.map(function (q) { return q.o.filter(function (o) { return o[0] === a[q.id]; })[0]; }).filter(Boolean); }
   function weights() {
     var w = {}; ORDER.forEach(function (f) { w[f] = 0; });
@@ -113,7 +113,7 @@
   }
   root.addEventListener('click', function (e) {
     var o = e.target.closest('[data-o]'), n = e.target.closest('[data-n]');
-    if (o) { a[Q[step].id] = o.dataset.o; render(); setTimeout(function () { step++; render(); }, 260); return; }
+    if (o) { a[Q[step].id] = o.dataset.o; render(); var at = step; clearTimeout(tm); tm = setTimeout(function () { if (step === at) { step++; render(); } }, 260); return; }
     if (n) {
       var i = a.notes.indexOf(n.dataset.n);
       if (i >= 0) a.notes.splice(i, 1); else if (a.notes.length < MAX_NOTES) a.notes.push(n.dataset.n);
@@ -123,5 +123,6 @@
     if (e.target.closest('[data-again]')) { a = { notes: [] }; step = 0; return render(); }
     if (e.target.closest('[data-back]') && step > 0) { step--; render(); }
   });
+  root.addEventListener('demo:reset', function () { clearTimeout(tm); a = { notes: [] }; step = 0; render(); });
   a = { notes: [] }; step = 0; render();
 })();

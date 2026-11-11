@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=36">
-<link rel="stylesheet" href="../../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -74,17 +74,17 @@
 <ol class="how rv"><li>0 leaks in 10,000 attempts on foreign data</li><li>Even a query without WHERE shows only your own rows</li><li>One company floods the system, the others stay fast</li></ol></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(40px,6vw,80px)">
 <h2 id="h-d" class="kicker">Try it yourself</h2>
-<p class="ph-claim rv">Switch the company and reach for a foreign ticket. The database does not hand it out.</p>
+<p class="ph-claim rv">Switch the company and try to see a foreign ticket. It stays invisible.</p>
 <p class="demo-sub rv">Try it: follow the golden hints.</p>
 <div class="hdd rv" id="hdd" style="--c:#7AA2FF">
 <div class="hdd-tabs" role="tablist" aria-label="Choose company"><button type="button" role="tab" class="hdd-tab" data-co="nd" aria-selected="true" style="--c:#7AA2FF"><i></i>Norddock Freight</button><button type="button" role="tab" class="hdd-tab" data-co="km" aria-selected="false" style="--c:#5FD3A0"><i></i>Kestrel Mutual</button><button type="button" role="tab" class="hdd-tab" data-co="bg" aria-selected="false" style="--c:#FF9E7A"><i></i>Bramble Goods</button></div>
 <p class="hdd-meta" id="hdd-meta"></p>
 <ul class="hdd-list" id="hdd-list"></ul>
-<div class="hdd-btns"><button type="button" class="lb pay" data-act="foreign">Fetch a foreign ticket</button><button type="button" class="lb" data-act="nofilter">Query without WHERE</button></div>
+<div class="hdd-btns"><button type="button" class="lb pay" data-act="foreign">Open another company's ticket</button><button type="button" class="lb" data-act="nofilter">Ask for all tickets, no filter</button></div>
 <div class="hdd-out" id="hdd-out" aria-live="polite"></div>
-<div class="hdd-stats"><div><b id="hdd-n">0</b><span>Foreign attempts</span></div><div><b class="zero">0</b><span>Leaks</span></div></div>
+<div class="hdd-stats"><div><b id="hdd-n">0</b><span>attempts on foreign tickets</span></div><div><b class="zero">0</b><span>foreign tickets seen</span></div></div>
 </div>
-<p class="demo-note">Rebuilt in the browser with the same rules as the real system: tenant from the token, row level security, 404 for foreign ids. The real code is on GitHub.</p>
+<p class="demo-note">Rebuilt in the browser with the same rules as the real system: the company is part of the login, and the database never hands out foreign tickets. The real code is on GitHub.</p>
 </section>
 <section class="wrap sec" aria-labelledby="h-a" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-a" class="kicker">The setup</h2>
@@ -113,7 +113,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../../assets/main.js?v=20"></script>
 <script src="../../assets/scenes.js?v=42"></script>
-<script src="../../assets/hd-demo.js?v=1"></script>
-<script src="../../assets/coach.js?v=2" defer></script>
+<script src="../../assets/hd-demo.js?v=2"></script>
+<script src="../../assets/coach.js?v=3" defer></script>
 </body>
 </html>

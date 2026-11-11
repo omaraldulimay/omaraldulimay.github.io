@@ -8,7 +8,14 @@
   if (!root || !window.KS_DATA) return;
   var $ = function (id) { return document.getElementById(id); };
   var data = window.KS_DATA, user = data[0], gen = 0;
-  var TAG = { not_found: T('Fangfrage: steht nirgends', 'Trick question: not in any document'), permission: T('Fangfrage: fremde Abteilung', 'Trick question: other department'), multi: T('zweiteilig', 'two part') };
+  var TAG = { not_found: T('Steht in keinem Dokument', 'Not in any document'), permission: T('Andere Abteilung, kein Zugriff', 'Other department, no access'), multi: T('Zwei Fragen in einer', 'Two questions in one') };
+  function say(kind, text) {
+    var r = $('ksd-res'), t = $('ksd-res-t');
+    r.className = 'lld-res' + (kind ? ' k-' + kind : '');
+    t.textContent = text;
+    t.style.animation = 'none'; void t.offsetWidth; t.style.animation = '';
+  }
+  function first() { return user.name.split(' ')[0]; }
 
   function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function renderUsers() {
@@ -19,18 +26,19 @@
     $('ksd-qs').innerHTML = user.qs.map(function (q, i) {
       return '<button type="button" class="ks-chip" data-q="' + i + '">' + esc(q.q) + (TAG[q.k] ? '<em>' + TAG[q.k] + '</em>' : '') + '</button>';
     }).join('');
-    $('ksd-who').textContent = user.name + T(' darf lesen: Allgemein, ', ' may read: General, ') + dept(user);
+    $('ksd-who').textContent = user.name + T(' darf nur lesen: Allgemein, ', ' may only read: General, ') + dept(user);
   }
   function ask(q) {
     var g = ++gen, steps = $('ksd-steps'), ans = $('ksd-ans');
     root.querySelectorAll('.ks-chip').forEach(function (c) { c.classList.toggle('on', c.textContent.indexOf(q.q) === 0); });
     $('ksd-q').textContent = q.q;
     ans.innerHTML = ''; $('ksd-cites').innerHTML = '';
+    say('info', T('Die Suche läuft …', 'Searching …'));
     var list = [
-      [T('Suche nach Bedeutung und Stichwort', 'Search by meaning and keyword'), EN ? q.n.replace('Treffer', 'hits').replace('Zeilen', 'rows') : q.n],
-      [T('Lokal nachsortiert', 'Reranked locally'), T('beste Abschnitte zuerst', 'best passages first')],
-      [T('Rechtefilter in der Datenbank', 'Permission filter in the database'), T('nur Allgemein, ', 'only General, ') + dept(user)],
-      q.f ? [q.r === 'agentic' ? T('Claude als Agent, Frage braucht mehrere Schritte', 'Claude as an agent, the question needs several steps') : T('Claude antwortet mit Quellen', 'Claude answers with sources'), ''] : [T('Nichts Passendes, das diese Person lesen darf', 'Nothing relevant this person may read'), T('feste Antwort statt einer erfundenen', 'fixed answer instead of a made up one')]
+      [T('Passende Stellen in den Dokumenten suchen', 'Find matching passages in the documents'), q.n.match(/\d+/)[0] + T(' gefunden', ' found')],
+      [T('Nur Dokumente behalten, die ' + first() + ' lesen darf', 'Keep only documents ' + first() + ' may read'), T('Allgemein, ', 'General, ') + dept(user)],
+      q.f ? [q.r === 'agentic' ? T('Antwort in mehreren Schritten zusammensetzen', 'Build the answer in several steps') : T('Antwort mit Quellen schreiben', 'Write the answer with sources'), '']
+          : [T('Nichts Passendes gefunden', 'Nothing suitable found'), T('ehrliche Antwort statt einer erfundenen', 'an honest answer instead of a made up one')]
     ];
     steps.innerHTML = list.map(function (s) { return '<li><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('');
     var lis = steps.children, i = 0;
@@ -38,6 +46,9 @@
       if (g !== gen) return;
       if (i < lis.length) { lis[i].classList.add('done'); i++; return setTimeout(next, 380); }
       type(q, g);
+      if (q.f) say('ok', T('Antwort gefunden. Mit Quelle, nur aus Dokumenten, die ' + first() + ' lesen darf.', 'Answer found. With a source, only from documents ' + first() + ' may read.'));
+      else if (q.k === 'permission') say('warn', T('Kein Zugriff. Das steht nur in Dokumenten einer anderen Abteilung.', 'No access. This is only in documents of another department.'));
+      else say('warn', T('Nichts gefunden. Das System erfindet keine Antwort.', 'Nothing found. The system does not make up an answer.'));
     })();
   }
   function type(q, g) {
@@ -58,7 +69,10 @@
     if (u) { user = data[+u.dataset.u]; renderUsers(); ask(user.qs[0]); }
     else if (q) ask(user.qs[+q.dataset.q]);
   });
+  function start() { gen++; user = data[0]; renderUsers(); ask(user.qs[0]); }
+  root.addEventListener('demo:reset', start);
   renderUsers();
+  say('', T('Wähle eine Person und klicke eine Frage an.', 'Pick a person and click a question.'));
   // Erste Frage starten, sobald die Demo ins Bild kommt.
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {

@@ -7,8 +7,8 @@
   var CFG = {
     hdd: [
       { sel: '[data-co=km]', hit: '[data-co]', t: ['1. Firma wählen', '1. Pick a company'] },
-      { sel: '[data-act=foreign]', t: ['2. Fremdes Ticket abrufen', '2. Fetch foreign ticket'] },
-      { sel: '[data-act=nofilter]', t: ['3. Ohne WHERE abfragen', '3. Query without WHERE'] }],
+      { sel: '[data-act=foreign]', t: ['2. Fremdes Ticket öffnen', '2. Open foreign ticket'] },
+      { sel: '[data-act=nofilter]', t: ['3. Ohne Filter abfragen', '3. Ask without filter'] }],
     lld: [
       { sel: '[data-act=pay]', t: ['1. Bezahlen', '1. Pay'] },
       { sel: '[data-act=pay]', t: ['2. Aus Versehen doppelt klicken', '2. Click twice by accident'] },
@@ -21,10 +21,10 @@
       { sel: '[data-act=drop]', t: ['4. Limitierten Verkauf starten', '4. Start a limited sale'] }],
     ivd: [
       { sel: '[data-act=sell]', t: ['1. Im Laden verkaufen', '1. Sell in store'] },
-      { sel: '[data-act=chaos]', t: ['2. Shop ausfallen lassen', '2. Take shop down'] },
+      { sel: '[data-act=chaos]', t: ['2. Onlineshop ausfallen lassen', '2. Take shop down'] },
       { sel: '[data-act=sell]', t: ['3. Nochmal verkaufen', '3. Sell again'] },
-      { sel: '[data-act=zero]', t: ['4. ERP Export kaputt', '4. Break ERP export'] },
-      { sel: '[data-act=fix]', t: ['5. Export korrigieren', '5. Fix the export'] }],
+      { sel: '[data-act=zero]', t: ['4. Fehlerhafte Lagerliste', '4. Faulty stock list'] },
+      { sel: '[data-act=fix]', t: ['5. Liste korrigieren', '5. Correct the list'] }],
     cyd: [
       { sel: '.cy-opts:not(.notes) button', until: '.cy-opts.notes', t: ['1. Antwort wählen', '1. Pick an answer'] },
       { sel: '.cy-opts.notes button', hit: '[data-n]', t: ['2. Lieblingsnote wählen', '2. Pick a note'] },
@@ -32,9 +32,9 @@
     ksd: [
       { sel: '#ksd-users button:not([aria-pressed=true])', hit: '[data-u]', t: ['1. Person wählen', '1. Pick a person'] },
       { sel: '.ks-chip:not(.on)', hit: '[data-q]', t: ['2. Frage anklicken', '2. Click a question'] },
-      { sel: '.ks-chip:has(em):not(.on)', hit: '[data-q]', t: ['3. Fangfrage probieren', '3. Try a trick question'] }],
+      { sel: '.ks-chip:has(em):not(.on)', hit: '[data-q]', t: ['3. Frage mit Etikett', '3. Try a labelled one'] }],
     pld: [
-      { sel: '[data-act=flaky]', t: ['1. API wackeln lassen', '1. Make API shaky'] },
+      { sel: '[data-act=flaky]', t: ['1. Verbindung stören', '1. Disturb connection'] },
       { sel: '[data-act=run]', t: ['2. Nochmal starten', '2. Run again'] }]
   };
   var DONE = ['Geschafft. Probier frei weiter.', 'Done. Keep exploring freely.'];

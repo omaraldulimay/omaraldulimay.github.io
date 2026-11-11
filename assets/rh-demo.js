@@ -79,6 +79,9 @@
     var avail = s.ok / Math.max(1, s.ok + s.bad) * 100;
     $('rhd-v3').textContent = avail.toFixed(2).replace('.', DEC) + ' %';
     $('rhd-v3').className = avail >= 99.5 ? 'g' : 'r';
+    $('rhd-v3l').textContent = avail >= 99.5 ? T('Erfolgreiche Bestellungen seit Start, Ziel 99,5 %', 'Successful orders since start, target 99.5 %')
+      : s.deploy ? T('Erfolgreiche Bestellungen: unter Ziel, Update wird zurückgenommen', 'Successful orders: below target, update is taken back')
+                 : T('Erfolgreiche Bestellungen: unter Ziel, erholt sich langsam', 'Successful orders: below target, slowly recovering');
     $('rhd-ver').textContent = s.deploy ? T('Update v1.5 bei ', 'Update v1.5 with ') + Math.min(50, 10 + (s.t - s.deploy) * 2) + T(' % der Kunden', ' % of customers') : s.version + T(' läuft stabil', ' running stable');
     $('rhd-ver').className = s.deploy ? 'r' : 'g';
     $('rhd-br').textContent = s.breaker === 'offen' ? T('hängt · ', 'stuck · ') + s.waiting.toLocaleString(LOC) + T(' warten', ' waiting') : T('läuft', 'working');

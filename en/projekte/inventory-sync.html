@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=36">
-<link rel="stylesheet" href="../../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -66,38 +66,37 @@
 <div class="stats"><div class="stat rv"><b>41</b><span>tests</span></div><div class="stat rv"><b>5</b><span>seconds: incremental sync</span></div><div class="stat rv"><b>60</b><span>seconds: full sync</span></div><div class="stat rv"><b>5</b><span>attempts per request</span></div></div></div></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-d" class="kicker">Try it yourself</h2>
-<p class="ph-claim rv">Sell in the store, take the shop down, send a broken export. The stock stays correct.</p>
+<p class="ph-claim rv">Sell in the store, take the online shop down, send a faulty stock list. The stock stays correct.</p>
 <p class="demo-sub rv">Try it: follow the golden hints.</p>
 <div class="lld rv" id="ivd">
 <div class="lld-bar">
-<div class="lld-order"><small>Next full sync</small><b id="ivd-next">60 s</b><span>Time lapse, 10 ×</span></div>
+<div class="lld-order"><small>Next check</small><b id="ivd-next">5 s</b><span>Time lapse, 2 ×</span></div>
 <div class="lld-btns">
 <button type="button" class="lb pay" data-act="sell">Sell in store</button>
-<button type="button" class="lb warn" data-act="chaos" aria-pressed="false">Shop goes down</button>
-<button type="button" class="lb" data-act="drift">Change directly in shop</button>
-<button type="button" class="lb warn" data-act="zero">Broken ERP export</button>
-<button type="button" class="lb pay" data-act="fix" hidden>Check and fix export</button>
-<button type="button" class="lb ghost" data-act="reset">Restart</button>
+<button type="button" class="lb warn" data-act="chaos" aria-pressed="false">Online shop goes down</button>
+<button type="button" class="lb warn" data-act="zero">Faulty stock list</button>
+<button type="button" class="lb pay" data-act="fix" hidden>Correct the stock list</button>
 </div>
 </div>
+<div class="lld-res" id="ivd-res" aria-live="polite"><b id="ivd-res-t"></b></div>
 <div class="lld-grid iv-grid">
 <section class="lld-card" aria-label="Stock">
-<div class="iv-r iv-h"><span>Item</span><span class="n">ERP</span><span class="n">Shop</span><span>Status</span></div>
+<div class="iv-tot"><div><small>Store</small><b id="ivd-ts">0</b></div><div id="ivd-tbox"><small>Online shop</small><b id="ivd-to">0</b></div></div>
+<div class="iv-r iv-h"><span>Item</span><span class="n">Store</span><span class="n">Shop</span><span>Status</span></div>
 <div id="ivd-rows"></div>
 </section>
 <section class="lld-card dark" aria-label="Log">
-<h3>What happens</h3>
-<ol id="ivd-log" class="lld-log iv-log" aria-live="polite"></ol>
+<h3>What is happening</h3>
+<ol id="ivd-log" class="lld-log iv-log" aria-live="off"></ol>
 </section>
 </div>
 <div class="lld-stats">
-<div><b id="ivd-c1">0</b><span>Sync runs</span></div>
-<div><b id="ivd-c2">0</b><span>Stock levels written</span></div>
-<div><b id="ivd-c3">0</b><span>Retries with backoff</span></div>
-<div><b id="ivd-c4">0</b><span>Items currently out of sync</span></div>
+<div><b id="ivd-c2">0</b><span>stock counts updated</span></div>
+<div><b id="ivd-c3">0</b><span>new tries after errors</span></div>
+<div><b id="ivd-c4">0</b><span>items currently different</span></div>
 </div>
 </div>
-<p class="demo-note">Rebuilt in the browser with the rules of the real service: sync every 5 s, full sync every 60 s, up to 5 attempts with backoff, absolute values instead of differences, zero stock protection. The real code with FastAPI and PostgreSQL is on GitHub.</p>
+<p class="demo-note">Rebuilt in the browser with the rules of the real service: the shop always gets the exact count, never just a change. Failed tries are repeated, a suspicious stock list is stopped. The real code is on GitHub.</p>
 </section>
 
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">How it works</h2>
@@ -112,7 +111,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../../assets/main.js?v=20"></script>
 <script src="../../assets/scenes.js?v=42"></script>
-<script src="../../assets/inv-demo.js?v=20"></script>
-<script src="../../assets/coach.js?v=2" defer></script>
+<script src="../../assets/inv-demo.js?v=21"></script>
+<script src="../../assets/coach.js?v=3" defer></script>
 </body>
 </html>

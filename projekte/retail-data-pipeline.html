@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=36">
-<link rel="stylesheet" href="../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -60,34 +60,35 @@
 <div class="stats"><div class="stat rv"><b>06:00</b><span>Jeden Morgen frische Zahlen</span></div><div class="stat rv"><b>3 → 1</b><span>Drei Systeme, ein Dashboard</span></div><div class="stat rv"><b>578</b><span>Fehler abgefangen vor dem Report</span></div><div class="stat rv"><b>13<small>von 46</small></b><span>Echte Alarme, Feiertage gefiltert</span></div></div></div></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-d" class="kicker">Probier es selbst</h2>
-<p class="ph-claim rv">Der Lauf um 06:00: Ein Jahr Daten aus drei Systemen rein, Fehler raus, fertiges Dashboard. Lass ruhig die API wackeln.</p>
+<p class="ph-claim rv">Der Lauf um 06:00: Ein Jahr Daten aus drei Systemen rein, Fehler raus, fertige Übersicht. Stör ruhig die Verbindung.</p>
 <p class="demo-sub rv">Probier es aus: folge den goldenen Hinweisen.</p>
 <div class="lld rv" id="pld">
 <div class="lld-bar">
 <div class="lld-order"><small>Uhrzeit</small><b id="pld-clock">05:59</b><span>Nordhafen Living, ein Jahr Daten</span></div>
 <div class="lld-btns">
-<button type="button" class="lb pay" data-act="run">Lauf starten</button>
-<button type="button" class="lb warn" data-act="flaky" aria-pressed="false">API wackeln lassen</button>
+<button type="button" class="lb pay" data-act="run">Tagesauswertung starten</button>
+<button type="button" class="lb warn" data-act="flaky" aria-pressed="false">Verbindung stören</button>
 </div>
 </div>
+<div class="lld-res" id="pld-res" aria-live="polite"><b id="pld-res-t"></b></div>
 <ol class="pl-stages">
-<li class="pl-stage"><span>1</span>Laden</li>
-<li class="pl-stage"><span>2</span>Prüfen</li>
-<li class="pl-stage"><span>3</span>dbt Modelle</li>
-<li class="pl-stage"><span>4</span>Dashboard</li>
+<li class="pl-stage"><span>1</span>Daten holen</li>
+<li class="pl-stage"><span>2</span>Fehler aussortieren</li>
+<li class="pl-stage"><span>3</span>Zahlen berechnen</li>
+<li class="pl-stage"><span>4</span>Übersicht</li>
 </ol>
 <div class="pl-grid">
-<section class="lld-card" aria-label="Quellen"><h3>Quellen</h3><div id="pld-src"></div></section>
-<section class="lld-card dark" aria-label="Quarantäne"><h3>Quarantäne <b class="pl-qt" id="pld-qt">0</b></h3><div id="pld-q"></div><p class="pl-hint">Kaputte Zeilen werden nicht gelöscht, sondern mit Grund zur Prüfung abgelegt.</p></section>
-<section class="lld-card" aria-label="Modelle"><h3>dbt</h3><ul class="pl-models" id="pld-m"></ul></section>
+<section class="lld-card" aria-label="Quellen"><h3>Woher die Daten kommen</h3><div id="pld-src"></div></section>
+<section class="lld-card dark" aria-label="Aussortiert"><h3>Aussortiert <b class="pl-qt" id="pld-qt">0</b></h3><div id="pld-q"></div><p class="pl-hint">Fehlerhafte Zeilen werden nicht gelöscht, sondern mit Grund zur Prüfung aufgehoben.</p></section>
+<section class="lld-card" aria-label="Berechnet"><h3>Berechnete Tabellen</h3><ul class="pl-models" id="pld-m"></ul></section>
 </div>
 <div class="pl-out" id="pld-out" aria-live="polite">
 <article><small>Diese Woche wichtig</small><b>15 Artikel nachbestellen</b><p>Waffelhandtuch Weiß 277 Stück · Tischleuchte Leuchtturm 287 Stück · Kissenhülle Leinen Salbei 295 Stück</p></article>
-<article><small>Umsatz</small><b>13 echte Ausreißer</b><p>46 auffällige Tage, 33 davon erklärt: Black Friday, Weihnachtsgeschäft, Sale.</p></article>
-<article class="warn"><small>Datenlücke</small><b>Versanddatei fehlt</b><p>versand_2026-08-14.csv kam nie an. Dagster meldet es, statt still falsch zu rechnen.</p></article>
+<article><small>Umsatz</small><b>13 Tage ohne Erklärung</b><p>46 auffällige Tage, 33 davon erklärt: Black Friday, Weihnachtsgeschäft, Sale.</p></article>
+<article class="warn"><small>Datenlücke</small><b>Versanddatei fehlt</b><p>versand_2026-08-14.csv kam nie an. Das System meldet es, statt still falsch zu rechnen.</p></article>
 </div>
 </div>
-<p class="demo-note">Alle Zahlen stammen aus dem echten Warehouse nach einem Lauf über ein Jahr Testdaten. Die Händlerin ist erfunden, die Fehler sind absichtlich eingebaut, und die Tests prüfen, dass die Quarantäne genau diese Fehler findet.</p>
+<p class="demo-note">Alle Zahlen stammen aus dem echten Warehouse nach einem Lauf über ein Jahr Testdaten. Die Händlerin ist erfunden, die Fehler sind absichtlich eingebaut, und die Tests prüfen, dass genau diese Fehler aussortiert werden.</p>
 </section>
 
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">So funktioniert’s</h2>
@@ -102,7 +103,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=20"></script>
 <script src="../assets/scenes.js?v=42"></script>
-<script src="../assets/pl-demo.js?v=20"></script>
-<script src="../assets/coach.js?v=2" defer></script>
+<script src="../assets/pl-demo.js?v=21"></script>
+<script src="../assets/coach.js?v=3" defer></script>
 </body>
 </html>

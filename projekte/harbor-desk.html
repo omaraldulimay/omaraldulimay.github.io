@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css?v=36">
-<link rel="stylesheet" href="../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -74,17 +74,17 @@
 <ol class="how rv"><li>0 Lecks bei 10.000 Zugriffen auf fremde Daten</li><li>Selbst eine Abfrage ohne WHERE zeigt nur eigene Zeilen</li><li>Eine Firma flutet das System, die anderen bleiben schnell</li></ol></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(40px,6vw,80px)">
 <h2 id="h-d" class="kicker">Probier es selbst</h2>
-<p class="ph-claim rv">Wechsle die Firma und greif nach einem fremden Ticket. Die Datenbank liefert es nicht aus.</p>
+<p class="ph-claim rv">Wechsle die Firma und versuche, ein fremdes Ticket zu sehen. Es bleibt unsichtbar.</p>
 <p class="demo-sub rv">Probier es aus: folge den goldenen Hinweisen.</p>
 <div class="hdd rv" id="hdd" style="--c:#7AA2FF">
 <div class="hdd-tabs" role="tablist" aria-label="Firma wählen"><button type="button" role="tab" class="hdd-tab" data-co="nd" aria-selected="true" style="--c:#7AA2FF"><i></i>Norddock Freight</button><button type="button" role="tab" class="hdd-tab" data-co="km" aria-selected="false" style="--c:#5FD3A0"><i></i>Kestrel Mutual</button><button type="button" role="tab" class="hdd-tab" data-co="bg" aria-selected="false" style="--c:#FF9E7A"><i></i>Bramble Goods</button></div>
 <p class="hdd-meta" id="hdd-meta"></p>
 <ul class="hdd-list" id="hdd-list"></ul>
-<div class="hdd-btns"><button type="button" class="lb pay" data-act="foreign">Fremdes Ticket abrufen</button><button type="button" class="lb" data-act="nofilter">Abfrage ohne WHERE</button></div>
+<div class="hdd-btns"><button type="button" class="lb pay" data-act="foreign">Ticket einer anderen Firma öffnen</button><button type="button" class="lb" data-act="nofilter">Alle Tickets abfragen, ohne Filter</button></div>
 <div class="hdd-out" id="hdd-out" aria-live="polite"></div>
-<div class="hdd-stats"><div><b id="hdd-n">0</b><span>Fremdzugriffe</span></div><div><b class="zero">0</b><span>Lecks</span></div></div>
+<div class="hdd-stats"><div><b id="hdd-n">0</b><span>Versuche auf fremde Tickets</span></div><div><b class="zero">0</b><span>fremde Tickets gesehen</span></div></div>
 </div>
-<p class="demo-note">Im Browser nachgebaut, mit denselben Regeln wie das echte System: Mandant aus dem Token, Row Level Security, 404 für fremde Ids. Der echte Code liegt auf GitHub.</p>
+<p class="demo-note">Im Browser nachgebaut, mit denselben Regeln wie das echte System: Die Firma steckt im Login, die Datenbank gibt fremde Tickets nie heraus. Der echte Code liegt auf GitHub.</p>
 </section>
 <section class="wrap sec" aria-labelledby="h-a" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-a" class="kicker">Der Aufbau</h2>
@@ -113,7 +113,7 @@
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../assets/main.js?v=20"></script>
 <script src="../assets/scenes.js?v=42"></script>
-<script src="../assets/hd-demo.js?v=1"></script>
-<script src="../assets/coach.js?v=2" defer></script>
+<script src="../assets/hd-demo.js?v=2"></script>
+<script src="../assets/coach.js?v=3" defer></script>
 </body>
 </html>

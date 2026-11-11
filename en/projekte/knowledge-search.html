@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=36">
-<link rel="stylesheet" href="../../assets/scenes.css?v=42">
+<link rel="stylesheet" href="../../assets/scenes.css?v=43">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -56,15 +56,16 @@
 <div class="stats"><div class="stat rv"><b>100<small>%</small></b><span>correct on new test questions</span></div><div class="stat rv"><b>0</b><span>permission leaks</span></div><div class="stat rv"><b>10,000</b><span>documents tested</span></div></div></div></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-d" class="kicker">Try it yourself</h2>
-<p class="ph-claim rv">Pick a person and a question. Try the trick questions too: anything that isn't in the documents or belongs to another department gets no answer.</p>
+<p class="ph-claim rv">Pick a person and a question. Try the labelled questions too: anything that is not in the documents or belongs to another department gets no answer.</p>
 <p class="demo-sub rv">Try it: follow the golden hints.</p>
 <div class="lld rv" id="ksd">
 <div class="lld-bar"><div class="lld-order"><small>Who is asking?</small></div><div class="lld-btns" id="ksd-users"></div></div>
 <p class="ks-who" id="ksd-who"></p>
 <div class="ks-qs" id="ksd-qs"></div>
+<div class="lld-res" id="ksd-res" aria-live="polite"><b id="ksd-res-t"></b></div>
 <div class="lld-grid ks-grid">
 <section class="lld-card dark" aria-label="Process">
-<h3>How it searches</h3>
+<h3>How the answer comes about</h3>
 <ol class="ks-steps" id="ksd-steps"></ol>
 </section>
 <section class="lld-card ks-out" aria-label="Answer" aria-live="polite">
@@ -102,7 +103,7 @@
 <script src="../../assets/main.js?v=20"></script>
 <script src="../../assets/scenes.js?v=42"></script>
 <script src="../../assets/ks-data.js?v=1"></script>
-<script src="../../assets/ks-demo.js?v=20"></script>
-<script src="../../assets/coach.js?v=2" defer></script>
+<script src="../../assets/ks-demo.js?v=21"></script>
+<script src="../../assets/coach.js?v=3" defer></script>
 </body>
 </html>

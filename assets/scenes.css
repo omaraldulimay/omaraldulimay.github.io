@@ -251,7 +251,7 @@
 
 /* Demo zum Selbstausprobieren: Inventory Sync */
 .iv-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
-.iv-r{display:grid;grid-template-columns:minmax(0,1fr) 48px 48px 118px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.iv-r{display:grid;grid-template-columns:minmax(0,1fr) 78px 78px 104px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
 .iv-r b{font-weight:500;display:block}
 .iv-r small{display:block;font-size:12px;color:var(--muted)}
 .iv-r .n{text-align:right;font-variant-numeric:tabular-nums;font-size:16px}
@@ -266,11 +266,21 @@
 .iv-log{min-height:0;height:330px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
 @media(max-width:899px){
   .iv-grid{grid-template-columns:1fr}
-  .iv-r{grid-template-columns:minmax(0,1fr) 34px 34px 96px;gap:6px;font-size:13px}
+  .iv-r{grid-template-columns:minmax(0,1fr) 58px 58px 84px;gap:6px;font-size:13px}
   .iv-r small{display:none}
   .iv-log{height:240px}
 }
 .iv-h .n{font-size:11px}
+.iv-h{letter-spacing:.06em}
+.iv-tot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.iv-tot>div{background:var(--bg2);border-radius:14px;padding:12px 16px;border:1px solid var(--line);transition:border-color .3s}
+.iv-tot small{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.iv-tot b{display:block;font:300 clamp(2rem,5vw,3rem)/1.1 var(--serif);font-variant-numeric:tabular-nums}
+.iv-tot b i{font:400 .9rem var(--sans,inherit);color:var(--muted);font-style:normal;margin-left:6px}
+.iv-tot>div.off{border-color:var(--c-coral)}.iv-tot>div.off b{color:var(--c-coral)}
+.iv-r .n.bump{animation:iv-bump .7s ease-out}
+@keyframes iv-bump{0%{transform:scale(1.5);color:var(--c-gold)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.iv-r .n.bump{animation:none}}
 .lld-order{flex-wrap:wrap}
 
 /* Demo zum Selbstausprobieren: Firmenwissensuche */
@@ -497,6 +507,9 @@
 .hdd-btns{display:flex;flex-wrap:wrap;gap:8px}
 .hdd-out{min-height:84px;border-radius:18px;background:#101113;padding:16px 20px;font-size:14px;line-height:1.5}
 .hdd-out code{font:500 13px/1.5 ui-monospace,Menlo,monospace;color:var(--c-gold);word-break:break-word}
+.hdd-out small{display:block;color:var(--muted);font-size:13px}
+.hdd-out b{display:block;margin-top:6px;font:400 clamp(20px,2.6vw,28px)/1.25 var(--serif)}
+.hdd-out b.no{color:var(--c-coral)}.hdd-out b.ok{color:var(--c-green)}
 .hdd-out .no{display:block;margin-top:6px;font-size:15px;color:var(--c-coral)}
 .hdd-out .ok{display:block;margin-top:6px;font-size:15px;color:var(--c-green)}
 .hdd-out.shake{animation:hdd-shake .4s}
