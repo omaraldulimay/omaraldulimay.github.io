@@ -1,4 +1,4 @@
-// Ledger Lane im Browser nachgebaut: doppelte Buchführung, Idempotenz-Schlüssel, Absturz mit Rollback.
+// Ledger Lane im Browser nachgebaut: jede Zahlung hat eine Nummer und wird nur einmal gebucht, Abstürze buchen nichts halb.
 (function () {
   var EN = document.documentElement.lang === 'en', LOC = EN ? 'en-GB' : 'de-DE';
   function T(de, en) { return EN ? en : de; }
@@ -7,7 +7,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var AMOUNTS = [5000, 2990, 8900, 12000, 4550, 1999, 6400];
   var FEE = 0.15;
-  var s, gen = 0;
+  var s, gen = 0, calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function eur(c, sign) {
     var t = (Math.abs(c) / 100).toLocaleString(LOC, { style: 'currency', currency: 'EUR' });
@@ -16,100 +16,131 @@
   }
   function init() {
     gen++;
-    s = { bank: 0, brand: 0, fee: 0, keys: {}, booked: 0, dup: 0, rolled: 0, armed: false, busy: false, n: 1001, amt: 5000 };
+    s = { bank: 0, brand: 0, fee: 0, keys: {}, booked: 0, dup: 0, rolled: 0, crashed: false, busy: false, n: 1001, amt: 5000 };
+    root.classList.remove('crashed');
     $('lld-log').innerHTML = '';
-    log('info', T('Bereit. Bestellung order-1001 über 50,00 € wartet auf Zahlung.', 'Ready. Order order-1001 for €50.00 is waiting for payment.'));
+    ['lld-bank', 'lld-brand', 'lld-fee'].forEach(function (id) { var e = $(id); e._v = 0; e._raf && cancelAnimationFrame(e._raf); e.parentNode.classList.remove('gld'); });
+    $('lld-nope').classList.remove('on');
+    say('', T('Klick auf Bezahlen.', 'Click Pay.'));
     render();
   }
-  function render() {
-    $('lld-ord').textContent = 'order-' + s.n;
+  // Ein großer Ergebnissatz pro Schritt.
+  function say(kind, text) {
+    var r = $('lld-res'), t = $('lld-res-t');
+    r.className = 'lld-res' + (kind ? ' k-' + kind : '');
+    t.textContent = text;
+    t.style.animation = 'none'; void t.offsetWidth; t.style.animation = '';
+  }
+  // Kurze Notizen, höchstens drei, bei jedem Schritt neu.
+  function notes(list) {
+    var ol = $('lld-log'); ol.innerHTML = '';
+    list.slice(0, 3).forEach(function (x) {
+      var li = document.createElement('li'); li.className = 'l-' + x[0]; li.textContent = x[1]; ol.appendChild(li);
+    });
+  }
+  // Betrag zählt animiert zum neuen Wert.
+  function setAmt(id, v, quick) {
+    var e = $(id), from = e._v || 0;
+    e._v = v;
+    if (e._raf) cancelAnimationFrame(e._raf);
+    if (calm || quick || from === v) { e.textContent = eur(v, true); return; }
+    var t0 = performance.now(), D = 700;
+    (function f(t) {
+      var k = Math.min(1, (t - t0) / D), q = 1 - Math.pow(1 - k, 3);
+      e.textContent = eur(Math.round(from + (v - from) * q), true);
+      e._raf = k < 1 ? requestAnimationFrame(f) : 0;
+    })(t0);
+  }
+  function render(quick) {
+    $('lld-ord').textContent = '#' + s.n;
     $('lld-amt').textContent = eur(s.amt);
-    $('lld-bank').textContent = eur(s.bank, true);
-    $('lld-brand').textContent = eur(s.brand, true);
-    $('lld-fee').textContent = eur(s.fee, true);
+    setAmt('lld-bank', s.bank, quick); setAmt('lld-brand', s.brand, quick); setAmt('lld-fee', s.fee, quick);
     $('lld-sum').textContent = eur(s.bank + s.brand + s.fee);
     $('lld-c1').textContent = s.booked.toLocaleString(LOC);
     $('lld-c2').textContent = s.dup.toLocaleString(LOC);
     $('lld-c3').textContent = s.rolled.toLocaleString(LOC);
-    var k = root.querySelector('[data-act=kill]');
-    k.setAttribute('aria-pressed', s.armed ? 'true' : 'false');
-    k.textContent = s.armed ? T('Absturz scharf ✕', 'Crash armed ✕') : T('Server abschießen', 'Kill the server');
-    root.querySelectorAll('button').forEach(function (b) { b.disabled = s.busy && b.dataset.act !== 'reset'; });
-  }
-  function log(kind, text) {
-    var li = document.createElement('li');
-    li.className = 'l-' + kind;
-    li.textContent = text;
-    var ol = $('lld-log');
-    ol.insertBefore(li, ol.firstChild);
-    while (ol.children.length > 7) ol.removeChild(ol.lastChild);
+    var p = root.querySelector('[data-act=pay]');
+    p.textContent = s.crashed ? T('Trotzdem bezahlen', 'Pay anyway') : T('Bezahlen', 'Pay');
+    root.querySelectorAll('button').forEach(function (b) {
+      b.disabled = s.busy || (s.crashed && b.dataset.act === 'kill');
+    });
   }
   function flash(ids) {
     ids.forEach(function (id) {
       var el = $(id).parentNode;
-      el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit');
+      el.classList.remove('gld'); void el.offsetWidth; el.classList.add('gld');
     });
   }
-  function book(key, amt, quiet) {
+  function book(key, amt) {
     var fee = Math.round(amt * FEE), brand = amt - fee;
     s.bank += amt; s.brand -= brand; s.fee -= fee;
     s.keys[key] = true; s.booked++;
-    if (!quiet) {
-      log('ok', T('Gebucht ', 'Booked ') + key + ': ' + T('Bank ', 'bank ') + eur(amt, true) + T(', Marke ', ', brand ') + eur(-brand, true) + T(', Provision ', ', fee ') + eur(-fee, true) + T('. Summe 0.', '. Sum 0.'));
-      flash(['lld-bank', 'lld-brand', 'lld-fee']);
-    }
+    return { fee: fee, brand: brand };
   }
   function pay() {
-    var key = 'order-' + s.n;
+    var key = '#' + s.n;
     if (s.keys[key]) {
       s.dup++;
-      log('warn', T('Gleicher Schlüssel ' + key + ' erkannt. Alte Antwort zurück, nichts neu gebucht.', 'Same key ' + key + ' seen. Old response returned, nothing booked again.'));
+      var n = $('lld-nope'); n.classList.remove('on'); void n.offsetWidth; n.classList.add('on');
+      say('warn', T('Doppelklick erkannt. Nicht doppelt abgebucht.', 'Double click spotted. Not charged twice.'));
+      notes([['warn', T('Bestellung ' + key + ' war schon bezahlt', 'Order ' + key + ' was already paid')], ['info', T('Die Konten bleiben unverändert', 'The accounts stay as they are')]]);
       return render();
     }
-    if (!s.armed) { book(key, s.amt); return render(); }
-    s.armed = false; s.busy = true; render();
-    var g = gen, later = function (ms, fn) { setTimeout(function () { if (g === gen) fn(); }, ms); };
-    log('info', T('Buchung ' + key + ' läuft: Konten gesperrt, Zeilen geschrieben …', 'Booking ' + key + ': accounts locked, rows written …'));
-    later(700, function () {
+    var wasCrashed = s.crashed, r = book(key, s.amt);
+    s.crashed = false;
+    say('ok', wasCrashed ? T('Wieder da. Alles genau einmal gebucht.', 'Back again. Everything booked exactly once.') : T('Bezahlt. ' + eur(s.amt).replace(',00', '') + ' korrekt verteilt.', 'Paid. ' + eur(s.amt).replace('.00', '') + ' split correctly.'));
+    notes([['ok', T('Bankkonto ', 'Bank account ') + eur(s.amt, true)], ['ok', T('Marke bekommt ', 'Brand receives ') + eur(r.brand)], ['ok', T('Plattform behält ', 'Platform keeps ') + eur(r.fee)]]);
+    flash(['lld-bank', 'lld-brand', 'lld-fee']);
+    render();
+  }
+  function crash() {
+    if (s.keys['#' + s.n]) next(true);
+    var key = '#' + s.n, g = gen, later = function (ms, fn) { setTimeout(function () { if (g === gen) fn(); }, ms); };
+    s.busy = true; render();
+    say('info', T('Zahlung ' + key + ' läuft …', 'Payment ' + key + ' is running …'));
+    notes([['info', T('Bestellung ' + key + ' über ' + eur(s.amt), 'Order ' + key + ' for ' + eur(s.amt))]]);
+    later(900, function () {
       root.classList.add('crashed');
-      log('bad', T('kill -9. Server weg, mitten in der Transaktion.', 'kill -9. Server gone, in the middle of the transaction.'));
+      say('bad', T('Server abgestürzt. Zahlung wird nicht halb gebucht.', 'Server crashed. A payment is never booked halfway.'));
+      notes([['info', T('Bestellung ' + key + ' über ' + eur(s.amt), 'Order ' + key + ' for ' + eur(s.amt))], ['bad', T('Server fällt mitten in der Buchung aus', 'Server drops out in the middle of booking')]]);
     });
-    later(1900, function () {
+    later(2300, function () {
       root.classList.remove('crashed');
-      s.rolled++;
-      log('info', T('Neustart. PostgreSQL rollt die halbe Transaktion zurück: nichts halb gebucht.', 'Restart. PostgreSQL rolls back the half transaction: nothing half booked.'));
+      s.rolled++; s.crashed = true; s.busy = false;
+      notes([['info', T('Bestellung ' + key + ' über ' + eur(s.amt), 'Order ' + key + ' for ' + eur(s.amt))], ['bad', T('Server fällt mitten in der Buchung aus', 'Server drops out in the middle of booking')], ['ok', T('Neustart: nichts wurde halb gebucht', 'Restart: nothing was booked halfway')]]);
       render();
     });
-    later(3100, function () {
-      log('info', T('Shop wiederholt die Zahlung mit demselben Schlüssel ' + key + '.', 'The shop retries the payment with the same key ' + key + '.'));
-      book(key, s.amt);
-      s.busy = false; render();
-    });
   }
-  function next() {
+  function next(silent) {
     s.n++;
     s.amt = AMOUNTS[s.n % AMOUNTS.length];
-    log('info', T('Neue Bestellung order-' + s.n + ' über ' + eur(s.amt) + '.', 'New order order-' + s.n + ' for ' + eur(s.amt) + '.'));
+    s.crashed = false;
+    if (!silent) {
+      say('info', T('Neue Bestellung #' + s.n + ' über ' + eur(s.amt) + '.', 'New order #' + s.n + ' for ' + eur(s.amt) + '.'));
+      notes([]);
+    }
     render();
   }
   function rush() {
     s.busy = true; render();
     var g = gen, total = 1000, done = 0, b0 = s.booked, d0 = s.dup, last = null;
-    log('info', T('Ansturm: 1.000 Zahlungen gleichzeitig, viele davon doppelt geklickt …', 'Rush: 1,000 payments at once, many of them double clicked …'));
+    say('info', T('1.000 Zahlungen gleichzeitig, viele doppelt geklickt …', '1,000 payments at once, many double clicked …'));
+    notes([]);
     (function step() {
       if (g !== gen) return;
       for (var i = 0; i < 25 && done < total; i++, done++) {
         var key;
         if (last && Math.random() < 0.1) key = last;
-        else { s.n++; key = 'order-' + s.n; last = key; }
+        else { s.n++; key = '#' + s.n; last = key; }
         if (s.keys[key]) s.dup++;
-        else book(key, AMOUNTS[s.n % AMOUNTS.length], true);
+        else book(key, AMOUNTS[s.n % AMOUNTS.length]);
       }
-      render();
+      render(true);
       if (done < total) return requestAnimationFrame(step);
       s.amt = AMOUNTS[s.n % AMOUNTS.length];
       s.busy = false;
-      log('ok', T('1.000 Anfragen: ' + (s.booked - b0) + ' gebucht, ' + (s.dup - d0) + ' Doppelte abgefangen. Summe weiter 0,00 €.', '1,000 requests: ' + (s.booked - b0) + ' booked, ' + (s.dup - d0) + ' duplicates caught. Sum still €0.00.'));
+      say('ok', T('Alles stimmt. ' + (s.booked - b0) + ' gebucht, nichts doppelt.', 'All correct. ' + (s.booked - b0) + ' booked, none twice.'));
+      notes([['ok', T((s.booked - b0) + ' Zahlungen gebucht', (s.booked - b0) + ' payments booked')], ['warn', T((s.dup - d0) + ' Doppelklicks abgefangen', (s.dup - d0) + ' double clicks caught')], ['ok', T('Differenz weiter 0,00 €', 'Difference still €0.00')]]);
       flash(['lld-bank', 'lld-brand', 'lld-fee']);
       render();
     })();
@@ -121,13 +152,9 @@
     var a = b.dataset.act;
     if (a === 'pay') pay();
     else if (a === 'new') next();
-    else if (a === 'kill') {
-      s.armed = !s.armed;
-      log(s.armed ? 'bad' : 'info', s.armed ? T('Absturz scharf: Der Server stirbt bei der nächsten Zahlung.', 'Crash armed: the server dies on the next payment.') : T('Absturz abgebrochen.', 'Crash cancelled.'));
-      render();
-    }
+    else if (a === 'kill') crash();
     else if (a === 'rush') rush();
-    else if (a === 'reset') { root.classList.remove('crashed'); init(); }
   });
+  root.addEventListener('demo:reset', init);
   init();
 })();

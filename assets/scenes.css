@@ -31,7 +31,7 @@
 .lg-sum{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:22px}
 .lg-sum span{font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
 .lg-sum b{font:400 64px/1 var(--serif);color:#5FD3A0;letter-spacing:-.03em;white-space:nowrap}
-.lg-kill{position:absolute;inset:0;background:#C2412D;display:flex;align-items:center;justify-content:center;font:600 56px var(--sans);color:#fff;opacity:0;pointer-events:none}
+.lg-kill{position:absolute;inset:0;background:#C2412D;display:flex;align-items:center;justify-content:center;font:600 48px var(--sans);color:#fff;opacity:0;pointer-events:none;text-align:center;padding:0 24px}
 .scene.on .lg-kill{animation:lg-kill 1s 2.4s forwards}
 @keyframes lg-kill{0%{opacity:0}15%{opacity:.95}60%{opacity:.95}100%{opacity:0}}
 .lg .sbadge{margin-top:28px;background:rgba(95,211,160,.14);color:#5FD3A0}
@@ -951,3 +951,25 @@
 .cm-again{all:unset;box-sizing:border-box;display:block;margin:10px 0 0 auto;cursor:pointer;font-size:.88rem;color:var(--c-gold,#F0BF5A);text-decoration:underline;text-underline-offset:3px}
 .cm-again:focus-visible{outline:2px solid var(--c-gold,#F0BF5A);outline-offset:3px;border-radius:4px}
 @media(prefers-reduced-motion:reduce){.cm-target{animation:none;box-shadow:0 0 0 3px rgba(240,191,90,.6)}.cm-badge{transition:none;transform:none}}
+
+/* Demo Ergebnissatz (Ledger Lane, Rush Hour): ein großer Satz pro Aktion */
+.lld-res{border-radius:18px;padding:clamp(16px,2.4vw,26px) clamp(18px,2.6vw,30px);background:var(--bg2);border-left:5px solid var(--muted);min-height:4.2em;display:flex;align-items:center}
+.lld-res b{font:400 clamp(1.4rem,3vw,2.2rem)/1.2 var(--serif);animation:sc-up .45s var(--ease)}
+.lld-res.k-ok{border-left-color:var(--c-green)}.lld-res.k-ok b{color:var(--c-green)}
+.lld-res.k-warn{border-left-color:var(--c-gold)}.lld-res.k-warn b{color:var(--c-gold)}
+.lld-res.k-bad{border-left-color:var(--c-coral)}.lld-res.k-bad b{color:var(--c-coral)}
+.lld-res.k-info b{color:var(--text)}
+.lld-card{position:relative}
+.lld-row.gld{animation:lld-gold 1.1s ease-out}
+@keyframes lld-gold{0%,30%{background:rgba(240,191,90,.3)}100%{background:transparent}}
+.lld-nope{position:absolute;top:16px;right:18px;padding:.35em .8em;border-radius:999px;background:var(--c-gold);color:#1E1D1B;font-size:13px;font-weight:600;opacity:0;pointer-events:none}
+.lld-nope.on{animation:lld-nope 2s ease-out}
+@keyframes lld-nope{0%{opacity:0;transform:scale(.8)}12%,70%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.lld-log{min-height:0}
+@media (prefers-reduced-motion:reduce){.lld-row.gld,.lld-nope.on,.lld-res b{animation:none}.lld-nope.on{opacity:1}}
+
+/* Rush Hour Kapitel 1: Linie und Auslastung bauen sich beim ersten Zeigen sichtbar auf */
+.rh[data-step="1"] .c{animation:rh-draw1 1.2s var(--ease) backwards}
+.rh[data-step="1"] .rh-lv i{animation:rh-fill1 1s .3s var(--ease) backwards}
+@keyframes rh-draw1{from{stroke-dashoffset:1}}
+@keyframes rh-fill1{from{width:0}}

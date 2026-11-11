@@ -119,7 +119,7 @@
     function vis(v) {
       if (v === seen) return;
       seen = v;
-      if (v) { hold = 0; show(0); wake(); } else { show(0); }
+      if (v) { hold = 0; fx.removeAttribute('data-step'); void fx.offsetWidth; show(0); wake(); } else { show(0); }  // Schritt neu setzen, damit Kapitel 1 beim ersten Zeigen wirklich animiert
     }
     prev.addEventListener('click', function () { manual(cur - 1); });
     next.addEventListener('click', function () { manual(cur + 1); });

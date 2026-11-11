@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/style.css?v=36">
-<link rel="stylesheet" href="../../assets/scenes.css?v=41">
+<link rel="stylesheet" href="../../assets/scenes.css?v=42">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -53,16 +53,16 @@
 <div class="lg-row sa" style="--d:.3s"><span>Bank account</span><b class="p">+€50.00</b></div>
 <div class="lg-row sa" style="--d:.7s"><span>Brand receives</span><b class="m">−€42.50</b></div>
 <div class="lg-row sa" style="--d:1.1s"><span>Platform fee</span><b class="m">−€7.50</b></div>
-<div class="lg-sum sa pop" style="--d:1.6s"><span>Sum of all entries</span><b>€0.00</b></div>
-<div class="sbadge sa" style="--d:3.4s"><i></i>Restart after kill -9: entry there exactly once</div>
+<div class="lg-sum sa pop" style="--d:1.6s"><span>Balance: difference</span><b>€0.00</b></div>
+<div class="sbadge sa" style="--d:3.4s"><i></i>After the crash: payment booked exactly once</div>
 </div>
-<div class="lg-kill">kill -9</div>
+<div class="lg-kill">Server crashes</div>
 <span class="tag">100,000 payments · 0 cent difference</span>
 </div></figure>
 </header>
 <section class="wrap sec" aria-labelledby="h-f" style="padding-top:clamp(48px,8vw,100px)">
 <h2 id="h-f" class="kicker">How a payment flows</h2>
-<div class="rl" data-scene="rail"><div class="rl-pin"><nav class="rl-nav" aria-label="Chapters"><ol class="rl-rail"><li class="rl-i" data-s="1"><button type="button" class="rl-b" aria-label="Chapter 1: Customer pays"><span class="rl-n">1</span><span class="rl-h">Customer pays</span></button><div class="rl-d"><p>The customer pays €50.00 in the shop.</p></div></li><li class="rl-i" data-s="2"><button type="button" class="rl-b" aria-label="Chapter 2: Accept payment"><span class="rl-n">2</span><span class="rl-h">Accept payment</span></button><div class="rl-d"><p>The server creates a unique key so nothing counts twice.</p></div></li><li class="rl-i" data-s="3"><button type="button" class="rl-b" aria-label="Chapter 3: Split the money"><span class="rl-n">3</span><span class="rl-h">Split the money</span></button><div class="rl-d"><p>The amount is split between bank, brand and platform.</p></div></li><li class="rl-i" data-s="4"><button type="button" class="rl-b" aria-label="Chapter 4: Balance checked"><span class="rl-n">4</span><span class="rl-h">Balance checked</span></button><div class="rl-d"><p>All entries together add up to exactly €0.00.</p></div></li></ol><p class="rl-cap" aria-hidden="true"></p></nav><div class="rl-img"><div class="fx ll" role="img" aria-label="How a payment flows: customer pays, accept payment, split the money, balance checked"><div class="fx-in"><div class="ll-top"><div class="fx-node ll-cu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/></svg><b>Customer</b></div><div class="ll-lane"><div class="ll-coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5a3.5 3.5 0 1 0 0 5M8.5 11h5M8.5 13h5"/></svg>€50.00</div></div><div class="fx-node ll-sv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><b>Server</b></div><div class="ll-stat"><span class="ll-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Accepted</span><span class="ll-key"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3"/></svg>Unique key</span></div></div><div class="ll-rows"><div class="ll-r p"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"/></svg><span>Bank account</span><b>+€50.00</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l2-5h12l2 5M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></svg><span>Brand receives</span><b>−€42.50</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/></svg><span>Platform fee</span><b>−€7.50</b></div><div class="ll-sum"><span>Sum of all entries</span><b style='--pre:"€";--end:".00"'></b></div></div><div class="fx-end"><span class="sbadge ll-b"><i></i>Every cent accounted for</span></div></div></div></div></div></div>
+<div class="rl" data-scene="rail"><div class="rl-pin"><nav class="rl-nav" aria-label="Chapters"><ol class="rl-rail"><li class="rl-i" data-s="1"><button type="button" class="rl-b" aria-label="Chapter 1: Customer pays"><span class="rl-n">1</span><span class="rl-h">Customer pays</span></button><div class="rl-d"><p>The customer pays €50.00 in the shop.</p></div></li><li class="rl-i" data-s="2"><button type="button" class="rl-b" aria-label="Chapter 2: Payment arrives"><span class="rl-n">2</span><span class="rl-h">Payment arrives</span></button><div class="rl-d"><p>Every payment gets its own number. So it never counts twice.</p></div></li><li class="rl-i" data-s="3"><button type="button" class="rl-b" aria-label="Chapter 3: Money is split"><span class="rl-n">3</span><span class="rl-h">Money is split</span></button><div class="rl-d"><p>€50 go to three accounts: bank, brand, platform.</p></div></li><li class="rl-i" data-s="4"><button type="button" class="rl-b" aria-label="Chapter 4: Everything adds up"><span class="rl-n">4</span><span class="rl-h">Everything adds up</span></button><div class="rl-d"><p>Not a cent is missing: €0.00 difference.</p></div></li></ol><p class="rl-cap" aria-hidden="true"></p></nav><div class="rl-img"><div class="fx ll" role="img" aria-label="How a payment flows: customer pays, payment arrives, money is split, everything adds up"><div class="fx-in"><div class="ll-top"><div class="fx-node ll-cu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4-6.5 8-6.5s7 2 8 6.5"/></svg><b>Customer</b></div><div class="ll-lane"><div class="ll-coin"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5a3.5 3.5 0 1 0 0 5M8.5 11h5M8.5 13h5"/></svg>€50.00</div></div><div class="fx-node ll-sv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg><b>Server</b></div><div class="ll-stat"><span class="ll-ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Accepted</span><span class="ll-key"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3"/></svg>Own number</span></div></div><div class="ll-rows"><div class="ll-r p"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"/></svg><span>Bank account</span><b>+€50.00</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l2-5h12l2 5M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></svg><span>Brand receives</span><b>−€42.50</b></div><div class="ll-r m"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/></svg><span>Platform fee</span><b>−€7.50</b></div><div class="ll-sum"><span>Difference</span><b style='--pre:"€";--end:".00"'></b></div></div><div class="fx-end"><span class="sbadge ll-b"><i></i>Every cent accounted for</span></div></div></div></div></div></div>
 </section>
 <section id="glance" class="inv" aria-labelledby="h-g"><div class="wrap">
 <h2 id="h-g" class="kicker">The proof</h2>
@@ -72,41 +72,41 @@
 <ol class="how rv"><li>Customer clicks Pay twice</li><li>Server crashes in the middle of a booking</li><li>Bank and accounting show different numbers</li></ol></section>
 <section class="wrap sec" id="demo" aria-labelledby="h-d" style="padding-top:clamp(40px,6vw,80px)">
 <h2 id="h-d" class="kicker">Try it yourself</h2>
-<p class="ph-claim rv">Go ahead and click twice. Kill the server. The ledger still books every cent exactly once.</p>
+<p class="ph-claim rv">Go ahead and click twice. Crash the server. Every cent is still booked exactly once.</p>
 <p class="demo-sub rv">Try it: follow the golden hints.</p>
 <div class="lld rv" id="lld">
 <div class="lld-bar">
-<div class="lld-order"><small>Order</small><b id="lld-ord">order-1001</b><span id="lld-amt">€50.00</span></div>
+<div class="lld-order"><small>Order</small><b id="lld-ord">#1001</b><span id="lld-amt">€50.00</span></div>
 <div class="lld-btns">
 <button type="button" class="lb pay" data-act="pay">Pay</button>
 <button type="button" class="lb" data-act="new">New order</button>
-<button type="button" class="lb warn" data-act="kill" aria-pressed="false">Kill server</button>
-<button type="button" class="lb" data-act="rush">Rush: 1,000 payments</button>
-<button type="button" class="lb ghost" data-act="reset">Reset</button>
+<button type="button" class="lb warn" data-act="kill">Crash the server</button>
+<button type="button" class="lb" data-act="rush">1,000 payments at once</button>
 </div>
 </div>
+<div class="lld-res" id="lld-res" aria-live="polite"><b id="lld-res-t"></b></div>
 <div class="lld-grid">
 <section class="lld-card" aria-label="Accounts">
-<h3>Accounts</h3>
+<h3>Accounts</h3><span class="lld-nope" id="lld-nope" aria-hidden="true">No second time</span>
 <div class="lld-row"><span>Bank account</span><b id="lld-bank">€0.00</b></div>
-<div class="lld-row"><span>Brands, still to be paid out</span><b id="lld-brand">€0.00</b></div>
+<div class="lld-row"><span>Brands, payout pending</span><b id="lld-brand">€0.00</b></div>
 <div class="lld-row"><span>Platform fee, 15 %</span><b id="lld-fee">€0.00</b></div>
-<div class="lld-sum"><span>Sum of all entries</span><b id="lld-sum">€0.00</b></div>
+<div class="lld-sum"><span>Difference, must be 0</span><b id="lld-sum">€0.00</b></div>
 </section>
 <section class="lld-card dark" aria-label="Log">
 <h3>What happens</h3>
-<ol id="lld-log" class="lld-log" aria-live="polite"></ol>
+<ol id="lld-log" class="lld-log" aria-live="off"></ol>
 </section>
 </div>
 <div class="lld-stats">
 <div><b id="lld-c1">0</b><span>Payments booked</span></div>
-<div><b id="lld-c2">0</b><span>Duplicates caught</span></div>
-<div><b id="lld-c3">0</b><span>Crashes rolled back</span></div>
+<div><b id="lld-c2">0</b><span>Double clicks caught</span></div>
+<div><b id="lld-c3">0</b><span>Crashes without damage</span></div>
 <div><b class="zero">€0.00</b><span>lost</span></div>
 </div>
-<div class="lld-crash" aria-hidden="true">kill -9</div>
+<div class="lld-crash" aria-hidden="true">Server crashes</div>
 </div>
-<p class="demo-note">Rebuilt in the browser with the same rules as the real ledger: idempotency keys, transaction with rollback, sum always 0. The real code is on GitHub.</p>
+<p class="demo-note">Rebuilt in the browser with the same rules as the real booking system: every payment has its own number and is booked only once, a crash books nothing halfway, the difference stays 0. The real code is on GitHub.</p>
 </section>
 <section class="wrap sec" aria-labelledby="h-r" style="padding-top:clamp(64px,10vw,140px)">
 <h2 id="h-r" class="kicker">Bank reconciliation</h2>
@@ -129,7 +129,7 @@
 </section>
 
 <section class="wrap sec" aria-labelledby="h-w" style="padding-top:clamp(40px,6vw,80px)"><h2 id="h-w" class="kicker">How every cent stays clean</h2>
-<ol class="how rv"><li>Double entry bookkeeping: every booking sums to exactly 0</li><li>Idempotency: same request twice, still only one booking</li><li>Immutable: errors are reversed, never deleted</li><li>Outbox: every booking is guaranteed to land in Kafka</li><li>Key based access: shop books, finance pays out, audit reads</li><li>Euro and dollar: each currency balances to 0 on its own</li></ol>
+<ol class="how rv"><li>Double entry bookkeeping: every booking balances, the difference is always 0</li><li>Own number per payment: sent twice, still booked only once</li><li>Immutable: errors are reversed, never deleted</li><li>Message to other systems (Kafka): every booking is guaranteed to arrive</li><li>Key based access: shop books, finance pays out, audit reads</li><li>Euro and dollar: each currency balances to 0 on its own</li></ol>
 <div class="btns rv"><a class="btn" href="https://github.com/omaraldulimay/ledger-lane/blob/main/docs/chaos/report.md" target="_blank" rel="noopener">Chaos report on GitHub</a></div>
 </section>
 <section class="wrap techrow rv" aria-label="Technologies"><ul class="chips"><li>Java 21</li><li>Spring Boot 4</li><li>PostgreSQL</li><li>Kafka</li><li>Flyway</li><li>Spring Security</li><li>Testcontainers</li><li>OpenAPI</li><li>Docker</li><li>GitHub Actions</li><li>Trivy</li></ul></section>
@@ -142,8 +142,8 @@
 <section id="kontakt" class="wrap" aria-label="Contact"><div class="foot-contact"><a class="mail" href="mailto:omar.dev@web.de">omar.dev@web.de</a><div class="icons"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener" aria-label="GitHub: omaraldulimay"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.921.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener" aria-label="LinkedIn: Omar Abdullah"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a><a href="mailto:omar.dev@web.de" aria-label="Email Omar Abdullah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></a></div></div></section>
 <footer class="wrap foot"><p>© 2026 Omar Abdullah · Hamburg</p><p class="foot-links"><a href="https://github.com/omaraldulimay" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/om4r4bdh/" target="_blank" rel="noopener">LinkedIn</a></p></footer>
 <script src="../../assets/main.js?v=20"></script>
-<script src="../../assets/scenes.js?v=41"></script>
-<script src="../../assets/ll-demo.js?v=20"></script>
-<script src="../../assets/coach.js?v=1" defer></script>
+<script src="../../assets/scenes.js?v=42"></script>
+<script src="../../assets/ll-demo.js?v=21"></script>
+<script src="../../assets/coach.js?v=2" defer></script>
 </body>
 </html>

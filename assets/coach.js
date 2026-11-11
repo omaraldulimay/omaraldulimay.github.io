@@ -11,14 +11,14 @@
       { sel: '[data-act=nofilter]', t: ['3. Ohne WHERE abfragen', '3. Query without WHERE'] }],
     lld: [
       { sel: '[data-act=pay]', t: ['1. Bezahlen', '1. Pay'] },
-      { sel: '[data-act=pay]', t: ['2. Nochmal bezahlen', '2. Pay again'] },
-      { sel: '[data-act=kill]', t: ['3. Server abschießen', '3. Kill the server'] },
-      { sel: '[data-act=pay]', t: ['4. Jetzt bezahlen', '4. Now pay'] }],
+      { sel: '[data-act=pay]', t: ['2. Aus Versehen doppelt klicken', '2. Click twice by accident'] },
+      { sel: '[data-act=kill]', t: ['3. Server abstürzen lassen', '3. Crash the server'] },
+      { sel: '[data-act=pay]', t: ['4. Trotzdem bezahlen', '4. Pay anyway'] }],
     rhd: [
       { sel: '[data-act=rush]', t: ['1. Ansturm starten', '1. Start the rush'] },
-      { sel: '[data-act=deploy]', t: ['2. Kaputtes Update', '2. Broken update'] },
-      { sel: '[data-act=pod]', t: ['3. Pod abschießen', '3. Kill a pod'] },
-      { sel: '[data-act=drop]', t: ['4. Limited Drop', '4. Limited drop'] }],
+      { sel: '[data-act=deploy]', t: ['2. Fehlerhaftes Update einspielen', '2. Push a faulty update'] },
+      { sel: '[data-act=pod]', t: ['3. Einen Server ausfallen lassen', '3. Take one server down'] },
+      { sel: '[data-act=drop]', t: ['4. Limitierten Verkauf starten', '4. Start a limited sale'] }],
     ivd: [
       { sel: '[data-act=sell]', t: ['1. Im Laden verkaufen', '1. Sell in store'] },
       { sel: '[data-act=chaos]', t: ['2. Shop ausfallen lassen', '2. Take shop down'] },
@@ -93,7 +93,7 @@
       finTimer = setTimeout(function () { badge.classList.remove('on'); }, 4500);
     }
     function restart() {
-      clearTimeout(finTimer); fin = false; i = 0; badge.classList.remove('fin', 'on'); queue();
+      clearTimeout(finTimer); root.dispatchEvent(new CustomEvent('demo:reset')); fin = false; i = 0; badge.classList.remove('fin', 'on'); queue();
     }
     root.addEventListener('click', function (e) {
       if (fin) return;
