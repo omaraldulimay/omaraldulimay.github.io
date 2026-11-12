@@ -7,7 +7,9 @@
   var root = document.getElementById('ksd');
   if (!root || !window.KS_DATA) return;
   var $ = function (id) { return document.getElementById(id); };
-  var data = window.KS_DATA, user = data[2], gen = 0, START = 1; // Start: Katja (Vertrieb) mit firmeninterner Vertragsstrafe-Frage
+  var data = window.KS_DATA, user = data[2], gen = 0;
+  data.forEach(function (u) { u.qs = u.qs.filter(function (q) { return q.f; }); }); // nur beantwortete Fragen zeigen
+  var START = Math.max(0, data[2].qs.findIndex(function (q) { return /Nordhafen/.test(q.q); })); // Start: Katja (Vertrieb) mit firmeninterner Vertragsstrafe-Frage
   var TAG = { not_found: T('Steht in keinem Dokument', 'Not in any document'), permission: T('Andere Abteilung, kein Zugriff', 'Other department, no access'), multi: T('Zwei Fragen in einer', 'Two questions in one') };
   function say(kind, text) {
     var r = $('ksd-res'), t = $('ksd-res-t');

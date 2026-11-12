@@ -81,7 +81,7 @@
   // danach beginnt sie von vorn. Klick und Pfeile springen direkt, nach 10 s ohne Eingriff läuft es ab dem aktuellen Kapitel weiter.
   // Verlässt die Szene das Bild, wird sie auf Kapitel 1 zurückgesetzt.
   [].forEach.call(doc.querySelectorAll('[data-scene="rail"]'), function (rl) {
-    var fx = rl.querySelector('.fx,.hq'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(rl.querySelectorAll('.lab-p')),
+    var fx = rl.querySelector('.fx,.hq,.hp'), items = [].slice.call(rl.querySelectorAll('.rl-i')), panels = [].slice.call(rl.querySelectorAll('.lab-p')),
       cap = rl.querySelector('.rl-cap'), n = items.length, cur = -1, MS = 3500, END = 10000, IDLE = 10000, el = 0, last = 0, raf = 0, seen = false, hold = 0;
     var de = (doc.documentElement.lang || 'de').slice(0, 2) !== 'en', bar = doc.createElement('div');
     rl.classList.add('live');
@@ -148,8 +148,8 @@
       [].forEach.call(steps, function (s) { so.observe(s); });
     });
     // Startseite: Kapitel laufen von selbst, solange die Karte im Bild ist.
-    [].forEach.call(doc.querySelectorAll('.hq-auto,.fx-auto'), function (sc) {
-      var names = sc.getAttribute('data-labels').split('|'), dots = sc.querySelectorAll('.hq-dots i,.fx-dots i'), cap = sc.querySelector('.hq-cap b,.fx-cap b'), n = 0, t = 0;
+    [].forEach.call(doc.querySelectorAll('.hq-auto,.fx-auto,.hp-auto'), function (sc) {
+      var names = sc.getAttribute('data-labels').split('|'), dots = sc.querySelectorAll('.hq-dots i,.fx-dots i,.hp-dots i'), cap = sc.querySelector('.hq-cap b,.fx-cap b,.hp-cap b'), n = 0, t = 0;
       function show(i) {
         sc.setAttribute('data-step', i); cap.textContent = names[i - 1];
         [].forEach.call(dots, function (d, k) { d.classList.toggle('on', k === i - 1); });

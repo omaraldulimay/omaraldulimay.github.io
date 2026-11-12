@@ -6,9 +6,9 @@
   // sel: Ziel, hit: Klick, der den Schritt abschließt (Standard sel), until: Schritt endet, sobald dieses Element da ist.
   var CFG = {
     hdd: [
-      { sel: '[data-co=km]', hit: '[data-co]', t: ['1. Firma wählen', '1. Pick a company'] },
-      { sel: '[data-act=foreign]', t: ['2. Fremdes Ticket öffnen', '2. Open foreign ticket'] },
-      { sel: '[data-act=nofilter]', t: ['3. Ohne Filter abfragen', '3. Ask without filter'] }],
+      { sel: '[data-act=flood]', t: ['1. Ansturm starten', '1. Start a rush'] },
+      { sel: '[data-co=km]', hit: '[data-co]', t: ['2. Anderen Kunden wählen', '2. Pick another customer'] },
+      { sel: '[data-act=add]', t: ['3. Neuen Kunden anlegen', '3. Add a new customer'] }],
     lld: [
       { sel: '[data-act=pay]', t: ['1. Bezahlen', '1. Pay'] },
       { sel: '[data-act=pay]', t: ['2. Aus Versehen doppelt klicken', '2. Click twice by accident'] },
@@ -31,8 +31,7 @@
       { sel: '[data-go]', t: ['3. Ergebnis zeigen', '3. Show result'] }],
     ksd: [
       { sel: '.ks-chip:not(.on):not(:has(em))', hit: '[data-q]', t: ['1. Weitere Frage anklicken', '1. Click another question'] },
-      { sel: '.ks-chip:has(em):not(.on)', hit: '[data-q]', t: ['2. Schwierige Frage testen', '2. Try a tricky one'] },
-      { sel: '#ksd-users button:not([aria-pressed=true])', hit: '[data-u]', t: ['3. Andere Person wählen', '3. Pick another person'] }],
+      { sel: '#ksd-users button:not([aria-pressed=true])', hit: '[data-u]', t: ['2. Andere Person wählen', '2. Pick another person'] }],
     pld: [
       { sel: '[data-act=flaky]', t: ['1. Verbindung stören', '1. Disturb connection'] },
       { sel: '[data-act=run]', t: ['2. Nochmal starten', '2. Run again'] }]

@@ -503,7 +503,8 @@
 .hdd-list li:first-child{border-top:0}
 .hdd-list li>b{font-weight:500;font-variant-numeric:tabular-nums;color:var(--c)}
 .hdd-list li>span{min-width:0}
-.hdd-list em{font-style:normal;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.hdd-list em{font-style:normal;font-size:14px;font-weight:600;color:var(--c-green);white-space:nowrap;font-variant-numeric:tabular-nums}
+.hdd-list li.hit em{color:var(--c-gold)}
 .hdd-list li.hit{animation:lld-hit .9s ease-out}
 .hdd-btns{display:flex;flex-wrap:wrap;gap:8px}
 .hdd-out{min-height:84px;border-radius:18px;background:#101113;padding:16px 20px;font-size:14px;line-height:1.5}
@@ -987,3 +988,67 @@
 .rh[data-step="1"] .rh-lv i{animation:rh-fill1 1s .3s var(--ease) backwards}
 @keyframes rh-draw1{from{stroke-dashoffset:1}}
 @keyframes rh-fill1{from{width:0}}
+
+/* Harbor Desk: Kunden, Tarife, Ansturm. Ohne data-step steht der Endzustand. */
+.hp{--g:#F0BF5A;--r:#FF7A6B;--ok:#5FD3A0;position:relative;container-type:inline-size;background:#1E1D1B;color:#F2EDE4;border-radius:24px;box-shadow:inset 0 0 0 1px rgba(240,191,90,.22);overflow:hidden;font-family:var(--sans);text-align:left}
+.hp *{box-sizing:border-box}
+.hp-in{font-size:clamp(10.5px,3cqw,16px);padding:1.7em 1.5em 1.5em;display:flex;flex-direction:column;gap:1em;line-height:1.25}
+.hp-rows{display:flex;flex-direction:column;gap:.55em}
+.hp-r{display:grid;grid-template-columns:minmax(0,9.5em) 8.6em minmax(3em,1fr) 6.2em;align-items:center;gap:.9em;padding:.75em .9em;border-radius:1em;background:#171615;border:1px solid #2B2825;transition:opacity .4s,border-color .4s,box-shadow .4s}
+.hp-r>b{display:flex;align-items:center;gap:.55em;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hp-r>b i{flex:none;width:.65em;height:.65em;border-radius:50%;background:var(--c)}
+.hp-plan{font-style:normal;font-size:.78em;font-weight:600;text-align:center;padding:.35em .6em;border-radius:999px;border:1px solid #3A3631;color:#D9D3C8;white-space:nowrap;transition:all .4s}
+.hp-bar{position:relative;height:.7em;border-radius:99px;background:#2B2825;min-width:0}
+.hp-bar>i{position:absolute;left:0;top:0;bottom:0;width:var(--hw,14%);border-radius:99px;background:var(--c);transition:width .9s var(--ease),background .4s}
+.hp-bar>small{position:absolute;right:0;top:-1.7em;font-size:.72em;font-weight:700;color:var(--r);opacity:0;transition:opacity .3s}
+.hp-st{position:relative;font-size:.85em;font-weight:600;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.hp-st i{font-style:normal;display:none}
+.hp-st .x4{display:inline}
+.hp-dbs{display:grid;grid-template-columns:1fr 1fr;gap:.6em}
+.hp-db{border:1px solid rgba(240,191,90,.28);border-radius:1em;padding:.6em .9em;background:#171615;transition:box-shadow .4s,border-color .4s}
+.hp-db small{display:block;font-size:.68em;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:.25em}
+.hp-db span{font-size:.88em;color:#D9D3C8}
+.hp-end{display:flex;flex-wrap:wrap;gap:.6em;min-height:2.6em}
+.hp-end .sbadge{font-size:.9em;padding:.55em .9em;gap:.55em;background:rgba(95,211,160,.14);color:var(--ok)}
+.hp-end .sbadge.g{background:rgba(240,191,90,.16);color:var(--g)}
+.hp-cap{display:flex;align-items:center;gap:.9em;font-size:.95em;font-weight:500;color:var(--g)}
+.hp-dots{display:flex;gap:.45em}
+.hp-dots i{width:.6em;height:.6em;border-radius:50%;background:#4A453E;transition:background .3s,transform .3s}
+.hp-dots i.on,.hp:not([data-step]) .hp-dots i:last-child{background:var(--g);transform:scale(1.25)}
+/* Endzustand: Ansturm abgefangen */
+.hp .bg .hp-bar>i{--hw:18%;background:var(--g)}
+.hp .bg .hp-st{color:var(--g)}
+.hp .nd .hp-st{color:var(--ok)}
+.hp .km .hp-st{color:var(--ok)}
+/* 1 Neuer Kunde */
+.hp[data-step="1"] .hp-st .x4,.hp[data-step="2"] .hp-st .x4,.hp[data-step="3"] .hp-st .x4{display:none}
+.hp[data-step="1"] .hp-st .x1,.hp[data-step="2"] .hp-st .x1,.hp[data-step="3"] .hp-st .x3{display:inline}
+.hp:is([data-step="1"],[data-step="2"]) .hp-r .hp-st{color:#D9D3C8}
+.hp:is([data-step="1"],[data-step="2"],[data-step="3"]) .bg .hp-bar>i{--hw:14%;background:var(--c)}
+.hp:is([data-step="1"],[data-step="2"],[data-step="3"]) .hp-end>*{opacity:0}
+.hp[data-step="1"] .hp-r:not(.km){opacity:.45}
+.hp[data-step="1"] .km{border-color:var(--c);box-shadow:0 0 1.4em color-mix(in srgb,var(--c) 40%,transparent);animation:hp-pop .6s .2s backwards}
+.hp[data-step="1"] .km .hp-st{color:var(--ok)}
+.hp[data-step="1"] .hp-db.own{border-color:var(--ok);box-shadow:0 0 1.2em rgba(95,211,160,.35);animation:hp-pop .6s .8s backwards}
+.hp[data-step="1"] .hp-db:not(.own){opacity:.45}
+/* 2 Tarif bestimmt das Tempo */
+.hp[data-step="2"] .hp-plan{border-color:var(--g);color:var(--g);background:rgba(240,191,90,.12);animation:hp-pop .5s backwards}
+.hp[data-step="2"] .km .hp-plan{animation-delay:.25s}.hp[data-step="2"] .bg .hp-plan{animation-delay:.5s}
+/* 3 Ansturm */
+.hp[data-step="3"] .bg .hp-bar>i{--hw:100%;background:var(--r);transition-duration:1.2s}
+.hp[data-step="3"] .bg .hp-bar>small{opacity:1;transition-delay:.6s}
+.hp[data-step="3"] .bg{border-color:var(--r);animation:hp-shake .5s 1s}
+.hp[data-step="3"] .bg .hp-st{color:var(--r)}
+.hp[data-step="3"] .hp-r:not(.bg){opacity:.7}
+/* 4 Alle bleiben schnell */
+.hp[data-step="4"] .nd{border-color:var(--ok);box-shadow:0 0 1.2em rgba(95,211,160,.3)}
+.hp[data-step="4"] .nd .hp-st{animation:hp-pop .5s .9s backwards}
+.hp[data-step="4"] .hp-end>:first-child{animation:hp-pop .5s 1.2s backwards}
+.hp[data-step="4"] .hp-end>:last-child{animation:hp-pop .5s 1.8s backwards}
+@keyframes hp-pop{0%{opacity:0;transform:scale(.7)}70%{transform:scale(1.05)}100%{opacity:1;transform:none}}
+@keyframes hp-shake{0%,100%{transform:none}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.hp-card{height:100%;border-radius:0;box-shadow:none}
+.hp-card .hp-in,.hp-box .hp-in{height:100%;justify-content:center}
+.ph-media.hp-box{background:none}
+@container (max-width:520px){.hp-r{grid-template-columns:minmax(0,1fr) auto;row-gap:.5em}.hp-bar{grid-column:1/-1;order:3}.hp-st{order:2}.hp-plan{order:1;justify-self:start}.hp-r>b{grid-column:1/-1}.hp-bar>small{display:none}}
+@media (prefers-reduced-motion:reduce){.hp *{animation:none!important;transition:none!important}}
