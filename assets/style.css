@@ -1,7 +1,7 @@
 /* Tokens: Scandinavian-magazine palette, light + dark */
 :root{
   color-scheme:dark;
-  --bg:#0E0D0C;--bg2:#1A1917;--text:#F2EDE4;--muted:#9C9488;--line:#2B2825;--accent:#8DB5A2;--on-accent:#0E0D0C;--card:#161513;
+  --bg:#0E0D0C;--bg2:#1A1917;--text:#F2EDE4;--muted:#9C9488;--line:#2B2825;--accent:#F0BF5A;--on-accent:#0E0D0C;--card:#161513;
   --inv-bg:#16211C;--inv-text:#F2EEE6;--inv-muted:#B4C4BA;--inv-line:#2E3F37;
   --tint:#2A241E;--shadow:0 24px 60px -28px rgba(0,0,0,.9);
   --c-green:#5FD3A0;--c-gold:#F0BF5A;--c-coral:#FF7A6B;--c-blue:#7AA2FF;
@@ -435,3 +435,11 @@ html:not(.js) .dd:hover .dd-menu,html:not(.js) .dd:focus-within .dd-menu{display
 @media(max-width:759px){.js .lang{margin-top:18px;align-self:flex-start;padding:.75rem 1rem}.js .lang .flag svg{height:18px}}
 .card-txt h3.h3-long{font-size:clamp(1.9rem,3.3vw,3rem);overflow-wrap:normal;hyphens:none}
 .card-txt:has(.h3-long){padding-right:clamp(0px,1.5vw,20px)}
+/* Positionierung und Kennzahlen (Review 12.11.2026) */
+.lead{margin-bottom:.6rem}
+.lead-sub{color:var(--muted);font-size:clamp(.95rem,1.3vw,1.05rem);max-width:30em;margin-bottom:1.4rem}
+.icons .hero-cta{width:auto;height:auto;border-color:var(--accent);padding:.7rem 1.25rem;margin-right:.4rem;font-size:.88rem;border-radius:999px}
+.card-kpi{display:flex;align-items:baseline;gap:.7rem;margin:.55rem 0 .7rem;max-width:26em}
+.card-kpi b{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,3.4vw,2.9rem);line-height:1;letter-spacing:-.02em;color:var(--c-gold);white-space:nowrap}
+.card-kpi span{font-size:.88rem;line-height:1.35;color:var(--muted)}
+.contact-sub{color:var(--muted);font-size:clamp(1rem,1.4vw,1.15rem);margin:-.6rem 0 1.6rem}
